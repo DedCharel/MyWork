@@ -1,6 +1,8 @@
 package com.example.mywork.domain
 
-class EditWorkUseCase(
+import javax.inject.Inject
+
+class EditWorkUseCase @Inject constructor(
     private val repository: WorkRepository
 ) {
     suspend operator fun invoke(work: Work) {
