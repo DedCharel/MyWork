@@ -20,4 +20,8 @@ interface WorksDao {
     @Transaction
     @Query("DELETE FROM works WHERE id == :workId")
     suspend fun deleteWork(workId: Int)
+
+    @Transaction
+    @Query("SELECT * FROM works WHERE id == :workId")
+    suspend fun getWork(workId: Int): WorkDbModel
 }
