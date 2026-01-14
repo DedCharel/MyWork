@@ -1,7 +1,16 @@
 package com.example.mywork.presentation.screen.works
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
@@ -11,6 +20,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.domain.Work
 
@@ -40,7 +54,17 @@ fun WorksScreen(
             contentPadding = innerPadding
         ) {
             item {
-                Text("Title")
+                WorkCard(
+                    modifier = Modifier.padding(8.dp),
+                    work = Work(
+                        id = 1,
+                        date = 1111,
+                        counterparty = "ООО Рога и копыта",
+                        worker = "Иванов И.И.",
+                        description = "Большой текст для проверки читаемости и прочей ерунды на несколько строк",
+                        time = 1
+                    )
+                ) { }
             }
         }
     }
@@ -49,7 +73,63 @@ fun WorksScreen(
 @Composable
 fun WorkCard(
     modifier: Modifier = Modifier,
-    work: Work
-){
+    work: Work,
+    onWorkClick: (Work) -> Unit
+) {
+    Column(
+        modifier = modifier
+            .clip(RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.primary)
+            .clickable(onClick = {
+                onWorkClick(work)
+            }
+            )
+            .padding(horizontal = 8.dp)
 
+    ) {
+        Row {
+            Text(
+                text = work.date.toString(),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = work.counterparty,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = work.description,
+            fontSize = 12.sp,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 3
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row {
+            Text(
+                text = work.worker,
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = work.time.toString(),
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1
+            )
+        }
+
+    }
 }
