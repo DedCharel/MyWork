@@ -6,7 +6,13 @@ interface WorkRepository {
 
     fun getAllWorks(): Flow<List<Work>>
 
-    suspend fun addWork(work: Work)
+    suspend fun addWork(
+        date: Long,
+        counterparty: String,
+        worker: String,
+        description: String,
+        time: Long
+    )
 
     suspend fun deleteWork(workId: Int)
 

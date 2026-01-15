@@ -8,17 +8,24 @@ import javax.inject.Inject
 
 class WorkRepositoryImpl @Inject constructor(
     private val worksDao: WorksDao
-): WorkRepository {
+) : WorkRepository {
     override fun getAllWorks(): Flow<List<Work>> {
         return worksDao.getAllWorks().map { it.toEntities() }
     }
 
-    override suspend fun addWork(work: Work) {
-        worksDao.addWork(work.toDbModel())
+    override suspend fun addWork(
+        date: Long,
+        counterparty: String,
+        worker: String,
+        description: String,
+        time: Long
+    ) {
+        val workDBModel = WorkDbModel(0, date, counterparty, worker, description, time)
+        worksDao.addWork(workDBModel)
     }
 
     override suspend fun deleteWork(workId: Int) {
-       worksDao.deleteWork(workId)
+        worksDao.deleteWork(workId)
     }
 
     override suspend fun getWork(workId: Int): Work {
