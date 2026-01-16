@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -34,6 +35,10 @@ fun WorksScreen(
     viewModel: WorksViewModel = hiltViewModel(),
     onAddWorkClick: () -> Unit
 ) {
+    val state = viewModel.state.collectAsState()
+
+    val currentState = state.value
+
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
@@ -53,19 +58,7 @@ fun WorksScreen(
         LazyColumn(
             contentPadding = innerPadding
         ) {
-            item {
-                WorkCard(
-                    modifier = Modifier.padding(8.dp),
-                    work = Work(
-                        id = 1,
-                        date = 1111,
-                        counterparty = "ООО Рога и копыта",
-                        worker = "Иванов И.И.",
-                        description = "Большой текст для проверки читаемости и прочей ерунды на несколько строк",
-                        time = 1
-                    )
-                ) { }
-            }
+
         }
     }
 }
