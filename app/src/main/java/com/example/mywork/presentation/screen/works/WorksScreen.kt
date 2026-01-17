@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -43,7 +44,7 @@ fun WorksScreen(
         modifier = modifier,
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { onAddWorkClick },
+                onClick = { viewModel.processCommand(WorkCommand.AddWork) },
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 containerColor = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
@@ -58,7 +59,12 @@ fun WorksScreen(
         LazyColumn(
             contentPadding = innerPadding
         ) {
-
+            items(currentState.works){work->
+                WorkCard(
+                    modifier.padding(8.dp),
+                    work =work,
+                    onWorkClick = {viewModel.processCommand(WorkCommand.EditWork(work))})
+            }
         }
     }
 }
@@ -77,7 +83,7 @@ fun WorkCard(
                 onWorkClick(work)
             }
             )
-            .padding(horizontal = 8.dp)
+            .padding(8.dp)
 
     ) {
         Row {
