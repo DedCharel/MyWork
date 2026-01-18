@@ -44,7 +44,7 @@ fun WorksScreen(
         modifier = modifier,
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { viewModel.processCommand(WorkCommand.AddWork) },
+                onClick = onAddWorkClick ,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 containerColor = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
@@ -59,7 +59,10 @@ fun WorksScreen(
         LazyColumn(
             contentPadding = innerPadding
         ) {
-            items(currentState.works){work->
+            items(
+                items = currentState.works,
+                key = {it.id}
+            ){work->
                 WorkCard(
                     modifier.padding(8.dp),
                     work =work,
