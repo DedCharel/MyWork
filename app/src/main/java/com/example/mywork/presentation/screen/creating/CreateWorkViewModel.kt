@@ -35,7 +35,7 @@ class CreateWorkViewModel @Inject constructor(
             is CreateWorkCommand.InputDate -> {
                 _state.update {previousState ->
                     if (previousState is CreateWorkScreenState.Creation){
-                        previousState.copy(date = command.date)
+                        previousState.copy(date = command.date.toLong())
                     } else {
                         previousState
                     }
@@ -53,7 +53,7 @@ class CreateWorkViewModel @Inject constructor(
             is CreateWorkCommand.InputTime -> {
                 _state.update {previousState ->
                     if (previousState is CreateWorkScreenState.Creation){
-                        previousState.copy(time = command.time)
+                        previousState.copy(time = command.time.toLong())
                     } else {
                         previousState
                     }
@@ -98,7 +98,7 @@ class CreateWorkViewModel @Inject constructor(
 
 sealed interface CreateWorkCommand{
 
-    data class InputDate(val date: Long): CreateWorkCommand
+    data class InputDate(val date: String): CreateWorkCommand
 
     data class InputCounterparty(val counterparty: String): CreateWorkCommand
 
@@ -106,7 +106,7 @@ sealed interface CreateWorkCommand{
 
     data class InputDescription(val description: String): CreateWorkCommand
 
-    data class InputTime(val time: Long): CreateWorkCommand
+    data class InputTime(val time: String): CreateWorkCommand
 
     data object Save: CreateWorkCommand
 
