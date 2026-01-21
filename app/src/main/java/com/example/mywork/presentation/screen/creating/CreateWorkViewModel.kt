@@ -12,8 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateWorkViewModel @Inject constructor(
-    private val addWorkUseCase: AddWorkUseCase,
-
+    private val addWorkUseCase: AddWorkUseCase
 ): ViewModel() {
     private val _state = MutableStateFlow<CreateWorkScreenState>(CreateWorkScreenState.Creation())
     val state = _state.asStateFlow()
