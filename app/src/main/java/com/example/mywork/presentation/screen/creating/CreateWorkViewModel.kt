@@ -52,7 +52,12 @@ class CreateWorkViewModel @Inject constructor(
             is CreateWorkCommand.InputTime -> {
                 _state.update {previousState ->
                     if (previousState is CreateWorkScreenState.Creation){
-                        previousState.copy(time = command.time.toLong())
+                        if (command.time.isEmpty()){
+                            previousState.copy(time = 0)
+                        } else {
+                            previousState.copy(time = command.time.toLong())
+                        }
+
                     } else {
                         previousState
                     }

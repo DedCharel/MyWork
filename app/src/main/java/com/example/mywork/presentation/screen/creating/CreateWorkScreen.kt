@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.Button
@@ -22,8 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mywork.presentation.utils.DataFormater
 
@@ -31,7 +34,7 @@ import com.example.mywork.presentation.utils.DataFormater
 @Composable
 fun CreateWorkScreen(
     modifier: Modifier = Modifier,
-    viewModel: CreateWorkViewModel = viewModel(),
+    viewModel: CreateWorkViewModel = hiltViewModel(),
     onFinished: () -> Unit
 ) {
     val state = viewModel.state.collectAsState()
@@ -74,26 +77,26 @@ fun CreateWorkScreen(
                 Column(
                     modifier = Modifier.padding(innerPadding)
                 ) {
-                    TextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = DataFormater.formatDateTjString(currentState.date),
-                        onValueChange = {
-                            viewModel.processCommand(CreateWorkCommand.InputDate(it))
-                        },
-                        textStyle = TextStyle(
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
-                        ),
-                        placeholder = {
-                            Text(
-                                text = "Date",
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                            )
-                        }
-                    )
+//                    TextField(
+//                        modifier = Modifier.fillMaxWidth(),
+//                        value = DataFormater.formatDateTjString(currentState.date),
+//                        onValueChange = {
+//                            viewModel.processCommand(CreateWorkCommand.InputDate(it))
+//                        },
+//                        textStyle = TextStyle(
+//                            fontSize = 24.sp,
+//                            fontWeight = FontWeight.Bold,
+//                            color = MaterialTheme.colorScheme.onSurface
+//                        ),
+//                        placeholder = {
+//                            Text(
+//                                text = "Date",
+//                                fontSize = 24.sp,
+//                                fontWeight = FontWeight.Bold,
+//                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+//                            )
+//                        }
+//                    )
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = currentState.counterparty,
@@ -139,7 +142,7 @@ fun CreateWorkScreen(
                         maxLines = 5,
                         value = currentState.description,
                         onValueChange = {
-                            viewModel.processCommand(CreateWorkCommand.InputDate(it))
+                            viewModel.processCommand(CreateWorkCommand.InputDescription(it))
                         },
                         textStyle = TextStyle(
                             fontSize = 24.sp,
@@ -148,7 +151,7 @@ fun CreateWorkScreen(
                         ),
                         placeholder = {
                             Text(
-                                text = "Time",
+                                text = "Description",
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
@@ -159,7 +162,7 @@ fun CreateWorkScreen(
                         modifier = Modifier.fillMaxWidth(),
                         value = currentState.time.toString(),
                         onValueChange = {
-                            viewModel.processCommand(CreateWorkCommand.InputTime(it))
+                                viewModel.processCommand(CreateWorkCommand.InputTime(it))
                         },
                         textStyle = TextStyle(
                             fontSize = 24.sp,
@@ -173,7 +176,10 @@ fun CreateWorkScreen(
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
                             )
-                        }
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Decimal
+                        )
                     )
                     Button(
                         modifier = Modifier
