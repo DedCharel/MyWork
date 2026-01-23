@@ -2,8 +2,14 @@ package com.example.mywork.presentation.screen.creating
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
@@ -21,21 +27,21 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mywork.presentation.utils.DataFormater
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateWorkScreen(
     modifier: Modifier = Modifier,
     viewModel: CreateWorkViewModel = hiltViewModel(),
-    onFinished: () -> Unit
+    onFinished: () -> Unit,
+    onCounterpartyClick: () -> Unit
 ) {
     val state = viewModel.state.collectAsState()
     val currentState = state.value
@@ -97,46 +103,82 @@ fun CreateWorkScreen(
 //                            )
 //                        }
 //                    )
-                    TextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = currentState.counterparty,
-                        onValueChange = {
-                            viewModel.processCommand(CreateWorkCommand.InputCounterparty(it))
-                        },
-                        textStyle = TextStyle(
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
-                        ),
-                        placeholder = {
-                            Text(
-                                text = "Counterparty",
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(IntrinsicSize.Max)
+                    ) {
+                        TextField(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .clickable(onClick = {}),
+
+                            value = currentState.counterparty,
+                            onValueChange = {
+                                viewModel.processCommand(CreateWorkCommand.InputCounterparty(it))
+                            },
+                            textStyle = TextStyle(
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                            )
+                                color = MaterialTheme.colorScheme.onSurface
+                            ),
+                            placeholder = {
+                                Text(
+                                    text = "Counterparty",
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+                                )
+                            }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Button(
+                            modifier = Modifier.fillMaxHeight(),
+                            shape = RectangleShape,
+                            onClick = {onCounterpartyClick()}) {
+                            Text("...")
                         }
-                    )
-                    TextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = currentState.worker,
-                        onValueChange = {
-                            viewModel.processCommand(CreateWorkCommand.InputWorker(it))
-                        },
-                        textStyle = TextStyle(
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
-                        ),
-                        placeholder = {
-                            Text(
-                                text = "Worker",
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(IntrinsicSize.Max)
+                    ) {
+
+                        TextField(
+                            modifier = Modifier.fillMaxWidth()
+                                .fillMaxHeight()
+                                .weight(1f),
+
+                            value = currentState.worker,
+                            onValueChange = {
+                                viewModel.processCommand(CreateWorkCommand.InputWorker(it))
+                            },
+                            textStyle = TextStyle(
                                 fontSize = 24.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                            )
+                                color = MaterialTheme.colorScheme.onSurface
+                            ),
+                            placeholder = {
+                                Text(
+                                    text = "Worker",
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
+                                )
+                            }
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Button(
+                            modifier = Modifier.fillMaxHeight(),
+                            shape = RectangleShape,
+                            onClick = {}) {
+                            Text("...")
                         }
-                    )
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         maxLines = 5,
@@ -158,11 +200,12 @@ fun CreateWorkScreen(
                             )
                         }
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = currentState.time.toString(),
                         onValueChange = {
-                                viewModel.processCommand(CreateWorkCommand.InputTime(it))
+                            viewModel.processCommand(CreateWorkCommand.InputTime(it))
                         },
                         textStyle = TextStyle(
                             fontSize = 24.sp,
@@ -181,6 +224,7 @@ fun CreateWorkScreen(
                             keyboardType = KeyboardType.Decimal
                         )
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
                     Button(
                         modifier = Modifier
                             .padding(24.dp)
