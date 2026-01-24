@@ -14,17 +14,25 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -34,6 +42,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.presentation.utils.DataFormater
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,6 +55,7 @@ fun CreateWorkScreen(
     onFinished: () -> Unit,
     onCounterpartyClick: () -> Unit
 ) {
+    var showDialog by remember { mutableStateOf(false) }
     val state = viewModel.state.collectAsState()
     val currentState = state.value
 
@@ -83,26 +96,21 @@ fun CreateWorkScreen(
                 Column(
                     modifier = Modifier.padding(innerPadding)
                 ) {
-//                    TextField(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        value = DataFormater.formatDateTjString(currentState.date),
-//                        onValueChange = {
-//                            viewModel.processCommand(CreateWorkCommand.InputDate(it))
-//                        },
-//                        textStyle = TextStyle(
-//                            fontSize = 24.sp,
-//                            fontWeight = FontWeight.Bold,
-//                            color = MaterialTheme.colorScheme.onSurface
-//                        ),
-//                        placeholder = {
-//                            Text(
-//                                text = "Date",
-//                                fontSize = 24.sp,
-//                                fontWeight = FontWeight.Bold,
-//                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-//                            )
-//                        }
-//                    )
+
+                    Column {
+                        Button(onClick = { showDialog = true }) { Text(DataFormater.formatDateToString(currentState.date)) }
+
+                        if (showDialog) {
+                            DatePickerModal (
+                                onDateSelected = { millis ->
+                                    val currentMills = millis ?: 0
+                                    viewModel.processCommand(CreateWorkCommand.InputDate(currentMills))
+                                    showDialog = false
+                                },
+                                onDismiss = { showDialog = false }
+                            )
+                        }
+                    }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -148,7 +156,8 @@ fun CreateWorkScreen(
                     ) {
 
                         TextField(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .fillMaxHeight()
                                 .weight(1f),
 
@@ -244,4 +253,28 @@ fun CreateWorkScreen(
         }
     }
 
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DatePickerModal(
+    onDateSelected: (Long?) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val datePickerState = rememberDatePickerState()
+
+    DatePickerDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = {
+                onDateSelected(datePickerState.selectedDateMillis)
+                onDismiss()
+            }) { Text("OK") }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("Cancel") }
+        }
+    ) {
+        DatePicker(state = datePickerState)
+    }
 }
