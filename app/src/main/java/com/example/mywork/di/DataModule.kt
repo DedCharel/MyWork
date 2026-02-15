@@ -1,8 +1,10 @@
 package com.example.mywork.di
 
 import android.content.Context
+import com.example.mywork.data.OrganizationsDao
 import com.example.mywork.data.WorkDatabase
 import com.example.mywork.data.WorkRepositoryImpl
+import com.example.mywork.data.WorkersDao
 import com.example.mywork.data.WorksDao
 import com.example.mywork.domain.WorkRepository
 import dagger.Binds
@@ -37,6 +39,22 @@ interface DataModule {
             database: WorkDatabase
         ): WorksDao {
             return database.worksDao()
+        }
+
+        @Singleton
+        @Provides
+        fun provideWorkersDao(
+            database: WorkDatabase
+        ): WorkersDao {
+            return database.workersDao()
+        }
+
+        @Singleton
+        @Provides
+        fun provideOrganisationsDao(
+            database: WorkDatabase
+        ): OrganizationsDao {
+            return database.organizationsDao()
         }
     }
 }

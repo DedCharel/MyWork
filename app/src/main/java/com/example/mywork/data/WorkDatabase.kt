@@ -6,26 +6,30 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [WorkDbModel::class],
+    entities = [WorkDbModel::class,
+        WorkerDbModel::class,
+        OrganizationDbModel::class],
     version = 1,
     exportSchema = false
 )
-abstract class WorkDatabase: RoomDatabase() {
+abstract class WorkDatabase : RoomDatabase() {
 
     abstract fun worksDao(): WorksDao
+    abstract fun workersDao(): WorkersDao
+    abstract fun organizationsDao(): OrganizationsDao
 
-    companion object{
+    companion object {
 
         private var instance: WorkDatabase? = null
         private val LOCK = Any()
 
         fun getInstance(context: Context): WorkDatabase {
             instance?.let { return it }
-            synchronized(LOCK){
+            synchronized(LOCK) {
                 instance?.let { return it }
 
                 return Room.databaseBuilder(
-                    context =context,
+                    context = context,
                     klass = WorkDatabase::class.java,
                     name = "works.db"
                 ).fallbackToDestructiveMigration(true)

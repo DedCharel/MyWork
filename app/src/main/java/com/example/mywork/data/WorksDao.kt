@@ -12,7 +12,7 @@ interface WorksDao {
 
     @Transaction
     @Query("SELECT * FROM works ORDER BY date DESC")
-    fun getAllWorks(): Flow<List<WorkDbModel>>
+    fun getAllWorks(): Flow<List<WorkWithReferences>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addWork(workDbModel: WorkDbModel)
