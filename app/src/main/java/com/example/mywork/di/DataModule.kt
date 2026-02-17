@@ -1,12 +1,14 @@
 package com.example.mywork.di
 
 import android.content.Context
+import com.example.mywork.data.OrganizationRepositoryImpl
 import com.example.mywork.data.OrganizationsDao
 import com.example.mywork.data.WorkDatabase
 import com.example.mywork.data.WorkRepositoryImpl
 import com.example.mywork.data.WorkerRepositoryImpl
 import com.example.mywork.data.WorkersDao
 import com.example.mywork.data.WorksDao
+import com.example.mywork.domain.organization.OrganizationRepository
 import com.example.mywork.domain.work.WorkRepository
 import com.example.mywork.domain.worker.WorkerRepository
 import dagger.Binds
@@ -28,6 +30,10 @@ interface DataModule {
     @Singleton
     @Binds
     fun bindsWorkersRepository(impl: WorkerRepositoryImpl): WorkerRepository
+
+    @Singleton
+    @Binds
+    fun bindsOrganizationRepository(impl: OrganizationRepositoryImpl): OrganizationRepository
 
     companion object {
 
