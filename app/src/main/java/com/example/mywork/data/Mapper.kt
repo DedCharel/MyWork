@@ -37,6 +37,18 @@ fun OrganizationDbModel.toEntity(): Organization {
     )
 }
 
+fun Organization.toDbModel(): OrganizationDbModel{
+    return OrganizationDbModel(
+        organizationId = id,
+        name = name
+
+    )
+}
+
+fun List<OrganizationDbModel>.toEntities(): List<Organization>{
+    return map { it.toEntity() }
+}
+
 fun WorkerDbModel.toEntity(): Worker {
     return Worker(
         id = workerId,
