@@ -1,7 +1,7 @@
 package com.example.mywork.domain.work
 
 import com.example.mywork.domain.organization.Organization
-import com.example.mywork.domain.Worker
+import com.example.mywork.domain.worker.Worker
 
 data class Work(
     val id: Int,

@@ -2,7 +2,7 @@ package com.example.mywork.data
 
 import com.example.mywork.domain.organization.Organization
 import com.example.mywork.domain.work.Work
-import com.example.mywork.domain.Worker
+import com.example.mywork.domain.worker.Worker
 
 fun WorkWithReferences.toEntity(): Work {
     return Work(

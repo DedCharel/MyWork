@@ -4,9 +4,11 @@ import android.content.Context
 import com.example.mywork.data.OrganizationsDao
 import com.example.mywork.data.WorkDatabase
 import com.example.mywork.data.WorkRepositoryImpl
+import com.example.mywork.data.WorkerRepositoryImpl
 import com.example.mywork.data.WorkersDao
 import com.example.mywork.data.WorksDao
 import com.example.mywork.domain.work.WorkRepository
+import com.example.mywork.domain.worker.WorkerRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -22,6 +24,10 @@ interface DataModule {
     @Singleton
     @Binds
     fun bindsWorksRepository(impl: WorkRepositoryImpl): WorkRepository
+
+    @Singleton
+    @Binds
+    fun bindsWorkersRepository(impl: WorkerRepositoryImpl): WorkerRepository
 
     companion object {
 

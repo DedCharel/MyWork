@@ -1,4 +1,4 @@
-package com.example.mywork.domain
+package com.example.mywork.domain.worker
 
 data class Worker(
     val id: Long,
