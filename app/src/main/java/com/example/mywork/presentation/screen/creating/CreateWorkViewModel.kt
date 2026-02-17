@@ -2,7 +2,7 @@ package com.example.mywork.presentation.screen.creating
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mywork.domain.AddWorkUseCase
+import com.example.mywork.domain.work.AddWorkUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

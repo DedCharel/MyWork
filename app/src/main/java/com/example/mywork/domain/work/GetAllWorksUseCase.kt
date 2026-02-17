@@ -1,5 +1,7 @@
-package com.example.mywork.domain
+package com.example.mywork.domain.work
 
+import com.example.mywork.domain.work.Work
+import com.example.mywork.domain.work.WorkRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

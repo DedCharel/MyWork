@@ -1,5 +1,6 @@
-package com.example.mywork.domain
+package com.example.mywork.domain.work
 
+import com.example.mywork.domain.work.WorkRepository
 import javax.inject.Inject
 
 class DeleteWorkUseCase @Inject constructor(

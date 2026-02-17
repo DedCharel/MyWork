@@ -1,5 +1,6 @@
-package com.example.mywork.domain
+package com.example.mywork.domain.work
 
+import com.example.mywork.domain.work.Work
 import kotlinx.coroutines.flow.Flow
 
 interface WorkRepository {
@@ -8,8 +9,8 @@ interface WorkRepository {
 
     suspend fun addWork(
         date: Long,
-        counterparty: String,
-        worker: String,
+        organizationId: Long,
+        workerId: Long,
         description: String,
         time: Long
     )

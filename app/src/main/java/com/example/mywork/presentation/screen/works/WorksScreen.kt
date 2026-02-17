@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -23,12 +24,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.mywork.domain.Work
+import com.example.mywork.domain.work.Work
+import com.example.mywork.presentation.utils.DataFormater
 
 @Composable
 fun WorksScreen(
@@ -79,7 +80,7 @@ fun WorkCard(
     onWorkClick: (Work) -> Unit
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier.fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.primary)
             .clickable(onClick = {
@@ -91,7 +92,7 @@ fun WorkCard(
     ) {
         Row {
             Text(
-                text = work.date.toString(),
+                text = DataFormater.formatDateToString(work.date),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -99,7 +100,7 @@ fun WorkCard(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = work.counterparty,
+                text = work.organization,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,

@@ -6,7 +6,7 @@ import com.example.mywork.data.WorkDatabase
 import com.example.mywork.data.WorkRepositoryImpl
 import com.example.mywork.data.WorkersDao
 import com.example.mywork.data.WorksDao
-import com.example.mywork.domain.WorkRepository
+import com.example.mywork.domain.work.WorkRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

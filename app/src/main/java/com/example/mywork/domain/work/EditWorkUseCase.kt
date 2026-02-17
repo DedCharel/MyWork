@@ -1,5 +1,7 @@
-package com.example.mywork.domain
+package com.example.mywork.domain.work
 
+import com.example.mywork.domain.work.Work
+import com.example.mywork.domain.work.WorkRepository
 import javax.inject.Inject
 
 class EditWorkUseCase @Inject constructor(
@@ -9,4 +11,3 @@ class EditWorkUseCase @Inject constructor(
         repository.editWork(work)
     }
 }
-

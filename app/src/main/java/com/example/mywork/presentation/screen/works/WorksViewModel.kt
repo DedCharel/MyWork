@@ -2,11 +2,11 @@ package com.example.mywork.presentation.screen.works
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mywork.domain.AddWorkUseCase
-import com.example.mywork.domain.DeleteWorkUseCase
-import com.example.mywork.domain.EditWorkUseCase
-import com.example.mywork.domain.GetAllWorksUseCase
-import com.example.mywork.domain.Work
+import com.example.mywork.domain.work.AddWorkUseCase
+import com.example.mywork.domain.work.DeleteWorkUseCase
+import com.example.mywork.domain.work.EditWorkUseCase
+import com.example.mywork.domain.work.GetAllWorksUseCase
+import com.example.mywork.domain.work.Work
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -52,8 +52,8 @@ class WorksViewModel @Inject constructor(
                     deleteWorkUseCase(command.workId)
                 }
                 is WorkCommand.EditWork -> {
-                    val counterparty = command.work.counterparty
-                    editWorkUseCase(command.work.copy(counterparty = "$counterparty EDIT" ))
+                    val counterparty = command.work.organization
+                    editWorkUseCase(command.work.copy(organization = "$counterparty EDIT" ))
                 }
             }
         }

@@ -23,5 +23,5 @@ interface WorksDao {
 
     @Transaction
     @Query("SELECT * FROM works WHERE id == :workId")
-    suspend fun getWork(workId: Int): WorkDbModel
+    suspend fun getWork(workId: Int): WorkWithReferences
 }

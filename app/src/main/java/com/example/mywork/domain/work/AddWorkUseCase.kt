@@ -1,7 +1,7 @@
-package com.example.mywork.domain
+package com.example.mywork.domain.work
 
+import com.example.mywork.domain.work.WorkRepository
 import javax.inject.Inject
-import kotlin.Long
 
 class AddWorkUseCase @Inject constructor(
     private val repository: WorkRepository

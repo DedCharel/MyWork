@@ -1,7 +1,9 @@
 package com.example.mywork.data
 
-import com.example.mywork.domain.Work
-import com.example.mywork.domain.WorkRepository
+import com.example.mywork.domain.organization.Organization
+import com.example.mywork.domain.work.Work
+import com.example.mywork.domain.work.WorkRepository
+import com.example.mywork.domain.Worker
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -15,12 +17,12 @@ class WorkRepositoryImpl @Inject constructor(
 
     override suspend fun addWork(
         date: Long,
-        counterparty: String,
-        worker: String,
+        organizationId: Long,
+        workerId: Long,
         description: String,
         time: Long
     ) {
-        val workDBModel = WorkDbModel(0, date, counterparty, worker, description, time)
+        val workDBModel = WorkDbModel(0, date, organizationId, workerId, description, time)
         worksDao.addWork(workDBModel)
     }
 
