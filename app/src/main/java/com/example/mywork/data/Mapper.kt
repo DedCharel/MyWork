@@ -44,3 +44,14 @@ fun WorkerDbModel.toEntity(): Worker {
     )
 }
 
+fun Worker.toDbModel(): WorkerDbModel {
+    return WorkerDbModel(
+        workerId = id,
+        name = name
+    )
+}
+
+fun List<WorkerDbModel>.toEntities(): List<Worker>{
+    return map { it.toEntity() }
+}
+

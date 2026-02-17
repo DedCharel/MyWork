@@ -1,9 +1,7 @@
 package com.example.mywork.data
 
-import com.example.mywork.domain.organization.Organization
 import com.example.mywork.domain.work.Work
 import com.example.mywork.domain.work.WorkRepository
-import com.example.mywork.domain.worker.Worker
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

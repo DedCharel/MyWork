@@ -4,27 +4,28 @@ import com.example.mywork.domain.worker.Worker
 import com.example.mywork.domain.worker.WorkerRepository
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class WorkerRepositoryImpl @Inject constructor(
     private val workersDao: WorkersDao
 ): WorkerRepository {
     override fun getAllWorkers(): Flow<List<Worker>> {
-        TODO("Not yet implemented")
+     return workersDao.getAllWorkers().map { it.toEntities() }
     }
 
     override suspend fun addWorker(worker: Worker) {
-        TODO("Not yet implemented")
+        workersDao.addWorker(worker.toDbModel())
     }
 
     override suspend fun deleteWorker(workerId: Long) {
-        TODO("Not yet implemented")
+        workersDao.deleteWorker(workerId)
     }
 
     override suspend fun editWorker(worker: Worker) {
-        TODO("Not yet implemented")
+        workersDao.addWorker(worker.toDbModel())
     }
 
     override suspend fun getWorker(workerId: Long): Worker {
-        TODO("Not yet implemented")
+       return workersDao.getWorker(workerId).toEntity()
     }
 }
