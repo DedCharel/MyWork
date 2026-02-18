@@ -40,20 +40,20 @@ class WorksViewModel @Inject constructor(
         viewModelScope.launch {
             when(command){
                 is WorkCommand.AddWork -> {
+                    val work = command.work
                     addWorkUseCase(
-                        date = System.currentTimeMillis(),
-                        counterparty = "Counterparty new",
-                        worker = "Worker new",
-                        description = "Большой текст для проверки читаемости и прочей ерунды на несколько строк",
-                        time = 1
+                        date = work.date,
+                        organizationId = work.organization.id ,
+                        workerId = work.worker.id,
+                        description = work.description,
+                        time = work.time
                     )
                 }
                 is WorkCommand.DeleteWork -> {
                     deleteWorkUseCase(command.workId)
                 }
                 is WorkCommand.EditWork -> {
-                    val counterparty = command.work.organization
-                    editWorkUseCase(command.work.copy(organization = "$counterparty EDIT" ))
+                    editWorkUseCase(command.work)
                 }
             }
         }
@@ -69,7 +69,7 @@ sealed interface WorkCommand{
 
     data class EditWork(val work: Work): WorkCommand
 
-    data object AddWork: WorkCommand
+    data class AddWork(val work: Work): WorkCommand
 }
 
 data class WorksScreenState(

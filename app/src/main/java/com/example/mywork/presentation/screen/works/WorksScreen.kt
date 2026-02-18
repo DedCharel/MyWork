@@ -100,7 +100,7 @@ fun WorkCard(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = work.organization,
+                text = work.organization.name,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
@@ -120,7 +120,7 @@ fun WorkCard(
 
         Row {
             Text(
-                text = work.worker,
+                text = work.worker.name,
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1

@@ -8,11 +8,11 @@ class AddWorkUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         date: Long,
-        counterparty: String,
-        worker: String,
+        organizationId: Long,
+        workerId: Long,
         description: String,
         time: Long
     ) {
-        repository.addWork(date, counterparty, worker, description, time)
+        repository.addWork(date , organizationId, workerId, description, time)
     }
 }
