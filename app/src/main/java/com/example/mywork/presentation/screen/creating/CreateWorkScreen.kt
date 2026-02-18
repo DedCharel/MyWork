@@ -1,6 +1,7 @@
 package com.example.mywork.presentation.screen.creating
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -43,9 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.presentation.utils.DataFormater
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +51,8 @@ fun CreateWorkScreen(
     modifier: Modifier = Modifier,
     viewModel: CreateWorkViewModel = hiltViewModel(),
     onFinished: () -> Unit,
-    onCounterpartyClick: () -> Unit
+    onWorkerClick: () -> Unit,
+    onOrganizationClick: () -> Unit
 ) {
     var showDialog by remember { mutableStateOf(false) }
     val state = viewModel.state.collectAsState()
@@ -98,96 +97,52 @@ fun CreateWorkScreen(
                 ) {
 
                     Column {
-                        Button(onClick = { showDialog = true }) { Text(DataFormater.formatDateToString(currentState.date)) }
+                        Button(onClick = {
+                            showDialog = true
+                        }) { Text(DataFormater.formatDateToString(currentState.date)) }
 
                         if (showDialog) {
-                            DatePickerModal (
+                            DatePickerModal(
                                 onDateSelected = { millis ->
                                     val currentMills = millis ?: 0
-                                    viewModel.processCommand(CreateWorkCommand.InputDate(currentMills))
+                                    viewModel.processCommand(
+                                        CreateWorkCommand.InputDate(
+                                            currentMills
+                                        )
+                                    )
                                     showDialog = false
                                 },
                                 onDismiss = { showDialog = false }
                             )
                         }
                     }
-                    Row(
+
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(IntrinsicSize.Max)
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .clickable(onClick = { onOrganizationClick() })
                     ) {
-                        TextField(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxHeight()
-                                .clickable(onClick = {}),
-
-                            value = currentState.counterparty,
-                            onValueChange = {
-                                viewModel.processCommand(CreateWorkCommand.InputCounterparty(it))
-                            },
-                            textStyle = TextStyle(
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface
-                            ),
-                            placeholder = {
-                                Text(
-                                    text = "Counterparty",
-                                    fontSize = 24.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                                )
-                            }
+                        Text(
+                            text = currentState.organization?.name ?: "Select organization"
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Button(
-                            modifier = Modifier.fillMaxHeight(),
-                            shape = RectangleShape,
-                            onClick = {onCounterpartyClick()}) {
-                            Text("...")
-                        }
                     }
+
+
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(IntrinsicSize.Max)
+                            .weight(1f)
+                            .fillMaxHeight()
+                            .clickable(onClick = { onWorkerClick() })
                     ) {
-
-                        TextField(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight()
-                                .weight(1f),
-
-                            value = currentState.worker,
-                            onValueChange = {
-                                viewModel.processCommand(CreateWorkCommand.InputWorker(it))
-                            },
-                            textStyle = TextStyle(
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface
-                            ),
-                            placeholder = {
-                                Text(
-                                    text = "Worker",
-                                    fontSize = 24.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                                )
-                            }
+                        Text(
+                            text = currentState.worker?.name ?: "Select worker"
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Button(
-                            modifier = Modifier.fillMaxHeight(),
-                            shape = RectangleShape,
-                            onClick = {}) {
-                            Text("...")
-                        }
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
+
                     TextField(
                         modifier = Modifier.fillMaxWidth(),
                         maxLines = 5,

@@ -2,7 +2,9 @@ package com.example.mywork.presentation.screen.creating
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mywork.domain.organization.Organization
 import com.example.mywork.domain.work.AddWorkUseCase
+import com.example.mywork.domain.worker.Worker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,10 +24,10 @@ class CreateWorkViewModel @Inject constructor(
             CreateWorkCommand.Back -> {
                 _state.update { CreateWorkScreenState.Finished }
             }
-            is CreateWorkCommand.InputCounterparty -> {
+            is CreateWorkCommand.InputOrganization -> {
                 _state.update {previousState ->
                     if (previousState is CreateWorkScreenState.Creation){
-                        previousState.copy(counterparty = command.counterparty)
+                        previousState.copy(organization = command.organization)
                     } else {
                         previousState
                     }
@@ -77,14 +79,15 @@ class CreateWorkViewModel @Inject constructor(
                     _state.update { previousState ->
                         if (previousState is CreateWorkScreenState.Creation){
                             val date = previousState.date
-                            val counterparty = previousState.counterparty
+                            val organization = previousState.organization
                             val worker = previousState.worker
                             val description = previousState.description
                             val time = previousState.time
+                            if (organization!==null && worker!==null)
                             addWorkUseCase(
                                 date = date,
-                                counterparty = counterparty,
-                                worker = worker,
+                                organizationId = organization.id,
+                                workerId = worker.id,
                                 description = description,
                                 time = time
                             )
@@ -104,9 +107,9 @@ sealed interface CreateWorkCommand{
 
     data class InputDate(val date: Long): CreateWorkCommand
 
-    data class InputCounterparty(val counterparty: String): CreateWorkCommand
+    data class InputOrganization(val organization: Organization): CreateWorkCommand
 
-    data class InputWorker(val worker: String): CreateWorkCommand
+    data class InputWorker(val worker: Worker): CreateWorkCommand
 
     data class InputDescription(val description: String): CreateWorkCommand
 
@@ -122,8 +125,8 @@ sealed interface CreateWorkScreenState {
 
     data class Creation(
         val date: Long = System.currentTimeMillis(),
-        val counterparty: String = "",
-        val worker: String = "",
+        val organization: Organization? = null,
+        val worker: Worker? = null,
         val description: String = "",
         val time: Long = 0
     ) : CreateWorkScreenState
