@@ -4,19 +4,19 @@ import com.example.mywork.domain.organization.Organization
 import com.example.mywork.domain.work.Work
 import com.example.mywork.domain.worker.Worker
 
-fun WorkWithReferences.toEntity(): Work {
+fun WorkWithReferences.toWorkEntity(): Work {
     return Work(
         id = work.id,
         date = work.date,
-        organization = organization.toEntity(),
-        worker = worker.toEntity(),
+        organization = organization.toOrganizationEntity(),
+        worker = worker.toWorkerEntity(),
         description = work.description,
         time = work.time
     )
 }
 
-fun List<WorkWithReferences>.toEntities(): List<Work> {
-    return map { it.toEntity() }
+fun List<WorkWithReferences>.toWorkEntities(): List<Work> {
+    return map { it.toWorkEntity() }
 }
 
 fun Work.toDbModel(): WorkDbModel {
@@ -30,7 +30,7 @@ fun Work.toDbModel(): WorkDbModel {
     )
 }
 
-fun OrganizationDbModel.toEntity(): Organization {
+fun OrganizationDbModel.toOrganizationEntity(): Organization {
     return Organization(
         id = organizationId,
         name = name
@@ -45,11 +45,11 @@ fun Organization.toDbModel(): OrganizationDbModel{
     )
 }
 
-fun List<OrganizationDbModel>.toEntities(): List<Organization>{
-    return map { it.toEntity() }
+fun List<OrganizationDbModel>.toOrganizationEntities(): List<Organization>{
+    return map { it.toOrganizationEntity() }
 }
 
-fun WorkerDbModel.toEntity(): Worker {
+fun WorkerDbModel.toWorkerEntity(): Worker {
     return Worker(
         id = workerId,
         name = name
@@ -63,7 +63,7 @@ fun Worker.toDbModel(): WorkerDbModel {
     )
 }
 
-fun List<WorkerDbModel>.toEntities(): List<Worker>{
-    return map { it.toEntity() }
+fun List<WorkerDbModel>.toWorkerEntities(): List<Worker>{
+    return map { it.toWorkerEntity() }
 }
 

@@ -21,7 +21,7 @@ import androidx.room.PrimaryKey
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index("organisationId"), Index("workerId")])
+    indices = [Index("organizationId"), Index("workerId")])
 data class WorkDbModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int,

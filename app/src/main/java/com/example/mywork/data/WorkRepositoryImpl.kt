@@ -10,7 +10,7 @@ class WorkRepositoryImpl @Inject constructor(
     private val worksDao: WorksDao
 ) : WorkRepository {
     override fun getAllWorks(): Flow<List<Work>> {
-        return worksDao.getAllWorks().map { it.toEntities() }
+        return worksDao.getAllWorks().map { it.toWorkEntities() }
     }
 
     override suspend fun addWork(
@@ -29,7 +29,7 @@ class WorkRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getWork(workId: Int): Work {
-        return worksDao.getWork(workId).toEntity()
+        return worksDao.getWork(workId).toWorkEntity()
     }
 
     override suspend fun editWork(work: Work) {

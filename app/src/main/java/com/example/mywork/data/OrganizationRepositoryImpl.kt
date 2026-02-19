@@ -10,11 +10,11 @@ class OrganizationRepositoryImpl @Inject constructor(
     private val organizationsDao: OrganizationsDao
 ): OrganizationRepository {
     override fun getAllOrganization(): Flow<List<Organization>> {
-        return organizationsDao.getOrganizations().map { it.toEntities() }
+        return organizationsDao.getOrganizations().map { it.toOrganizationEntities() }
     }
 
     override suspend fun getOrganization(organizationId: Long): Organization {
-        return organizationsDao.getOrganization(organizationId).toEntity()
+        return organizationsDao.getOrganization(organizationId).toOrganizationEntity()
     }
 
     override suspend fun addOrganization(organization: Organization) {

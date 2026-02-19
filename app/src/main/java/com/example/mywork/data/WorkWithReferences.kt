@@ -6,8 +6,9 @@ import com.example.mywork.domain.work.Work
 
 data class WorkWithReferences(
     @Embedded
-    val work: Work,
-    @Relation(parentColumn = "organisationId", entityColumn = "organisationId")
+    val work: WorkDbModel,
+
+    @Relation(parentColumn = "organizationId", entityColumn = "organizationId")
     val organization: OrganizationDbModel,
 
     @Relation(parentColumn = "workerId", entityColumn = "workerId")
