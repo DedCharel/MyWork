@@ -7,8 +7,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mywork.presentation.screen.creating.CreateWorkScreen
-import com.example.mywork.presentation.screen.editing.EditWorkScreen
+import com.example.mywork.presentation.screen.works.creating.CreateWorkScreen
 import com.example.mywork.presentation.screen.works.WorksScreen
 
 @Composable

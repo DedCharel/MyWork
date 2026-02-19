@@ -1,4 +1,4 @@
-package com.example.mywork.presentation.screen.editing
+package com.example.mywork.presentation.screen.works.editing
 
 import javax.inject.Inject
 

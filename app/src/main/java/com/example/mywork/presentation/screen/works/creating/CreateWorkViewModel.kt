@@ -1,4 +1,4 @@
-package com.example.mywork.presentation.screen.creating
+package com.example.mywork.presentation.screen.works.creating
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

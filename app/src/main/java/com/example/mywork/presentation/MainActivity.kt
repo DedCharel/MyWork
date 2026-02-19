@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.mywork.presentation.navigation.NavGraph
-import com.example.mywork.presentation.screen.creating.CreateWorkScreen
-import com.example.mywork.presentation.screen.works.WorksScreen
 import com.example.mywork.presentation.ui.theme.MyWorkTheme
 import dagger.hilt.android.AndroidEntryPoint
 
