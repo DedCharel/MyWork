@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mywork.presentation.screen.workers.WorkerScreen
 import com.example.mywork.presentation.screen.works.creating.CreateWorkScreen
 import com.example.mywork.presentation.screen.works.WorksScreen
 
@@ -29,12 +30,17 @@ fun NavGraph() {
             CreateWorkScreen(
                 modifier = Modifier.padding(16.dp),
                 onFinished = { navController.popBackStack() },
-                onWorkerClick = {},
+                onWorkerClick = {
+                    navController.navigate("worker")
+                },
                 onOrganizationClick = {
                   //  navController.navigate(Screen.EditWork.route)
                 }
             )
 
+        }
+        composable(Screen.Worker.route) {
+            WorkerScreen {  }
         }
 //        composable(Screen.EditWork.route) {
 //            EditWorkScreen(
@@ -52,7 +58,7 @@ sealed class Screen(val route: String) {
 
     data object CreateWork : Screen("create_work")
 
-  //  data object EditWork: Screen("edit_work")
+    data object Worker: Screen("worker")
 
 
 }

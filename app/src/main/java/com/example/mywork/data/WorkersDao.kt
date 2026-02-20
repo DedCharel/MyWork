@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface WorkersDao {
 
     @Transaction
-    @Query("SELECT * FROM workers ORDER BY name DESC")
+    @Query("SELECT * FROM workers ORDER BY name ASC")
     fun getAllWorkers(): Flow<List<WorkerDbModel>>
 
     @Transaction
