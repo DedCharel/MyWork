@@ -2,14 +2,11 @@ package com.example.mywork.presentation.screen.works.creating
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -35,23 +32,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.room.util.copy
 import com.example.mywork.presentation.utils.DataFormater
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateWorkScreen(
     modifier: Modifier = Modifier,
+    currentWorkerId: Long? = null,
     viewModel: CreateWorkViewModel = hiltViewModel(),
     onFinished: () -> Unit,
     onWorkerClick: () -> Unit,
@@ -152,7 +146,7 @@ fun CreateWorkScreen(
                             .fillMaxWidth()
                             .clickable(onClick = { onWorkerClick() })
                     ) {
-                        Text(text = "Работник:")
+                        Text(text = currentWorkerId?.toString() ?:"Работник:")
                         Spacer(Modifier.height(4.dp))
                         Text(
                             text = currentState.worker?.name ?: "Select worker"

@@ -3,6 +3,7 @@ package com.example.mywork.presentation.screen.workers
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.example.mywork.domain.worker.AddWorkerUseCase
 import com.example.mywork.domain.worker.GetAllWorkersUseCase
 import com.example.mywork.domain.worker.Worker
@@ -37,18 +38,19 @@ class WorkerViewModel @Inject constructor(
 
 
     }
-}
+    fun processCommand(command: WorkerCommand){
+        when(command){
+            WorkerCommand.Back -> {
 
-fun processCommand(command: WorkerCommand){
-    when(command){
-        WorkerCommand.Back -> {
+            }
+            is WorkerCommand.SelectedWorker -> {
 
-        }
-        is WorkerCommand.SelectedWorker -> {
-
+            }
         }
     }
 }
+
+
 sealed interface WorkerCommand{
 
     data class SelectedWorker(val worker: Worker): WorkerCommand

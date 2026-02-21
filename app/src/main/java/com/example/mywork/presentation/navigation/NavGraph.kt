@@ -26,28 +26,29 @@ fun NavGraph() {
                 }
             )
         }
-        composable(Screen.CreateWork.route) {
+        composable(Screen.CreateWork.route) { entry ->
+            val currentWorkerId = entry.savedStateHandle.get<Long>("key_id")
             CreateWorkScreen(
                 modifier = Modifier.padding(16.dp),
+                currentWorkerId = currentWorkerId,
                 onFinished = { navController.popBackStack() },
                 onWorkerClick = {
                     navController.navigate("worker")
                 },
                 onOrganizationClick = {
-                  //  navController.navigate(Screen.EditWork.route)
                 }
             )
-
         }
         composable(Screen.Worker.route) {
-            WorkerScreen {  }
+            WorkerScreen(
+                onWorkerSelected = {worker ->
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("key_id", worker.id)
+                    navController.popBackStack()
+            })
         }
-//        composable(Screen.EditWork.route) {
-//            EditWorkScreen(
-//
-//            )
-//
-//        }
+
     }
 
 }
