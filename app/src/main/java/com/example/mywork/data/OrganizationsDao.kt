@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface OrganizationsDao {
 
     @Transaction
-    @Query("SELECT * FROM organizations ORDER BY name DESC")
+    @Query("SELECT * FROM organizations ORDER BY name ASC")
     fun getOrganizations(): Flow<List<OrganizationDbModel>>
 
     @Transaction

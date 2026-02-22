@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.presentation.screen.workers.WorkerCommand
 import com.example.mywork.presentation.utils.DataFormater
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,6 +47,7 @@ import com.example.mywork.presentation.utils.DataFormater
 fun CreateWorkScreen(
     modifier: Modifier = Modifier,
     currentWorkerId: Long? = null,
+    currentOrganizationId: Long? = null,
     viewModel: CreateWorkViewModel = hiltViewModel(),
     onFinished: () -> Unit,
     onWorkerClick: () -> Unit,
@@ -54,6 +56,13 @@ fun CreateWorkScreen(
     var showDialog by remember { mutableStateOf(false) }
     val state = viewModel.state.collectAsState()
     val currentState = state.value
+
+    currentWorkerId?.let {
+        viewModel.processCommand(CreateWorkCommand.InputWorker(it))
+    }
+    currentOrganizationId?.let {
+        viewModel.processCommand(CreateWorkCommand.InputOrganization(it))
+    }
 
     when (currentState) {
         is CreateWorkScreenState.Creation -> {
@@ -146,10 +155,11 @@ fun CreateWorkScreen(
                             .fillMaxWidth()
                             .clickable(onClick = { onWorkerClick() })
                     ) {
-                        Text(text = currentWorkerId?.toString() ?:"Работник:")
+                        Text(text = "Работник:")
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            text = currentState.worker?.name ?: "Select worker"
+                            text = currentState.worker?.name ?: "Select worker",
+
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))

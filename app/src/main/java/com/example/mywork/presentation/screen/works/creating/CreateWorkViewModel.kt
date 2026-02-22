@@ -2,8 +2,10 @@ package com.example.mywork.presentation.screen.works.creating
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mywork.domain.organization.GetOrganizationUseCase
 import com.example.mywork.domain.organization.Organization
 import com.example.mywork.domain.work.AddWorkUseCase
+import com.example.mywork.domain.worker.GetWorkerUseCase
 import com.example.mywork.domain.worker.Worker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,10 +16,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateWorkViewModel @Inject constructor(
-    private val addWorkUseCase: AddWorkUseCase
+    private val addWorkUseCase: AddWorkUseCase,
+    private val getWorkerUseCase: GetWorkerUseCase,
+    private val getOrganizationUseCase: GetOrganizationUseCase
 ): ViewModel() {
     private val _state = MutableStateFlow<CreateWorkScreenState>(CreateWorkScreenState.Creation())
     val state = _state.asStateFlow()
+
+
 
     fun processCommand(command: CreateWorkCommand){
         when (command){
@@ -25,11 +31,14 @@ class CreateWorkViewModel @Inject constructor(
                 _state.update { CreateWorkScreenState.Finished }
             }
             is CreateWorkCommand.InputOrganization -> {
-                _state.update {previousState ->
-                    if (previousState is CreateWorkScreenState.Creation){
-                        previousState.copy(organization = command.organization)
-                    } else {
-                        previousState
+                viewModelScope.launch {
+                    val organization = getOrganizationUseCase(command.organizationId)
+                    _state.update {previousState ->
+                        if (previousState is CreateWorkScreenState.Creation){
+                            previousState.copy(organization = organization)
+                        } else {
+                            previousState
+                        }
                     }
                 }
             }
@@ -66,13 +75,17 @@ class CreateWorkViewModel @Inject constructor(
                 }
             }
             is CreateWorkCommand.InputWorker -> {
-                _state.update {previousState ->
-                    if (previousState is CreateWorkScreenState.Creation){
-                        previousState.copy(worker = command.worker)
-                    } else {
-                        previousState
+                viewModelScope.launch {
+                    val worker = getWorkerUseCase(command.workerId)
+                    _state.update {previousState ->
+                        if (previousState is CreateWorkScreenState.Creation){
+                            previousState.copy(worker = worker)
+                        } else {
+                            previousState
+                        }
                     }
                 }
+
             }
             CreateWorkCommand.Save -> {
                 viewModelScope.launch {
@@ -107,9 +120,9 @@ sealed interface CreateWorkCommand{
 
     data class InputDate(val date: Long): CreateWorkCommand
 
-    data class InputOrganization(val organization: Organization): CreateWorkCommand
+    data class InputOrganization(val organizationId: Long): CreateWorkCommand
 
-    data class InputWorker(val worker: Worker): CreateWorkCommand
+    data class InputWorker(val workerId: Long): CreateWorkCommand
 
     data class InputDescription(val description: String): CreateWorkCommand
 

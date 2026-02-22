@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mywork.presentation.screen.organization.OrganizationScreen
 import com.example.mywork.presentation.screen.workers.WorkerScreen
 import com.example.mywork.presentation.screen.works.creating.CreateWorkScreen
 import com.example.mywork.presentation.screen.works.WorksScreen
@@ -27,15 +28,18 @@ fun NavGraph() {
             )
         }
         composable(Screen.CreateWork.route) { entry ->
-            val currentWorkerId = entry.savedStateHandle.get<Long>("key_id")
+            val currentWorkerId = entry.savedStateHandle.get<Long>("worker_id")
+            val currentOrganizationId = entry.savedStateHandle.get<Long>("organization_id")
             CreateWorkScreen(
                 modifier = Modifier.padding(16.dp),
                 currentWorkerId = currentWorkerId,
+                currentOrganizationId = currentOrganizationId,
                 onFinished = { navController.popBackStack() },
                 onWorkerClick = {
                     navController.navigate("worker")
                 },
                 onOrganizationClick = {
+                    navController.navigate("organization")
                 }
             )
         }
@@ -44,9 +48,18 @@ fun NavGraph() {
                 onWorkerSelected = {worker ->
                     navController.previousBackStackEntry
                         ?.savedStateHandle
-                        ?.set("key_id", worker.id)
+                        ?.set("worker_id", worker.id)
                     navController.popBackStack()
             })
+        }
+        composable(Screen.Organization.route) {
+            OrganizationScreen(
+                onOrganizationSelected = {organization ->
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("organization_id", organization.id)
+                    navController.popBackStack()
+                })
         }
 
     }
@@ -60,6 +73,8 @@ sealed class Screen(val route: String) {
     data object CreateWork : Screen("create_work")
 
     data object Worker: Screen("worker")
+
+    data object Organization: Screen("organization")
 
 
 }
