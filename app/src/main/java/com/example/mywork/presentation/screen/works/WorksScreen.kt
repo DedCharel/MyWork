@@ -15,6 +15,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -65,7 +67,7 @@ fun WorksScreen(
                 key = {it.id}
             ){work->
                 WorkCard(
-                    modifier.padding(8.dp),
+
                     work =work,
                     onWorkClick = {viewModel.processCommand(WorkCommand.EditWork(work))})
             }
@@ -79,60 +81,66 @@ fun WorkCard(
     work: Work,
     onWorkClick: (Work) -> Unit
 ) {
-    Column(
-        modifier = modifier.fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(MaterialTheme.colorScheme.primary)
-            .clickable(onClick = {
+    Card(
+        modifier = modifier
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .fillMaxWidth()
+            .clickable {
                 onWorkClick(work)
-            }
-            )
-            .padding(8.dp)
-
-    ) {
-        Row {
-            Text(
-                text = DataFormater.formatDateToString(work.date),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = work.organization.name,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1
-            )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = work.description,
-            fontSize = 12.sp,
-            color = MaterialTheme.colorScheme.onSurface,
-            maxLines = 3
+            },
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
         )
-        Spacer(modifier = Modifier.height(8.dp))
+    ){
+        Column(
+            modifier = Modifier.padding(horizontal = 8.dp)
+        ) {
+            Row {
+                Text(
+                    text = DataFormater.formatDateToString(work.date),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = work.organization.name,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1
+                )
+            }
 
-        Row {
+            Spacer(modifier = Modifier.height(4.dp))
+
             Text(
-                text = work.worker.name,
+                text = work.description,
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1
+                maxLines = 3
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = work.time.toString(),
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1
-            )
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Row {
+                Text(
+                    text = work.worker.name,
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = work.time.toString(),
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1
+                )
+            }
+
         }
-
     }
+
 }

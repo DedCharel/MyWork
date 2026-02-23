@@ -1,15 +1,27 @@
 package com.example.mywork.presentation.screen.organization
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.domain.organization.Organization
 
@@ -41,13 +53,43 @@ fun OrganizationScreen(
                 key = {it.id}
             ){
 
-                Text(
-                    modifier = Modifier.clickable{
-                        onOrganizationSelected(it)
-                    },
-                    text = it.name)
+                OrganizationCard(
+                    organization = it,
+                    onOrganizationClick = {onOrganizationSelected(it)}
+                )
+
             }
         }
 
+    }
+}
+
+@Composable
+fun OrganizationCard(
+    modifier: Modifier = Modifier,
+    organization: Organization,
+    onOrganizationClick: () -> Unit
+){
+    Card(
+        modifier = modifier
+            .padding(horizontal = 8.dp, vertical = 4.dp)
+            .fillMaxWidth()
+        .clickable{
+            onOrganizationClick()
+        },
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = organization.name,
+                fontWeight = FontWeight.Bold)
+
+        }
     }
 }
