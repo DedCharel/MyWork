@@ -19,11 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import com.example.mywork.domain.organization.Organization
 import com.example.mywork.domain.worker.Worker
-import com.example.mywork.presentation.navigation.Screen
-import com.example.mywork.presentation.screen.works.WorkCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
