@@ -5,7 +5,7 @@ import javax.inject.Inject
 class AddOrganizationUseCase @Inject constructor(
     private val repository: OrganizationRepository
 ) {
-    suspend operator fun invoke(organization: Organization){
-        repository.addOrganization(organization)
+    suspend operator fun invoke(name: String){
+        repository.addOrganization(name)
     }
 }

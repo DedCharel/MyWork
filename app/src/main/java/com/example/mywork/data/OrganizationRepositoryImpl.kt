@@ -17,8 +17,12 @@ class OrganizationRepositoryImpl @Inject constructor(
         return organizationsDao.getOrganization(organizationId).toOrganizationEntity()
     }
 
-    override suspend fun addOrganization(organization: Organization) {
-        organizationsDao.addOrganization(organization.toDbModel())
+    override suspend fun addOrganization(name: String) {
+        val organizationDbModel = OrganizationDbModel(
+            organizationId = 0,
+            name = name
+        )
+        organizationsDao.addOrganization(organizationDbModel)
     }
 
     override suspend fun editOrganization(organization: Organization) {

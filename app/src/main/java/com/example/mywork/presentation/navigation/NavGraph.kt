@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mywork.presentation.screen.organization.OrganizationScreen
+import com.example.mywork.presentation.screen.organization.create.CreateOrganizationScreen
 import com.example.mywork.presentation.screen.settings.SettingsScreen
 import com.example.mywork.presentation.screen.workers.WorkerScreen
 import com.example.mywork.presentation.screen.works.creating.CreateWorkScreen
@@ -58,6 +59,9 @@ fun NavGraph() {
         }
         composable(Screen.Organization.route) {
             OrganizationScreen(
+                onAddClick = {
+                    navController.navigate("create_organization")
+                },
                 onOrganizationSelected = {organization ->
                     navController.previousBackStackEntry
                         ?.savedStateHandle
@@ -69,6 +73,13 @@ fun NavGraph() {
             SettingsScreen(
                 onWorkerClick = {},
                 onOrganizationClick = {}
+            )
+        }
+        composable(Screen.CreateOrganization.route) { entry ->
+            CreateOrganizationScreen(
+                onFinished = {
+                  navController.popBackStack()
+                }
             )
         }
 
@@ -87,6 +98,8 @@ sealed class Screen(val route: String) {
     data object Organization: Screen("organization")
 
     data object Settings: Screen("settings")
+
+    data object CreateOrganization: Screen("create_organization")
 
 
 }
