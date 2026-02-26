@@ -8,7 +8,13 @@ interface OrganizationRepository {
 
     suspend fun getOrganization(organizationId: Long): Organization
 
-    suspend fun addOrganization(name: String)
+    suspend fun addOrganization(
+        name: String,
+        inn: String,
+        phone: String,
+        email: String,
+        address: String,
+        comments: String)
 
     suspend fun editOrganization(organization: Organization)
 

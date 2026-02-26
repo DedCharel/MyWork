@@ -33,14 +33,24 @@ fun Work.toDbModel(): WorkDbModel {
 fun OrganizationDbModel.toOrganizationEntity(): Organization {
     return Organization(
         id = organizationId,
-        name = name
+        name = name,
+        inn = inn,
+        phone = phone,
+        email = email,
+        address = address,
+        comments = comments
     )
 }
 
 fun Organization.toDbModel(): OrganizationDbModel{
     return OrganizationDbModel(
         organizationId = id,
-        name = name
+        name = name,
+        inn = inn,
+        phone = phone,
+        email = email,
+        address = address,
+        comments = comments
 
     )
 }
