@@ -5,16 +5,29 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -24,40 +37,140 @@ fun CreateOrganizationScreen(
     modifier: Modifier = Modifier,
     viewModel: CreateOrganizationViewModel = hiltViewModel(),
     onFinished: () -> Unit,
-){
+) {
     val state = viewModel.state.collectAsState()
     val currentState = state.value
+    val scrollState = rememberScrollState()
 
-    when(currentState){
+    when (currentState) {
         is CreateOrganizationScreenState.Creation -> {
             Scaffold(
                 modifier = modifier,
                 topBar = {
                     TopAppBar(
-                        title = {Text("Create organization")}
+                        title = { Text("Create organization") }
                     )
 
                 }
             ) { innerPadding ->
                 Column(
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(16.dp)
+                        .verticalScroll(scrollState)
                 ) {
-                    TextField(
+                    OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
                         value = currentState.name,
+
+                        singleLine = true,
                         onValueChange = {
                             viewModel.processCommand(CreateOrganizationCommand.InputName(it))
                         },
-                        placeholder = {
-                            Text("Organization name")
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
+                        label = { Text("Name") },
 
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedBorderColor = Color.Transparent,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                        )
+
+                    )
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        value = currentState.inn,
+                        singleLine = true,
+                        onValueChange = {
+                            if (it.length < 13) {
+                                viewModel.processCommand(CreateOrganizationCommand.InputInn(it))
+                            }
+                        },
+                        label = { Text("INN") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedBorderColor = Color.Transparent,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                        ),
+//                        supportingText = {
+//                            Text(
+//                                text = "${(currentState.inn).length} / 12",
+//                                modifier = Modifier.fillMaxWidth(),
+//                                textAlign = TextAlign.End
+//                            )
+//                        }
+
+                    )
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        value = currentState.phone,
+                        singleLine = true,
+                        onValueChange = {
+                            viewModel.processCommand(CreateOrganizationCommand.InputPhone(it))
+                        },
+                        label = { Text("Phone") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedBorderColor = Color.Transparent,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                        )
+                    )
+
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        value = currentState.phone,
+                        singleLine = true,
+                        onValueChange = {
+                            viewModel.processCommand(CreateOrganizationCommand.InputEmail(it))
+                        },
+                        label = { Text("Email") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedBorderColor = Color.Transparent,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                        )
+                    )
+
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        value = currentState.phone,
+                        maxLines = 3,
+                        onValueChange = {
+                            viewModel.processCommand(CreateOrganizationCommand.InputAddress(it))
+                        },
+                        label = { Text("Address") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedBorderColor = Color.Transparent,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                        )
+                    )
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
+                        value = currentState.phone,
+                        minLines = 3,
+                        maxLines = 5,
+                        onValueChange = {
+                            viewModel.processCommand(CreateOrganizationCommand.InputComments(it))
+                        },
+                        label = { Text("Comments") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            unfocusedBorderColor = Color.Transparent,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
+                            focusedContainerColor = MaterialTheme.colorScheme.secondary,
+                        )
+                    )
+                    Spacer(Modifier.height(8.dp))
                     Button(
                         modifier = Modifier
-                            .padding(24.dp)
                             .fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
                         onClick = { viewModel.processCommand(CreateOrganizationCommand.Save) }
                     ) {
                         Text(text = "Save")
@@ -66,6 +179,7 @@ fun CreateOrganizationScreen(
 
             }
         }
+
         CreateOrganizationScreenState.Finished -> {
             LaunchedEffect(key1 = Unit) {
                 onFinished()

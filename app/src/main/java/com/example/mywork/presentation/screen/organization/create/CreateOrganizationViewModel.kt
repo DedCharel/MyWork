@@ -92,6 +92,16 @@ class CreateOrganizationViewModel @Inject constructor(
                     }
                 }
             }
+
+            is CreateOrganizationCommand.InputInn -> {
+                _state.update { previousState ->
+                    if (previousState is CreateOrganizationScreenState.Creation){
+                        previousState.copy(inn = command.inn)
+                    } else {
+                        previousState
+                    }
+                }
+            }
         }
     }
 }
@@ -107,6 +117,8 @@ sealed interface CreateOrganizationCommand{
     data class InputAddress(val address: String): CreateOrganizationCommand
 
     data class InputComments(val comments: String): CreateOrganizationCommand
+
+    data class InputInn(val inn: String): CreateOrganizationCommand
 
     data object Save: CreateOrganizationCommand
 
