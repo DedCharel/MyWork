@@ -112,6 +112,7 @@ fun CreateOrganizationScreen(
                             viewModel.processCommand(CreateOrganizationCommand.InputPhone(it))
                         },
                         label = { Text("Phone") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
                             unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -122,12 +123,13 @@ fun CreateOrganizationScreen(
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
-                        value = currentState.phone,
+                        value = currentState.email,
                         singleLine = true,
                         onValueChange = {
                             viewModel.processCommand(CreateOrganizationCommand.InputEmail(it))
                         },
                         label = { Text("Email") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
                             unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -138,7 +140,7 @@ fun CreateOrganizationScreen(
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
-                        value = currentState.phone,
+                        value = currentState.address,
                         maxLines = 3,
                         onValueChange = {
                             viewModel.processCommand(CreateOrganizationCommand.InputAddress(it))
@@ -153,7 +155,7 @@ fun CreateOrganizationScreen(
                     OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
-                        value = currentState.phone,
+                        value = currentState.comments,
                         minLines = 3,
                         maxLines = 5,
                         onValueChange = {
