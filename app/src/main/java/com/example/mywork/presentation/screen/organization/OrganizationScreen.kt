@@ -2,7 +2,9 @@ package com.example.mywork.presentation.screen.organization
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.domain.organization.Organization
 
@@ -45,8 +48,9 @@ fun OrganizationScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar( title = {
-                Text("Организации")
+            TopAppBar(
+                title = {
+                Text("Organizations")
             },
                 actions = {
                     Icon(
@@ -104,8 +108,18 @@ fun OrganizationCard(
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
+                fontSize = 14.sp,
                 text = organization.name,
                 fontWeight = FontWeight.Bold)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+
+            ) {
+                Text(text = "phone: " + organization.phone, fontSize = 12.sp)
+                if (!organization.email.isEmpty())
+                Text("email: " + organization.email, fontSize = 12.sp)
+            }
 
         }
     }
