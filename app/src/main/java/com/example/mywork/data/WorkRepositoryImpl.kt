@@ -18,7 +18,7 @@ class WorkRepositoryImpl @Inject constructor(
         organizationId: Long,
         workerId: Long,
         description: String,
-        time: Long
+        time: Double
     ) {
         val workDBModel = WorkDbModel(0, date, organizationId, workerId, description, time)
         worksDao.addWork(workDBModel)

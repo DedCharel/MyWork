@@ -9,5 +9,5 @@ data class Work(
     val organization: Organization,
     val worker: Worker,
     val description: String,
-    val time: Long
+    val time: Double
 )

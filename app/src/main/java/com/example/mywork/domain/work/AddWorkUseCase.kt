@@ -11,7 +11,7 @@ class AddWorkUseCase @Inject constructor(
         organizationId: Long,
         workerId: Long,
         description: String,
-        time: Long
+        time: Double
     ) {
         repository.addWork(date , organizationId, workerId, description, time)
     }

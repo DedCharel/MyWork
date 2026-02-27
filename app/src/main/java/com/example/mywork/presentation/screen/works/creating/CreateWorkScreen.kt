@@ -3,10 +3,12 @@ package com.example.mywork.presentation.screen.works.creating
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -17,6 +19,7 @@ import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -73,8 +76,6 @@ fun CreateWorkScreen(
                         title = {
                             Text(
                                 text = "Create Work",
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                         },
@@ -104,12 +105,15 @@ fun CreateWorkScreen(
 
                 ) {
 
-                    Column (Modifier.weight(1f)) {
-                        Text(text = "Дата:")
+                    Column(Modifier.weight(1f)) {
+                        Text(text = "Date:", fontSize = 12.sp)
                         Spacer(Modifier.height(4.dp))
-                         Text(
-                            modifier = Modifier.clickable{showDialog = true},
-                            text = DataFormater.formatDateToString(currentState.date))
+                        Text(
+                            modifier = Modifier.clickable { showDialog = true },
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            text = DataFormater.formatDateToString(currentState.date)
+                        )
 
                         if (showDialog) {
                             DatePickerModal(
@@ -135,9 +139,11 @@ fun CreateWorkScreen(
                             .clickable(onClick = { onOrganizationClick() })
 
                     ) {
-                        Text(text = "Организация:")
+                        Text(text = "Organization:", fontSize = 12.sp)
                         Spacer(Modifier.height(4.dp))
                         Text(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
                             text = currentState.organization?.name ?: "Select organization"
                         )
                     }
@@ -145,75 +151,99 @@ fun CreateWorkScreen(
 
 
                     Spacer(modifier = Modifier.height(8.dp))
-                    Column (
+                    Column(
                         modifier = Modifier
                             .weight(1f)
-                            .background(
-                                color = Color.White,
-                                shape = RoundedCornerShape(16.dp)
-                            )
                             .fillMaxWidth()
                             .clickable(onClick = { onWorkerClick() })
                     ) {
-                        Text(text = "Работник:")
+                        Text(text = "Worker:", fontSize = 12.sp)
                         Spacer(Modifier.height(4.dp))
                         Text(
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Bold,
                             text = currentState.worker?.name ?: "Select worker",
 
-                        )
+                            )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    TextField(
+                    OutlinedTextField(
                         modifier = Modifier.fillMaxWidth(),
                         maxLines = 5,
+                        minLines = 3,
                         value = currentState.description,
                         onValueChange = {
-                            viewModel.processCommand(CreateWorkCommand.InputDescription(it))
+                            viewModel.processCommand(
+                                CreateWorkCommand.InputDescription(it))
                         },
                         textStyle = TextStyle(
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
                             color = MaterialTheme.colorScheme.onSurface
                         ),
-                        placeholder = {
-                            Text(
-                                text = "Description",
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                            )
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    TextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = currentState.time.toString(),
-                        onValueChange = {
-                            viewModel.processCommand(CreateWorkCommand.InputTime(it))
-                        },
-                        textStyle = TextStyle(
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface
-                        ),
-                        placeholder = {
-                            Text(
-                                text = "Time",
-                                fontSize = 24.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                            )
-                        },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Decimal
+                        label = { Text("Description") },
+
                         )
-                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        OutlinedTextField(
+                            modifier = Modifier.weight(1f),
+                            value = currentState.timeHour.toString(),
+                            onValueChange = { input ->
+                                if (input.all { it.isDigit() }) {
+                                    if (input.toInt() > 24)
+                                        viewModel.processCommand(
+                                            CreateWorkCommand.InputTimeHour("24"))
+                                    else
+                                        viewModel.processCommand(
+                                            CreateWorkCommand.InputTimeHour(
+                                                input
+                                            )
+                                        )
+                                }
+                            },
+                            textStyle = TextStyle(
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.onSurface
+                            ),
+                            label = { Text("Hour") },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number
+                            )
+                        )
+                        Spacer(Modifier.padding(16.dp))
+                        OutlinedTextField(
+                            modifier = Modifier.weight(1f),
+                            value = currentState.timeMinute.toString(),
+                            onValueChange = { input ->
+                                if (input.all { it.isDigit() }) {
+                                    if (input.toInt() > 59)
+                                        viewModel.processCommand(
+                                            CreateWorkCommand.InputTimeMinute("59"))
+                                    else
+                                        viewModel.processCommand(
+                                            CreateWorkCommand.InputTimeMinute(
+                                                input
+                                            )
+                                        )
+                                }
+                            },
+                            textStyle = TextStyle(
+                                fontSize = 14.sp,
+                                color = MaterialTheme.colorScheme.onSurface
+                            ),
+                            label = { Text("Minute") },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number
+                            )
+                        )
+                    }
+
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
                         modifier = Modifier
-                            .padding(24.dp)
                             .fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp),
                         onClick = { viewModel.processCommand(CreateWorkCommand.Save) }
                     ) {
                         Text(text = "Save")

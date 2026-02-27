@@ -29,6 +29,6 @@ data class WorkDbModel(
     val organizationId: Long,
     val workerId: Long,
     val description: String,
-    val time: Long
+    val time: Double
 )
 

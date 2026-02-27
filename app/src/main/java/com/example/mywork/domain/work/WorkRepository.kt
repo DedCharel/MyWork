@@ -12,7 +12,7 @@ interface WorkRepository {
         organizationId: Long,
         workerId: Long,
         description: String,
-        time: Long
+        time: Double
     )
 
     suspend fun deleteWork(workId: Int)
