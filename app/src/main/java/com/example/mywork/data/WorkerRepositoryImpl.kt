@@ -13,8 +13,13 @@ class WorkerRepositoryImpl @Inject constructor(
      return workersDao.getAllWorkers().map { it.toWorkerEntities() }
     }
 
-    override suspend fun addWorker(worker: Worker) {
-        workersDao.addWorker(worker.toDbModel())
+    override suspend fun addWorker(name: String, phone: String) {
+        val workerDbModel = WorkerDbModel(
+            workerId = 0,
+            name = name,
+            phone = phone
+        )
+        workersDao.addWorker(workerDbModel)
     }
 
     override suspend fun deleteWorker(workerId: Long) {

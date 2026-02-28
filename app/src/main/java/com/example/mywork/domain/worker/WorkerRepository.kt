@@ -6,7 +6,7 @@ interface WorkerRepository {
 
     fun getAllWorkers(): Flow<List<Worker>>
 
-    suspend fun addWorker(worker: Worker)
+    suspend fun addWorker(name: String, phone: String)
 
     suspend fun deleteWorker(workerId: Long)
 

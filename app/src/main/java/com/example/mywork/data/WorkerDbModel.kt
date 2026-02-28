@@ -6,5 +6,6 @@ import androidx.room.PrimaryKey
 @Entity (tableName = "workers")
 data class WorkerDbModel(
     @PrimaryKey(autoGenerate = true) val workerId: Long = 0,
-    val name: String
+    val name: String,
+    val phone: String
 )
