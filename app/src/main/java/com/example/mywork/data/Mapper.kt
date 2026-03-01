@@ -62,14 +62,16 @@ fun List<OrganizationDbModel>.toOrganizationEntities(): List<Organization>{
 fun WorkerDbModel.toWorkerEntity(): Worker {
     return Worker(
         id = workerId,
-        name = name
+        name = name,
+        phone = phone
     )
 }
 
 fun Worker.toDbModel(): WorkerDbModel {
     return WorkerDbModel(
         workerId = id,
-        name = name
+        name = name,
+        phone = phone
     )
 }
 

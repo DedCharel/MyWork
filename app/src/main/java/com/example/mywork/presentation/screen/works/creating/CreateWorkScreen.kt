@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.presentation.screen.workers.WorkerCommand
 import com.example.mywork.presentation.utils.DataFormater
@@ -105,7 +106,7 @@ fun CreateWorkScreen(
 
                 ) {
 
-                    Column(Modifier.weight(1f)) {
+                    Column(Modifier.fillMaxWidth()) {
                         Text(text = "Date:", fontSize = 12.sp)
                         Spacer(Modifier.height(4.dp))
                         Text(
@@ -134,7 +135,7 @@ fun CreateWorkScreen(
 
                     Column(
                         modifier = Modifier
-                            .weight(1f)
+
                             .fillMaxWidth()
                             .clickable(onClick = { onOrganizationClick() })
 
@@ -153,7 +154,7 @@ fun CreateWorkScreen(
                     Spacer(modifier = Modifier.height(8.dp))
                     Column(
                         modifier = Modifier
-                            .weight(1f)
+
                             .fillMaxWidth()
                             .clickable(onClick = { onWorkerClick() })
                     ) {
@@ -190,7 +191,7 @@ fun CreateWorkScreen(
                             modifier = Modifier.weight(1f),
                             value = currentState.timeHour.toString(),
                             onValueChange = { input ->
-                                if (input.all { it.isDigit() }) {
+                                if (input.isNotEmpty() && input.isDigitsOnly()) {
                                     if (input.toInt() > 24)
                                         viewModel.processCommand(
                                             CreateWorkCommand.InputTimeHour("24"))
@@ -200,6 +201,9 @@ fun CreateWorkScreen(
                                                 input
                                             )
                                         )
+                                } else {
+                                    viewModel.processCommand(
+                                        CreateWorkCommand.InputTimeHour("0"))
                                 }
                             },
                             textStyle = TextStyle(
@@ -216,7 +220,7 @@ fun CreateWorkScreen(
                             modifier = Modifier.weight(1f),
                             value = currentState.timeMinute.toString(),
                             onValueChange = { input ->
-                                if (input.all { it.isDigit() }) {
+                                if (input.isNotEmpty() && input.isDigitsOnly()) {
                                     if (input.toInt() > 59)
                                         viewModel.processCommand(
                                             CreateWorkCommand.InputTimeMinute("59"))
@@ -226,6 +230,9 @@ fun CreateWorkScreen(
                                                 input
                                             )
                                         )
+                                } else {
+                                    viewModel.processCommand(
+                                        CreateWorkCommand.InputTimeMinute("0"))
                                 }
                             },
                             textStyle = TextStyle(

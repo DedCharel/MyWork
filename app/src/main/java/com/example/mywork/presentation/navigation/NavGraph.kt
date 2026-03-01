@@ -11,6 +11,7 @@ import com.example.mywork.presentation.screen.organization.OrganizationScreen
 import com.example.mywork.presentation.screen.organization.create.CreateOrganizationScreen
 import com.example.mywork.presentation.screen.settings.SettingsScreen
 import com.example.mywork.presentation.screen.workers.WorkerScreen
+import com.example.mywork.presentation.screen.workers.create.CreateWorkerScreen
 import com.example.mywork.presentation.screen.works.creating.CreateWorkScreen
 import com.example.mywork.presentation.screen.works.WorksScreen
 
@@ -50,6 +51,9 @@ fun NavGraph() {
         }
         composable(Screen.Worker.route) {
             WorkerScreen(
+                onAddClick = {
+                    navController.navigate("create_worker")
+                },
                 onWorkerSelected = {worker ->
                     navController.previousBackStackEntry
                         ?.savedStateHandle
@@ -75,10 +79,17 @@ fun NavGraph() {
                 onOrganizationClick = {}
             )
         }
-        composable(Screen.CreateOrganization.route) { entry ->
+        composable(Screen.CreateOrganization.route) {
             CreateOrganizationScreen(
                 onFinished = {
                   navController.popBackStack()
+                }
+            )
+        }
+        composable(Screen.CreateWorker.route){
+            CreateWorkerScreen(
+                onFinished = {
+                    navController.popBackStack()
                 }
             )
         }
@@ -100,6 +111,8 @@ sealed class Screen(val route: String) {
     data object Settings: Screen("settings")
 
     data object CreateOrganization: Screen("create_organization")
+
+    data object CreateWorker: Screen("create_worker")
 
 
 }

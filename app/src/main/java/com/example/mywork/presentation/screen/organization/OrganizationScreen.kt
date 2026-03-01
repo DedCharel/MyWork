@@ -40,9 +40,10 @@ import com.example.mywork.domain.organization.Organization
 fun OrganizationScreen(
     modifier: Modifier = Modifier,
     viewModel: OrganizationViewModel = hiltViewModel(),
+    isSelection: Boolean = false,
     onAddClick: () -> Unit,
     onOrganizationSelected: (Organization) -> Unit
-){
+) {
     val state = viewModel.state.collectAsState()
     val currentState = state.value
 
@@ -50,8 +51,8 @@ fun OrganizationScreen(
         topBar = {
             TopAppBar(
                 title = {
-                Text("Organizations")
-            },
+                    Text("Organizations")
+                },
                 actions = {
                     Icon(
                         modifier = Modifier
@@ -63,7 +64,7 @@ fun OrganizationScreen(
                     )
                 }
 
-                )
+            )
         }
     ) { innerPadding ->
         LazyColumn(
@@ -71,12 +72,16 @@ fun OrganizationScreen(
         ) {
             items(
                 items = currentState.organizations,
-                key = {it.id}
-            ){
+                key = { it.id }
+            ) {
 
                 OrganizationCard(
                     organization = it,
-                    onOrganizationClick = {onOrganizationSelected(it)}
+                    onOrganizationClick = {
+
+                            onOrganizationSelected(it)
+
+                    }
                 )
 
             }
@@ -90,14 +95,14 @@ fun OrganizationCard(
     modifier: Modifier = Modifier,
     organization: Organization,
     onOrganizationClick: () -> Unit
-){
+) {
     Card(
         modifier = modifier
             .padding(horizontal = 8.dp, vertical = 4.dp)
             .fillMaxWidth()
-        .clickable{
-            onOrganizationClick()
-        },
+            .clickable {
+                onOrganizationClick()
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
@@ -110,15 +115,16 @@ fun OrganizationCard(
                 modifier = Modifier.fillMaxWidth(),
                 fontSize = 14.sp,
                 text = organization.name,
-                fontWeight = FontWeight.Bold)
+                fontWeight = FontWeight.Bold
+            )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
 
-            ) {
+                ) {
                 Text(text = "phone: " + organization.phone, fontSize = 12.sp)
                 if (!organization.email.isEmpty())
-                Text("email: " + organization.email, fontSize = 12.sp)
+                    Text("email: " + organization.email, fontSize = 12.sp)
             }
 
         }

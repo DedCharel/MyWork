@@ -49,8 +49,10 @@ class CreateWorkerViewModel @Inject constructor(
                                 )
                             }
                             CreateWorkerScreenState.Finish
+                        } else {
+                            previousState
                         }
-                        previousState
+
                     }
                 }
             }
