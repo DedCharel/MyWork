@@ -18,11 +18,10 @@ import javax.inject.Inject
 class CreateWorkViewModel @Inject constructor(
     private val addWorkUseCase: AddWorkUseCase,
     private val getWorkerUseCase: GetWorkerUseCase,
-    private val getOrganizationUseCase: GetOrganizationUseCase
+    private val getOrganizationUseCase: GetOrganizationUseCase,
 ) : ViewModel() {
     private val _state = MutableStateFlow<CreateWorkScreenState>(CreateWorkScreenState.Creation())
     val state = _state.asStateFlow()
-
 
     fun processCommand(command: CreateWorkCommand) {
         when (command) {
