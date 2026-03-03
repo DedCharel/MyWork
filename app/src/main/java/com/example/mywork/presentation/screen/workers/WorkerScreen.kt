@@ -33,6 +33,7 @@ fun WorkerScreen(
     viewModel: WorkerViewModel = hiltViewModel(),
     isChoice: Boolean = false,
     onAddClick: () -> Unit,
+    onEditWorker: (Worker) -> Unit,
     onWorkerSelected: (Worker) -> Unit
 ) {
     val state = viewModel.state.collectAsState()
@@ -70,6 +71,8 @@ fun WorkerScreen(
                     onWorkerClick = {
                         if (isChoice){
                             onWorkerSelected(it)
+                        } else {
+                            onEditWorker(it)
                         }
 
                     }

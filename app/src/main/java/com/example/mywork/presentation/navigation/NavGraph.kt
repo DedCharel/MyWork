@@ -13,6 +13,7 @@ import com.example.mywork.presentation.screen.organization.create.CreateOrganiza
 import com.example.mywork.presentation.screen.settings.SettingsScreen
 import com.example.mywork.presentation.screen.workers.WorkerScreen
 import com.example.mywork.presentation.screen.workers.create.CreateWorkerScreen
+import com.example.mywork.presentation.screen.workers.editing.EditWorkerScreen
 import com.example.mywork.presentation.screen.works.creating.CreateWorkScreen
 import com.example.mywork.presentation.screen.works.WorksScreen
 import com.example.mywork.presentation.screen.works.editing.EditWorkScreen
@@ -78,16 +79,19 @@ fun NavGraph() {
             val isChoice = Screen.Worker.getStatus(it.arguments)
             WorkerScreen(
                 onAddClick = {
-                    navController.navigate("create_worker/0")
+                    navController.navigate("create_worker")
                 },
                 isChoice = isChoice,
-                onWorkerSelected = {worker ->
+                onWorkerSelected = { worker ->
                     navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.set("worker_id", worker.id)
                     navController.popBackStack()
-            }
-                )
+                },
+                onEditWorker = {
+                    navController.navigate(Screen.EditWorker.createRoute(it.id) )
+                }
+            )
         }
         composable(Screen.Organization.route) {
             val isChoice = Screen.Organization.getStatus(it.arguments)
@@ -96,7 +100,7 @@ fun NavGraph() {
                 onAddClick = {
                     navController.navigate("create_organization")
                 },
-                onOrganizationSelected = {organization ->
+                onOrganizationSelected = { organization ->
                     navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.set("organization_id", organization.id)
@@ -105,19 +109,28 @@ fun NavGraph() {
         }
         composable(Screen.Settings.route) {
             SettingsScreen(
-                onWorkerClick = {navController.navigate("worker/false")},
-                onOrganizationClick = {navController.navigate("organization/false")}
+                onWorkerClick = { navController.navigate("worker/false") },
+                onOrganizationClick = { navController.navigate("organization/false") }
             )
         }
         composable(Screen.CreateOrganization.route) {
             CreateOrganizationScreen(
                 onFinished = {
-                  navController.popBackStack()
+                    navController.popBackStack()
                 }
             )
         }
-        composable(Screen.CreateWorker.route){
+        composable(Screen.CreateWorker.route) {
             CreateWorkerScreen(
+                onFinished = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(Screen.EditWorker.route) {
+            val workerId = Screen.EditWorker.getWorkerId(it.arguments)
+            EditWorkerScreen(
+                workerId = workerId,
                 onFinished = {
                     navController.popBackStack()
                 }
@@ -166,7 +179,7 @@ sealed class Screen(val route: String) {
 
     data object EditWorker : Screen("edit_worker/{workerId}") {
         fun createRoute(workerId: Long): String {
-            return "edit_work/$workerId"
+            return "edit_worker/$workerId"
         }
 
         fun getWorkerId(arguments: Bundle?): Long {

@@ -2,6 +2,7 @@ package com.example.mywork.presentation.screen.workers.editing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mywork.domain.worker.DeleteWorkerUseCase
 import com.example.mywork.domain.worker.EditWorkerUseCase
 import com.example.mywork.domain.worker.GetWorkerUseCase
 import com.example.mywork.domain.worker.Worker
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 class EditWorkerViewModel @AssistedInject constructor(
     private val editWorkerUseCase: EditWorkerUseCase,
     private val getWorkerUseCase: GetWorkerUseCase,
+    private val deleteWorkerUseCase: DeleteWorkerUseCase,
     @Assisted("workerId") val workerId: Long
 ) : ViewModel() {
 
@@ -75,6 +77,20 @@ class EditWorkerViewModel @AssistedInject constructor(
                     }
                 }
             }
+
+            is EditWorkerCommand.DeleteWorker -> {
+                viewModelScope.launch {
+                    _state.update { previousState ->
+                        if (previousState is EditWorkerState.Editing){
+                            deleteWorkerUseCase(command.workerId)
+                            EditWorkerState.Finished
+                        } else {
+                            previousState
+                        }
+                        //TODO запросить подтверждение перед удалением, (удалятся касадом все работы вязанные с работником)
+                    }
+                }
+            }
         }
     }
 
@@ -95,6 +111,8 @@ sealed interface EditWorkerCommand {
     data class InputName(val name: String) : EditWorkerCommand
 
     data class InputPhone(val phone:String): EditWorkerCommand
+
+    data class DeleteWorker(val workerId: Long): EditWorkerCommand
 }
 
 sealed interface EditWorkerState {
