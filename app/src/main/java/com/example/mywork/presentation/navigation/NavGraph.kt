@@ -1,5 +1,6 @@
 package com.example.mywork.presentation.navigation
 
+import android.os.Bundle
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +15,7 @@ import com.example.mywork.presentation.screen.workers.WorkerScreen
 import com.example.mywork.presentation.screen.workers.create.CreateWorkerScreen
 import com.example.mywork.presentation.screen.works.creating.CreateWorkScreen
 import com.example.mywork.presentation.screen.works.WorksScreen
+import com.example.mywork.presentation.screen.works.editing.EditWorkScreen
 
 @Composable
 fun NavGraph() {
@@ -25,6 +27,9 @@ fun NavGraph() {
     ) {
         composable(Screen.Works.route) {
             WorksScreen(
+                onWorkClick = {
+                    navController.navigate(Screen.EditWork.createRoute(it))
+                },
                 onSettingsClick = {
                     navController.navigate("settings")
                 },
@@ -47,6 +52,26 @@ fun NavGraph() {
                 onOrganizationClick = {
                     navController.navigate("organization")
                 }
+            )
+        }
+        composable(Screen.EditWork.route) { entry ->
+            val currentWorkerId = entry.savedStateHandle.get<Long>("worker_id")
+            val currentOrganizationId = entry.savedStateHandle.get<Long>("organization_id")
+            val workId = Screen.EditWork.getWorkId(entry.arguments)
+            EditWorkScreen(
+                modifier = Modifier.padding(16.dp),
+                currentWorkerId = currentWorkerId,
+                currentOrganizationId = currentOrganizationId,
+                workId = workId,
+                onFinished = { navController.popBackStack() },
+                onWorkerClick = {
+                    navController.navigate("worker")
+                },
+                onOrganizationClick = {
+                    navController.navigate("organization")
+                }
+
+
             )
         }
         composable(Screen.Worker.route) {
@@ -103,6 +128,16 @@ sealed class Screen(val route: String) {
     data object Works : Screen("works")
 
     data object CreateWork : Screen("create_work")
+
+    data object EditWork: Screen("edit_work/{workId}"){
+        fun createRoute(workId: Int): String {
+            return "edit_work/$workId"
+        }
+
+        fun getWorkId(arguments: Bundle?): Int {
+            return arguments?.getString("workId")?.toInt() ?:0
+        }
+    }
 
     data object Worker: Screen("worker")
 

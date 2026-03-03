@@ -3,10 +3,12 @@ package com.example.mywork.presentation.screen.works.editing
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mywork.domain.organization.GetOrganizationUseCase
+import com.example.mywork.domain.work.DeleteWorkUseCase
 import com.example.mywork.domain.work.EditWorkUseCase
 import com.example.mywork.domain.work.GetWorkUseCase
 import com.example.mywork.domain.work.Work
 import com.example.mywork.domain.worker.GetWorkerUseCase
+import com.example.mywork.presentation.navigation.Screen
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -22,6 +24,7 @@ class EditWorkViewModel @AssistedInject constructor(
     private val editWorkUseCase: EditWorkUseCase,
     private val getOrganizationUseCase: GetOrganizationUseCase,
     private val getWorkerUseCase: GetWorkerUseCase,
+    private val deleteWorkUseCase: DeleteWorkUseCase,
     @Assisted("workId") val workId: Int
 ) : ViewModel() {
 
@@ -121,6 +124,17 @@ class EditWorkViewModel @AssistedInject constructor(
                 }
 
             }
+
+            is EditWorkCommand.DeleteWork -> {
+                viewModelScope.launch {
+                    _state.update {
+                        deleteWorkUseCase(command.work.id)
+                        EditWorkState.Finished
+                    }
+
+
+                }
+            }
         }
     }
 
@@ -144,9 +158,13 @@ sealed interface EditWorkCommand {
 
     data class InputTime(val time: String) : EditWorkCommand
 
+    data class DeleteWork(val work: Work): EditWorkCommand
+
     data object Save : EditWorkCommand
 
     data object Back : EditWorkCommand
+
+
 }
 
 sealed interface EditWorkState {
