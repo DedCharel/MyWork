@@ -169,7 +169,7 @@ sealed class Screen(val route: String) {
             return "edit_work/$workerId"
         }
 
-        fun getWorkId(arguments: Bundle?): Long {
+        fun getWorkerId(arguments: Bundle?): Long {
             return arguments?.getString("workerId")?.toLong() ?: 0
         }
     }
