@@ -31,7 +31,7 @@ import com.example.mywork.domain.worker.Worker
 fun WorkerScreen(
     modifier: Modifier = Modifier,
     viewModel: WorkerViewModel = hiltViewModel(),
-    isSelection: Boolean = false,
+    isChoice: Boolean = false,
     onAddClick: () -> Unit,
     onWorkerSelected: (Worker) -> Unit
 ) {
@@ -68,7 +68,10 @@ fun WorkerScreen(
                 WorkerCard(
                     worker = it,
                     onWorkerClick = {
-                        onWorkerSelected(it)
+                        if (isChoice){
+                            onWorkerSelected(it)
+                        }
+
                     }
                 )
             }

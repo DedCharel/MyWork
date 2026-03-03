@@ -47,10 +47,10 @@ fun NavGraph() {
                 currentOrganizationId = currentOrganizationId,
                 onFinished = { navController.popBackStack() },
                 onWorkerClick = {
-                    navController.navigate("worker")
+                    navController.navigate("worker/true")
                 },
                 onOrganizationClick = {
-                    navController.navigate("organization")
+                    navController.navigate("organization/true")
                 }
             )
         }
@@ -65,29 +65,34 @@ fun NavGraph() {
                 workId = workId,
                 onFinished = { navController.popBackStack() },
                 onWorkerClick = {
-                    navController.navigate("worker")
+                    navController.navigate("worker/true")
                 },
                 onOrganizationClick = {
-                    navController.navigate("organization")
+                    navController.navigate("organization/true")
                 }
 
 
             )
         }
         composable(Screen.Worker.route) {
+            val isChoice = Screen.Worker.getStatus(it.arguments)
             WorkerScreen(
                 onAddClick = {
-                    navController.navigate("create_worker")
+                    navController.navigate("create_worker/0")
                 },
+                isChoice = isChoice,
                 onWorkerSelected = {worker ->
                     navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.set("worker_id", worker.id)
                     navController.popBackStack()
-            })
+            }
+                )
         }
         composable(Screen.Organization.route) {
+            val isChoice = Screen.Organization.getStatus(it.arguments)
             OrganizationScreen(
+                isChoice = isChoice,
                 onAddClick = {
                     navController.navigate("create_organization")
                 },
@@ -100,8 +105,8 @@ fun NavGraph() {
         }
         composable(Screen.Settings.route) {
             SettingsScreen(
-                onWorkerClick = {},
-                onOrganizationClick = {}
+                onWorkerClick = {navController.navigate("worker/false")},
+                onOrganizationClick = {navController.navigate("organization/false")}
             )
         }
         composable(Screen.CreateOrganization.route) {
@@ -129,25 +134,45 @@ sealed class Screen(val route: String) {
 
     data object CreateWork : Screen("create_work")
 
-    data object EditWork: Screen("edit_work/{workId}"){
+    data object EditWork : Screen("edit_work/{workId}") {
         fun createRoute(workId: Int): String {
             return "edit_work/$workId"
         }
 
         fun getWorkId(arguments: Bundle?): Int {
-            return arguments?.getString("workId")?.toInt() ?:0
+            return arguments?.getString("workId")?.toInt() ?: 0
         }
     }
 
-    data object Worker: Screen("worker")
+    data object Worker : Screen("worker/{choice}") {
 
-    data object Organization: Screen("organization")
+        fun getStatus(arguments: Bundle?): Boolean {
+            return arguments?.getString("choice")?.toBoolean() ?: false
+        }
+    }
 
-    data object Settings: Screen("settings")
+    data object Organization : Screen("organization/{choice}") {
 
-    data object CreateOrganization: Screen("create_organization")
+        fun getStatus(arguments: Bundle?): Boolean {
+            return arguments?.getString("choice")?.toBoolean() ?: false
+        }
+    }
 
-    data object CreateWorker: Screen("create_worker")
+    data object Settings : Screen("settings")
 
+    data object CreateOrganization : Screen("create_organization")
 
+    data object CreateWorker : Screen("create_worker")
+
+    data object EditWorker : Screen("edit_worker/{workerId}") {
+        fun createRoute(workerId: Long): String {
+            return "edit_work/$workerId"
+        }
+
+        fun getWorkId(arguments: Bundle?): Long {
+            return arguments?.getString("workerId")?.toLong() ?: 0
+        }
+    }
 }
+
+

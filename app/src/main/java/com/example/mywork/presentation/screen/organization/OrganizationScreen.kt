@@ -40,7 +40,7 @@ import com.example.mywork.domain.organization.Organization
 fun OrganizationScreen(
     modifier: Modifier = Modifier,
     viewModel: OrganizationViewModel = hiltViewModel(),
-    isSelection: Boolean = false,
+    isChoice: Boolean,
     onAddClick: () -> Unit,
     onOrganizationSelected: (Organization) -> Unit
 ) {
@@ -78,8 +78,9 @@ fun OrganizationScreen(
                 OrganizationCard(
                     organization = it,
                     onOrganizationClick = {
-
-                            onOrganizationSelected(it)
+                            if (isChoice){
+                                onOrganizationSelected(it)
+                            }
 
                     }
                 )
