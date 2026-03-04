@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.domain.worker.Worker
+import com.example.mywork.presentation.screen.workers.editing.EditWorkerCommand
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,53 +36,75 @@ fun WorkerScreen(
     isChoice: Boolean = false,
     onAddClick: () -> Unit,
     onEditWorker: (Worker) -> Unit,
+    onFinished:() -> Unit,
     onWorkerSelected: (Worker) -> Unit
 ) {
     val state = viewModel.state.collectAsState()
     val currentState = state.value
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text("Workers")
-                },
-                actions = {
-                    Icon(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .clickable { onAddClick() }
-                            .padding(end = 16.dp),
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add"
-                    )
-                }
 
-            )
+    when(currentState){
+        WorkerState.Finished -> {
+            onFinished()
         }
-    ) { innerPadding ->
-        LazyColumn(
-            contentPadding = innerPadding
-        ) {
-            items(
-                items = currentState.workers,
-                key = { it.id }
-            ) {
+        is WorkerState.WorkerScreenState -> {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text("Workers")
+                        },
+                        actions = {
+                            Icon(
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .clickable { onAddClick() }
+                                    .padding(end = 16.dp),
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Add"
+                            )
+                        },
+                        navigationIcon = {
+                            Icon(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp)
+                                    .clickable {
+                                        viewModel.processCommand(WorkerCommand.Back)
+                                    },
+                                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                                contentDescription = "Back"
 
-                WorkerCard(
-                    worker = it,
-                    onWorkerClick = {
-                        if (isChoice){
-                            onWorkerSelected(it)
-                        } else {
-                            onEditWorker(it)
+                            )
                         }
 
-                    }
-                )
-            }
+                    )
+                }
+            ) { innerPadding ->
+                LazyColumn(
+                    contentPadding = innerPadding
+                ) {
+                    items(
+                        items = currentState.workers,
+                        key = { it.id }
+                    ) {
 
+                        WorkerCard(
+                            worker = it,
+                            onWorkerClick = {
+                                if (isChoice){
+                                    onWorkerSelected(it)
+                                } else {
+                                    onEditWorker(it)
+                                }
+
+                            }
+                        )
+                    }
+
+                }
+            }
         }
     }
+
 }
 
 @Composable

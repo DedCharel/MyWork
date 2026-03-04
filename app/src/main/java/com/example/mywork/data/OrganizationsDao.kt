@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 
@@ -26,6 +27,10 @@ interface OrganizationsDao {
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addOrganization(organization: OrganizationDbModel)
+
+    @Transaction
+    @Update
+    suspend fun editOrganization(organization: OrganizationDbModel)
 
 
 }

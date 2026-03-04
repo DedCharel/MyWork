@@ -21,18 +21,17 @@ class WorkerViewModel @Inject constructor(
     private val getAllWorkersUseCase: GetAllWorkersUseCase,
     private val addWorkerUseCase: AddWorkerUseCase
 ): ViewModel() {
-    private val _state = MutableStateFlow(WorkerScreenState())
+    private val _state = MutableStateFlow<WorkerState>(WorkerState.WorkerScreenState())
     val state = _state.asStateFlow()
 
     init {
-//        viewModelScope.launch {
-//            repeat(10){
-//                addWorkerUseCase(Worker(it.toLong(), "Worker$it"))
-//            }
-//
-//        }
-        getAllWorkersUseCase().onEach {previousState ->
-            _state.update { it.copy(workers = previousState)
+        getAllWorkersUseCase().onEach {
+            _state.update { previousState ->
+                if (previousState is WorkerState.WorkerScreenState){
+                    previousState.copy(workers = it)
+                } else {
+                    previousState
+                }
             }
         }.launchIn(viewModelScope)
 
@@ -41,7 +40,9 @@ class WorkerViewModel @Inject constructor(
     fun processCommand(command: WorkerCommand){
         when(command){
             WorkerCommand.Back -> {
-
+                _state.update {
+                    WorkerState.Finished
+                }
             }
             is WorkerCommand.SelectedWorker -> {
 
@@ -58,6 +59,11 @@ sealed interface WorkerCommand{
     data object Back: WorkerCommand
 }
 
-data class WorkerScreenState(
-    val workers: List<Worker> = listOf()
-)
+
+sealed interface WorkerState{
+    data class WorkerScreenState(
+        val workers: List<Worker> = listOf()
+    ): WorkerState
+
+    data object Finished: WorkerState
+}

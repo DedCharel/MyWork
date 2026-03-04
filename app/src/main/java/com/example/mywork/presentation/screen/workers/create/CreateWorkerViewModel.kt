@@ -57,7 +57,10 @@ class CreateWorkerViewModel @Inject constructor(
                 }
             }
             CreateWorkerCommand.Back -> {
-                CreateWorkerScreenState.Finish
+                _state.update {
+                    CreateWorkerScreenState.Finish
+                }
+
             }
         }
     }

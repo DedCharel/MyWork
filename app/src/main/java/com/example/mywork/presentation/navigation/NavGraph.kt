@@ -90,6 +90,9 @@ fun NavGraph() {
                 },
                 onEditWorker = {
                     navController.navigate(Screen.EditWorker.createRoute(it.id) )
+                },
+                onFinished = {
+                    navController.popBackStack()
                 }
             )
         }

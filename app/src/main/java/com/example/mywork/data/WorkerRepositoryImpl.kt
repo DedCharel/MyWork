@@ -27,7 +27,7 @@ class WorkerRepositoryImpl @Inject constructor(
     }
 
     override suspend fun editWorker(worker: Worker) {
-        workersDao.addWorker(worker.toDbModel())
+        workersDao.editWorker(worker.toDbModel())
     }
 
     override suspend fun getWorker(workerId: Long): Worker {

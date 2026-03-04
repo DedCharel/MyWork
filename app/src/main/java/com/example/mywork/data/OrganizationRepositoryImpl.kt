@@ -38,7 +38,7 @@ class OrganizationRepositoryImpl @Inject constructor(
     }
 
     override suspend fun editOrganization(organization: Organization) {
-        organizationsDao.addOrganization(organization.toDbModel())
+        organizationsDao.editOrganization(organization.toDbModel())
     }
 
     override suspend fun deleteOrganization(organizationId: Long) {
