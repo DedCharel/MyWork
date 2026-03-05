@@ -42,6 +42,7 @@ fun OrganizationScreen(
     viewModel: OrganizationViewModel = hiltViewModel(),
     isChoice: Boolean,
     onAddClick: () -> Unit,
+    onEditOrganization: (Organization) -> Unit,
     onOrganizationSelected: (Organization) -> Unit
 ) {
     val state = viewModel.state.collectAsState()
@@ -80,7 +81,9 @@ fun OrganizationScreen(
                     onOrganizationClick = {
                             if (isChoice){
                                 onOrganizationSelected(it)
-                            }
+                            } else (
+                                onEditOrganization(it)
+                            )
 
                     }
                 )

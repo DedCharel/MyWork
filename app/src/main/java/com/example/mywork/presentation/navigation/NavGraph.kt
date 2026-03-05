@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mywork.presentation.screen.organization.OrganizationScreen
 import com.example.mywork.presentation.screen.organization.create.CreateOrganizationScreen
+import com.example.mywork.presentation.screen.organization.editing.EditOrganizationScreen
 import com.example.mywork.presentation.screen.settings.SettingsScreen
 import com.example.mywork.presentation.screen.workers.WorkerScreen
 import com.example.mywork.presentation.screen.workers.create.CreateWorkerScreen
@@ -103,6 +104,9 @@ fun NavGraph() {
                 onAddClick = {
                     navController.navigate("create_organization")
                 },
+                onEditOrganization = {
+                    navController.navigate(Screen.EditOrganization.createRoute(it.id))
+                },
                 onOrganizationSelected = { organization ->
                     navController.previousBackStackEntry
                         ?.savedStateHandle
@@ -134,6 +138,15 @@ fun NavGraph() {
             val workerId = Screen.EditWorker.getWorkerId(it.arguments)
             EditWorkerScreen(
                 workerId = workerId,
+                onFinished = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(Screen.EditOrganization.route) {
+            val organizationId = Screen.EditOrganization.getOrganizationId(it.arguments)
+            EditOrganizationScreen(
+                organizationId = organizationId,
                 onFinished = {
                     navController.popBackStack()
                 }
@@ -187,6 +200,16 @@ sealed class Screen(val route: String) {
 
         fun getWorkerId(arguments: Bundle?): Long {
             return arguments?.getString("workerId")?.toLong() ?: 0
+        }
+    }
+
+    data object EditOrganization : Screen("edit_organization/{organizationId}") {
+        fun createRoute(organizationId: Long): String {
+            return "edit_organization/$organizationId"
+        }
+
+        fun getOrganizationId(arguments: Bundle?): Long {
+            return arguments?.getString("organizationId")?.toLong() ?: 0
         }
     }
 }

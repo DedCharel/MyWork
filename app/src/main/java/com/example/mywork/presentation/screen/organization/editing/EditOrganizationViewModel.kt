@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-@HiltViewModel
+@HiltViewModel(assistedFactory = EditOrganizationViewModel.Factory::class)
 class EditOrganizationViewModel @AssistedInject constructor(
     private val getOrganizationUseCase: GetOrganizationUseCase,
     private val editOrganizationUseCase: EditOrganizationUseCase,
