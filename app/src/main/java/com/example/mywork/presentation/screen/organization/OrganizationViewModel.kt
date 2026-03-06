@@ -12,51 +12,47 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class OrganizationViewModel @Inject constructor(
     private val getAllOrganizationUseCase: GetAllOrganizationUseCase,
     private val addOrganizationUseCase: AddOrganizationUseCase
-): ViewModel(){
+) : ViewModel() {
 
-    private val _state = MutableStateFlow(OrganizationScreenState())
+    private val _state =
+        MutableStateFlow<OrganizationState>(OrganizationState.OrganizationScreenState())
     val state = _state.asStateFlow()
 
     init {
-//        viewModelScope.launch {
-//            repeat(10){
-//                addOrganizationUseCase(Organization(it.toLong(), "Organization$it"))
-//            }
-//
-//        }
-        getAllOrganizationUseCase().onEach {previousState ->
-            _state.update { it.copy(organizations = previousState)
+        getAllOrganizationUseCase().onEach { organizations ->
+            _state.update {
+                OrganizationState.OrganizationScreenState(organizations)
             }
         }.launchIn(viewModelScope)
     }
 
-    fun processCommand(command: OrganizationCommand){
-        when(command){
+    fun processCommand(command: OrganizationCommand) {
+        when (command) {
             OrganizationCommand.Back -> {
-
-            }
-            is OrganizationCommand.SelectedOrganization -> {
-
+                _state.update {
+                    OrganizationState.Finished
+                }
             }
         }
     }
-
 }
 
-sealed interface OrganizationCommand{
-
-    data class SelectedOrganization(val organization: Organization): OrganizationCommand
-
-    data object Back: OrganizationCommand
+sealed interface OrganizationCommand {
+    data object Back : OrganizationCommand
 }
 
-data class OrganizationScreenState(
-    val organizations:List<Organization> = listOf()
-)
+sealed interface OrganizationState {
+    data object Finished : OrganizationState
+
+    data class OrganizationScreenState(
+        val organizations: List<Organization> = listOf()
+    ) : OrganizationState
+}
+
+

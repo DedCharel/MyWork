@@ -112,6 +112,9 @@ fun NavGraph() {
                         ?.savedStateHandle
                         ?.set("organization_id", organization.id)
                     navController.popBackStack()
+                },
+                onFinished = {
+                    navController.popBackStack()
                 })
         }
         composable(Screen.Settings.route) {

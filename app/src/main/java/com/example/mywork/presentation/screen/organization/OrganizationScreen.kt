@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Card
@@ -24,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.domain.organization.Organization
+import com.example.mywork.presentation.screen.settings.SettingsCommand
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,55 +46,77 @@ fun OrganizationScreen(
     isChoice: Boolean,
     onAddClick: () -> Unit,
     onEditOrganization: (Organization) -> Unit,
-    onOrganizationSelected: (Organization) -> Unit
+    onOrganizationSelected: (Organization) -> Unit,
+    onFinished: () -> Unit
 ) {
     val state = viewModel.state.collectAsState()
     val currentState = state.value
+    when(currentState){
+        OrganizationState.Finished -> {
+            LaunchedEffect(key1 = Unit) {
+                onFinished()
+            }
+        }
+        is OrganizationState.OrganizationScreenState -> {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text("Organizations")
+                        },
+                        navigationIcon = {
+                            Icon(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp)
+                                    .clickable {
+                                        viewModel.processCommand(OrganizationCommand.Back)
+                                    },
+                                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                                contentDescription = "Back"
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text("Organizations")
-                },
-                actions = {
-                    Icon(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .clickable { onAddClick() }
-                            .padding(end = 16.dp),
-                        imageVector = Icons.Default.Add,
-                        contentDescription = "Add"
+                            )
+                        },
+                        actions = {
+                            Icon(
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .clickable { onAddClick() }
+                                    .padding(end = 16.dp),
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Add"
+                            )
+                        }
+
                     )
                 }
+            ) { innerPadding ->
+                LazyColumn(
+                    contentPadding = innerPadding
+                ) {
+                    items(
+                        items = currentState.organizations,
+                        key = { it.id }
+                    ) {
 
-            )
-        }
-    ) { innerPadding ->
-        LazyColumn(
-            contentPadding = innerPadding
-        ) {
-            items(
-                items = currentState.organizations,
-                key = { it.id }
-            ) {
+                        OrganizationCard(
+                            organization = it,
+                            onOrganizationClick = {
+                                if (isChoice){
+                                    onOrganizationSelected(it)
+                                } else (
+                                        onEditOrganization(it)
+                                        )
 
-                OrganizationCard(
-                    organization = it,
-                    onOrganizationClick = {
-                            if (isChoice){
-                                onOrganizationSelected(it)
-                            } else (
-                                onEditOrganization(it)
-                            )
+                            }
+                        )
 
                     }
-                )
+                }
 
             }
         }
-
     }
+
 }
 
 @Composable
