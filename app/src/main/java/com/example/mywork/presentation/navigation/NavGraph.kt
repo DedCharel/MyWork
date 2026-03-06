@@ -117,7 +117,10 @@ fun NavGraph() {
         composable(Screen.Settings.route) {
             SettingsScreen(
                 onWorkerClick = { navController.navigate("worker/false") },
-                onOrganizationClick = { navController.navigate("organization/false") }
+                onOrganizationClick = { navController.navigate("organization/false") },
+                onFinished = {
+                    navController.popBackStack()
+                }
             )
         }
         composable(Screen.CreateOrganization.route) {
