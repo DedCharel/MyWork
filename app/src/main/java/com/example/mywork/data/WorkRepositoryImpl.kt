@@ -13,6 +13,10 @@ class WorkRepositoryImpl @Inject constructor(
         return worksDao.getAllWorks().map { it.toWorkEntities() }
     }
 
+    override fun searchWork(query: String): Flow<List<Work>> {
+       return worksDao.searchWork(query).map { it.toWorkEntities() }
+    }
+
     override suspend fun addWork(
         date: Long,
         organizationId: Long,

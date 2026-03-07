@@ -7,6 +7,8 @@ interface WorkRepository {
 
     fun getAllWorks(): Flow<List<Work>>
 
+    fun searchWork(query: String): Flow<List<Work>>
+
     suspend fun addWork(
         date: Long,
         organizationId: Long,
