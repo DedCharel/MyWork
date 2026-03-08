@@ -12,6 +12,7 @@ import com.example.mywork.presentation.screen.organization.OrganizationScreen
 import com.example.mywork.presentation.screen.organization.create.CreateOrganizationScreen
 import com.example.mywork.presentation.screen.organization.editing.EditOrganizationScreen
 import com.example.mywork.presentation.screen.settings.SettingsScreen
+import com.example.mywork.presentation.screen.statistics.StatisticScreen
 import com.example.mywork.presentation.screen.workers.WorkerScreen
 import com.example.mywork.presentation.screen.workers.create.CreateWorkerScreen
 import com.example.mywork.presentation.screen.workers.editing.EditWorkerScreen
@@ -37,6 +38,9 @@ fun NavGraph() {
                 },
                 onAddWorkClick = {
                     navController.navigate(Screen.CreateWork.route)
+                },
+                onStatisticClick = {
+                    navController.navigate(Screen.Statistic.route)
                 }
             )
         }
@@ -158,6 +162,13 @@ fun NavGraph() {
                 }
             )
         }
+        composable(Screen.Statistic.route) {
+            StatisticScreen(
+                onFinished = {
+                    navController.popBackStack()
+                }
+            )
+        }
 
     }
 
@@ -218,6 +229,8 @@ sealed class Screen(val route: String) {
             return arguments?.getString("organizationId")?.toLong() ?: 0
         }
     }
+
+    data object Statistic : Screen("statistic")
 }
 
 

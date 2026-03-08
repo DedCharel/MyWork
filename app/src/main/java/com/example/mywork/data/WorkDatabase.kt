@@ -19,6 +19,8 @@ abstract class WorkDatabase : RoomDatabase() {
     abstract fun workersDao(): WorkersDao
     abstract fun organizationsDao(): OrganizationsDao
 
+    abstract fun statisticDao(): StatisticDao
+
     companion object {
 
         private var instance: WorkDatabase? = null

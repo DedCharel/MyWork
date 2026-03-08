@@ -3,16 +3,12 @@ package com.example.mywork.presentation.screen.works
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -37,12 +33,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.R
 import com.example.mywork.domain.work.Work
 import com.example.mywork.presentation.utils.DataFormater
 
@@ -53,7 +49,8 @@ fun WorksScreen(
     viewModel: WorksViewModel = hiltViewModel(),
     onWorkClick: (Int) -> Unit,
     onSettingsClick: () -> Unit,
-    onAddWorkClick: () -> Unit
+    onAddWorkClick: () -> Unit,
+    onStatisticClick: () -> Unit
 ) {
     val state = viewModel.state.collectAsState()
 
@@ -66,6 +63,14 @@ fun WorksScreen(
                 TopAppBar(
                     title = { Text(text = "Work list") },
                     actions = {
+                        Icon(
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .clickable { onStatisticClick() }
+                                .padding(end = 16.dp),
+                            painter = painterResource(id = R.drawable.ic_equalizer),
+                            contentDescription = "Statistics"
+                        )
                         Icon(
                             modifier = Modifier
                                 .clip(CircleShape)
