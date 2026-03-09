@@ -30,10 +30,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.R
 import com.example.mywork.domain.organization.Organization
 import com.example.mywork.presentation.screen.settings.SettingsCommand
 
@@ -62,7 +64,7 @@ fun OrganizationScreen(
                 topBar = {
                     TopAppBar(
                         title = {
-                            Text("Organizations")
+                            Text(stringResource(R.string.organizations_title))
                         },
                         navigationIcon = {
                             Icon(
@@ -72,7 +74,7 @@ fun OrganizationScreen(
                                         viewModel.processCommand(OrganizationCommand.Back)
                                     },
                                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = stringResource(R.string.back)
 
                             )
                         },
@@ -83,7 +85,7 @@ fun OrganizationScreen(
                                     .clickable { onAddClick() }
                                     .padding(end = 16.dp),
                                 imageVector = Icons.Default.Add,
-                                contentDescription = "Add"
+                                contentDescription = stringResource(R.string.add)
                             )
                         }
 

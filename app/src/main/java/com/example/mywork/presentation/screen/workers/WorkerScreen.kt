@@ -22,11 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.R
 import com.example.mywork.domain.worker.Worker
-import com.example.mywork.presentation.screen.workers.editing.EditWorkerCommand
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +52,7 @@ fun WorkerScreen(
                 topBar = {
                     TopAppBar(
                         title = {
-                            Text("Workers")
+                            Text(stringResource(R.string.workers_title))
                         },
                         actions = {
                             Icon(
@@ -60,7 +61,7 @@ fun WorkerScreen(
                                     .clickable { onAddClick() }
                                     .padding(end = 16.dp),
                                 imageVector = Icons.Default.Add,
-                                contentDescription = "Add"
+                                contentDescription = stringResource(R.string.add)
                             )
                         },
                         navigationIcon = {
@@ -71,7 +72,7 @@ fun WorkerScreen(
                                         viewModel.processCommand(WorkerCommand.Back)
                                     },
                                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = stringResource(R.string.back)
 
                             )
                         }

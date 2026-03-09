@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,7 +62,7 @@ fun WorksScreen(
         topBar = {
             Column {
                 TopAppBar(
-                    title = { Text(text = "Work list") },
+                    title = { Text(text = stringResource(R.string.work_list_title)) },
                     actions = {
                         Icon(
                             modifier = Modifier
@@ -69,7 +70,7 @@ fun WorksScreen(
                                 .clickable { onStatisticClick() }
                                 .padding(end = 16.dp),
                             painter = painterResource(id = R.drawable.ic_equalizer),
-                            contentDescription = "Statistics"
+                            contentDescription = stringResource(R.string.statistics)
                         )
                         Icon(
                             modifier = Modifier
@@ -77,7 +78,7 @@ fun WorksScreen(
                                 .clickable { onSettingsClick() }
                                 .padding(end = 16.dp),
                             imageVector = Icons.Default.Settings,
-                            contentDescription = "Settings"
+                            contentDescription = stringResource(R.string.settings)
                         )
                     }
                 )
@@ -101,7 +102,7 @@ fun WorksScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add work"
+                    contentDescription = stringResource(R.string.add_work)
                 )
             }
         }
@@ -211,7 +212,7 @@ private fun SearchBar(
         onValueChange = onQueryChange,
         placeholder = {
             Text(
-                text = "Search",
+                text = stringResource(R.string.search),
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -225,7 +226,7 @@ private fun SearchBar(
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = "search work",
+                contentDescription = stringResource(R.string.search_work),
                 tint = MaterialTheme.colorScheme.onSurface
             )
         },

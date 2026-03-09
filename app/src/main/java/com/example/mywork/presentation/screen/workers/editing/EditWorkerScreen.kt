@@ -29,9 +29,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.R
 import com.example.mywork.presentation.screen.works.editing.EditWorkCommand
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,16 +58,19 @@ fun EditWorkerScreen(
                 modifier = modifier,
                 topBar = {
                     TopAppBar(
-                        title = {Text("Edit Worker")},
+                        title = {Text(stringResource(R.string.edit_worker_title))},
                         actions = {
                             Icon(
                                 modifier = Modifier
                                     .clip(CircleShape)
-                                    .clickable { viewModel.processCommand(
-                                        EditWorkerCommand.DeleteWorker(currentState.worker.id)) }
+                                    .clickable {
+                                        viewModel.processCommand(
+                                            EditWorkerCommand.DeleteWorker(currentState.worker.id)
+                                        )
+                                    }
                                     .padding(end = 16.dp),
                                 imageVector = Icons.Default.Delete,
-                                contentDescription = "Delete"
+                                contentDescription = stringResource(R.string.delete)
                             )
                         },
                         navigationIcon = {
@@ -76,7 +81,7 @@ fun EditWorkerScreen(
                                         viewModel.processCommand(EditWorkerCommand.Back)
                                     },
                                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = stringResource(R.string.back)
 
                             )
                         }
@@ -100,7 +105,7 @@ fun EditWorkerScreen(
                         onValueChange = {
                             viewModel.processCommand(EditWorkerCommand.InputName(it))
                         },
-                        label = { Text("Name") },
+                        label = { Text(stringResource(R.string.worker_name)) },
 
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
@@ -118,7 +123,7 @@ fun EditWorkerScreen(
                         onValueChange = {
                             viewModel.processCommand(EditWorkerCommand.InputPhone(it))
                         },
-                        label = { Text("Phone") },
+                        label = { Text(stringResource(R.string.phone)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
@@ -133,7 +138,7 @@ fun EditWorkerScreen(
                         shape = RoundedCornerShape(16.dp),
                         onClick = { viewModel.processCommand(EditWorkerCommand.Save) }
                     ) {
-                        Text(text = "Save")
+                        Text(text = stringResource(R.string.save))
                     }
                 }
             }

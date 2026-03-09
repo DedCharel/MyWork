@@ -30,10 +30,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.R
 import com.example.mywork.presentation.navigation.Screen
 import com.example.mywork.presentation.screen.workers.editing.EditWorkerCommand
 
@@ -54,7 +56,7 @@ fun CreateOrganizationScreen(
                 modifier = modifier,
                 topBar = {
                     TopAppBar(
-                        title = { Text("Create organization") },
+                        title = { Text(stringResource(R.string.create_organization_title)) },
                         navigationIcon = {
                             Icon(
                                 modifier = Modifier
@@ -63,7 +65,7 @@ fun CreateOrganizationScreen(
                                         viewModel.processCommand(CreateOrganizationCommand.Back)
                                     },
                                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = stringResource(R.string.back)
 
                             )
                         }
@@ -86,7 +88,7 @@ fun CreateOrganizationScreen(
                         onValueChange = {
                             viewModel.processCommand(CreateOrganizationCommand.InputName(it))
                         },
-                        label = { Text("Name") },
+                        label = { Text(stringResource(R.string.name_organization)) },
 
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
@@ -105,7 +107,7 @@ fun CreateOrganizationScreen(
                                 viewModel.processCommand(CreateOrganizationCommand.InputInn(it))
                             }
                         },
-                        label = { Text("INN") },
+                        label = { Text(stringResource(R.string.inn)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
@@ -129,7 +131,7 @@ fun CreateOrganizationScreen(
                         onValueChange = {
                             viewModel.processCommand(CreateOrganizationCommand.InputPhone(it))
                         },
-                        label = { Text("Phone") },
+                        label = { Text(stringResource(R.string.phone)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
@@ -146,7 +148,7 @@ fun CreateOrganizationScreen(
                         onValueChange = {
                             viewModel.processCommand(CreateOrganizationCommand.InputEmail(it))
                         },
-                        label = { Text("Email") },
+                        label = { Text(stringResource(R.string.email)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
@@ -163,7 +165,7 @@ fun CreateOrganizationScreen(
                         onValueChange = {
                             viewModel.processCommand(CreateOrganizationCommand.InputAddress(it))
                         },
-                        label = { Text("Address") },
+                        label = { Text(stringResource(R.string.address)) },
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
                             unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -179,7 +181,7 @@ fun CreateOrganizationScreen(
                         onValueChange = {
                             viewModel.processCommand(CreateOrganizationCommand.InputComments(it))
                         },
-                        label = { Text("Comments") },
+                        label = { Text(stringResource(R.string.comments)) },
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
                             unfocusedContainerColor = MaterialTheme.colorScheme.secondary,
@@ -193,7 +195,7 @@ fun CreateOrganizationScreen(
                         shape = RoundedCornerShape(16.dp),
                         onClick = { viewModel.processCommand(CreateOrganizationCommand.Save) }
                     ) {
-                        Text(text = "Save")
+                        Text(text = stringResource(R.string.save))
                     }
                 }
 

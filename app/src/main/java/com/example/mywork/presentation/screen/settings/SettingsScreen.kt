@@ -15,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.R
 import com.example.mywork.presentation.screen.workers.create.CreateWorkerViewModel.CreateWorkerCommand
 
 
@@ -43,7 +45,7 @@ fun SettingsScreen(
             Scaffold(
                 topBar = {
                     TopAppBar(
-                        title = { Text("Settings") },
+                        title = { Text(stringResource(R.string.settings_title)) },
                         navigationIcon = {
                             Icon(
                                 modifier = Modifier
@@ -52,7 +54,7 @@ fun SettingsScreen(
                                         viewModel.processCommand(SettingsCommand.Back)
                                     },
                                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = stringResource(R.string.back)
 
                             )
                         }
@@ -66,17 +68,17 @@ fun SettingsScreen(
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth()
-                            .clickable{onOrganizationClick()},
+                            .clickable { onOrganizationClick() },
                         fontWeight = FontWeight.Bold,
-                        text = "Organizations"
+                        text = stringResource(R.string.organizations)
                     )
                     Text(
                         modifier = Modifier
                             .padding(8.dp)
                             .fillMaxWidth()
-                            .clickable{onWorkerClick()},
+                            .clickable { onWorkerClick() },
                         fontWeight = FontWeight.Bold,
-                        text = "Workers"
+                        text = stringResource(R.string.workers)
                     )
 
                 }

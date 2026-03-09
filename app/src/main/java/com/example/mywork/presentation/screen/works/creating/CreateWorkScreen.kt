@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.text.isDigitsOnly
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.R
 import com.example.mywork.presentation.screen.workers.WorkerCommand
 import com.example.mywork.presentation.utils.DataFormater
 import com.example.mywork.presentation.utils.DatePickerModal
@@ -77,7 +79,7 @@ fun CreateWorkScreen(
                     TopAppBar(
                         title = {
                             Text(
-                                text = "Create Work",
+                                text = stringResource(R.string.create_work_title),
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                         },
@@ -93,7 +95,7 @@ fun CreateWorkScreen(
                                         viewModel.processCommand(CreateWorkCommand.Back)
                                     },
                                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = stringResource(R.string.back)
 
                             )
                         }
@@ -108,7 +110,7 @@ fun CreateWorkScreen(
                 ) {
 
                     Column(Modifier.fillMaxWidth()) {
-                        Text(text = "Date:", fontSize = 12.sp)
+                        Text(text = stringResource(R.string.date), fontSize = 12.sp)
                         Spacer(Modifier.height(4.dp))
                         Text(
                             modifier = Modifier.clickable { showDialog = true },
@@ -141,12 +143,12 @@ fun CreateWorkScreen(
                             .clickable(onClick = { onOrganizationClick() })
 
                     ) {
-                        Text(text = "Organization:", fontSize = 12.sp)
+                        Text(text = stringResource(R.string.organization), fontSize = 12.sp)
                         Spacer(Modifier.height(4.dp))
                         Text(
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
-                            text = currentState.organization?.name ?: "Select organization"
+                            text = currentState.organization?.name ?: stringResource(R.string.select_organization)
                         )
                     }
 
@@ -159,12 +161,12 @@ fun CreateWorkScreen(
                             .fillMaxWidth()
                             .clickable(onClick = { onWorkerClick() })
                     ) {
-                        Text(text = "Worker:", fontSize = 12.sp)
+                        Text(text = stringResource(R.string.worker), fontSize = 12.sp)
                         Spacer(Modifier.height(4.dp))
                         Text(
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
-                            text = currentState.worker?.name ?: "Select worker",
+                            text = currentState.worker?.name ?: stringResource(R.string.select_worker),
 
                             )
                     }
@@ -183,7 +185,7 @@ fun CreateWorkScreen(
                             fontSize = 14.sp,
                             color = MaterialTheme.colorScheme.onSurface
                         ),
-                        label = { Text("Description") },
+                        label = { Text(stringResource(R.string.description)) },
 
                         )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -211,7 +213,7 @@ fun CreateWorkScreen(
                                 fontSize = 14.sp,
                                 color = MaterialTheme.colorScheme.onSurface
                             ),
-                            label = { Text("Hour") },
+                            label = { Text(stringResource(R.string.hour)) },
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number
                             )
@@ -240,7 +242,7 @@ fun CreateWorkScreen(
                                 fontSize = 14.sp,
                                 color = MaterialTheme.colorScheme.onSurface
                             ),
-                            label = { Text("Minute") },
+                            label = { Text(stringResource(R.string.minute)) },
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number
                             )
@@ -254,7 +256,7 @@ fun CreateWorkScreen(
                         shape = RoundedCornerShape(16.dp),
                         onClick = { viewModel.processCommand(CreateWorkCommand.Save) }
                     ) {
-                        Text(text = "Save")
+                        Text(text = stringResource(R.string.save))
                     }
                 }
             }

@@ -26,9 +26,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mywork.R
 import com.example.mywork.presentation.screen.workers.create.CreateWorkerViewModel.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +50,7 @@ fun CreateWorkerScreen(
                 modifier = modifier,
                 topBar = {
                     TopAppBar(
-                        title = {Text("Create Worker")},
+                        title = {Text(stringResource(R.string.create_worker_title))},
                         navigationIcon = {
                             Icon(
                                 modifier = Modifier
@@ -57,7 +59,7 @@ fun CreateWorkerScreen(
                                         viewModel.processCommand(CreateWorkerCommand.Back)
                                     },
                                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back"
+                                contentDescription = stringResource(R.string.back)
 
                             )
                         }
@@ -80,7 +82,7 @@ fun CreateWorkerScreen(
                         onValueChange = {
                             viewModel.processCommand(CreateWorkerCommand.InputName(it))
                         },
-                        label = { Text("Name") },
+                        label = { Text(stringResource(R.string.worker_name)) },
 
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
@@ -98,7 +100,7 @@ fun CreateWorkerScreen(
                         onValueChange = {
                             viewModel.processCommand(CreateWorkerCommand.InputPhone(it))
                         },
-                        label = { Text("Phone") },
+                        label = { Text(stringResource(R.string.phone)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedBorderColor = Color.Transparent,
@@ -113,7 +115,7 @@ fun CreateWorkerScreen(
                         shape = RoundedCornerShape(16.dp),
                         onClick = { viewModel.processCommand(CreateWorkerCommand.Save) }
                     ) {
-                        Text(text = "Save")
+                        Text(text = stringResource(R.string.save))
                     }
                 }
             }
