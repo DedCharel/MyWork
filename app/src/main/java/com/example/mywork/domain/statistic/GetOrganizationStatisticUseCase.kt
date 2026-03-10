@@ -6,7 +6,7 @@ import javax.inject.Inject
 class GetOrganizationStatisticUseCase @Inject constructor(
     private val repository: StatisticRepository
 ) {
-    operator fun invoke(): Flow<List<OrganizationStatisticEntity>>{
-        return repository.getAllOrganizationStatistic()
+    operator fun invoke(range: Pair<Long,Long>): Flow<List<OrganizationStatisticEntity>>{
+        return repository.getAllOrganizationStatistic(range)
     }
 }

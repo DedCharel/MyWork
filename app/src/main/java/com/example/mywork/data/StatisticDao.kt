@@ -11,10 +11,11 @@ interface StatisticDao {
 
     @Transaction
     @Query(""" SELECT Organizations.name , SUM(Works.time) AS totalTime, COUNT(*) AS count
-        FROM works 
+        FROM works         
         INNER JOIN organizations ON organizations.organizationId = works.organizationId
+        WHERE works.date >= :startRange AND works.date <= :finishRange
         GROUP BY Organizations.organizationId
         
     """)
-    fun getAllOrganizationsStatistic(): Flow<List<OrganizationStatistic>>
+    fun getAllOrganizationsStatistic(startRange: Long, finishRange:Long): Flow<List<OrganizationStatistic>>
 }

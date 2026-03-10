@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.map
 class StatisticRepositoryImpl @Inject constructor(
     private val statisticDao: StatisticDao
 ) : StatisticRepository {
-    override fun getAllOrganizationStatistic(): Flow<List<OrganizationStatisticEntity>> {
-        return statisticDao.getAllOrganizationsStatistic().map { it.toOrganizationStatisticEntities() }
+    override fun getAllOrganizationStatistic(range:Pair<Long,Long>): Flow<List<OrganizationStatisticEntity>> {
+        return statisticDao.getAllOrganizationsStatistic(range.first, range.second).map { it.toOrganizationStatisticEntities() }
     }
 }
