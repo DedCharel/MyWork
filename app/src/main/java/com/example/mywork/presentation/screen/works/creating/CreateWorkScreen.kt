@@ -74,7 +74,6 @@ fun CreateWorkScreen(
     when (currentState) {
         is CreateWorkScreenState.Creation -> {
             Scaffold(
-                modifier = modifier,
                 topBar = {
                     TopAppBar(
                         title = {
@@ -90,7 +89,7 @@ fun CreateWorkScreen(
                         navigationIcon = {
                             Icon(
                                 modifier = Modifier
-                                    .padding(horizontal = 16.dp)
+                                    .padding(horizontal = 8.dp)
                                     .clickable {
                                         viewModel.processCommand(CreateWorkCommand.Back)
                                     },
@@ -104,7 +103,7 @@ fun CreateWorkScreen(
             ) { innerPadding ->
 
                 Column(
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(innerPadding)
 
                 ) {

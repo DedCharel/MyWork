@@ -8,7 +8,6 @@ import com.example.mywork.domain.work.EditWorkUseCase
 import com.example.mywork.domain.work.GetWorkUseCase
 import com.example.mywork.domain.work.Work
 import com.example.mywork.domain.worker.GetWorkerUseCase
-import com.example.mywork.presentation.navigation.Screen
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

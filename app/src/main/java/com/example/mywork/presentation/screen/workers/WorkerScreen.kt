@@ -67,7 +67,7 @@ fun WorkerScreen(
                         navigationIcon = {
                             Icon(
                                 modifier = Modifier
-                                    .padding(horizontal = 16.dp)
+                                    .padding(horizontal = 8.dp)
                                     .clickable {
                                         viewModel.processCommand(WorkerCommand.Back)
                                     },

@@ -77,7 +77,6 @@ fun EditWorkScreen(
     when (currentState) {
         is EditWorkState.Editing -> {
             Scaffold(
-                modifier = modifier,
                 topBar = {
                     TopAppBar(
                         title = {
@@ -101,7 +100,7 @@ fun EditWorkScreen(
                                             )
                                         )
                                     }
-                                    .padding(end = 16.dp),
+                                    .padding(horizontal = 16.dp),
                                 imageVector = Icons.Default.Delete,
                                 contentDescription = stringResource(R.string.delete)
                             )
@@ -109,7 +108,7 @@ fun EditWorkScreen(
                         navigationIcon = {
                             Icon(
                                 modifier = Modifier
-                                    .padding(horizontal = 16.dp)
+                                    .padding(horizontal = 8.dp)
                                     .clickable {
                                         viewModel.processCommand(EditWorkCommand.Back)
                                     },
@@ -123,7 +122,7 @@ fun EditWorkScreen(
             ) { innerPadding ->
 
                 Column(
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(innerPadding)
 
                 ) {
