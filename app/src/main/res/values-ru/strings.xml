@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Учет работ</string>
+    <string name="statistic_title">Статистика</string>
+    <string name="back">Назад</string>
+    <string name="settings_title">Настройки</string>
+    <string name="organizations">Организации</string>
+    <string name="workers">Работники</string>
+    <string name="save">Сохранить</string>
+    <string name="comments">Комментарий</string>
+    <string name="address">Адрес</string>
+    <string name="email">Email</string>
+    <string name="phone">Телефон</string>
+    <string name="inn">ИНН</string>
+    <string name="name_organization">Название организации</string>
+    <string name="create_organization_title">Создать организацию</string>
+    <string name="edit_organization_title">Редактирование организации</string>
+    <string name="delete">Удалить</string>
+    <string name="organizations_title">Организации</string>
+    <string name="add">Добавить</string>
+    <string name="create_worker_title">Создать работника</string>
+    <string name="worker_name">Имя</string>
+    <string name="edit_worker_title">Редактировать работника</string>
+    <string name="workers_title">Работники</string>
+    <string name="create_work_title">Создать работу</string>
+    <string name="date">Дата</string>
+    <string name="organization">Организация</string>
+    <string name="select_organization">Выберите организацию</string>
+    <string name="worker">Работник</string>
+    <string name="select_worker">Выберите работника</string>
+    <string name="description">Описание</string>
+    <string name="hour">Часы</string>
+    <string name="minute">Минуты</string>
+    <string name="edit_work_title">Редактирование работы</string>
+    <string name="work_list_title">Список работ</string>
+    <string name="statistics">Статистика</string>
+    <string name="settings">Настройки</string>
+    <string name="add_work">Добавить работу</string>
+    <string name="search">Поиск</string>
+    <string name="search_work">Поиск работ</string>
+</resources>
