@@ -213,7 +213,7 @@ fun EditWorkScreen(
                             modifier = Modifier.weight(1f),
                             value = currentState.work.time.toString(),
                             onValueChange = { input ->
-                                if (input.isNotEmpty() && input.isDigitsOnly()) {
+                                if (input.isNotEmpty() && input.matches(Regex("^\\d*\\.?\\d*\$"))) {
 
                                         viewModel.processCommand(
                                             InputTime(
