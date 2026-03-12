@@ -38,4 +38,6 @@
     <string name="add_work">Добавить работу</string>
     <string name="search">Поиск</string>
     <string name="search_work">Поиск работ</string>
+    <string name="about_the_program">О программе</string>
+    <string name="default_settings">Настройки по умолчанию</string>
 </resources>

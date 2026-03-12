@@ -64,7 +64,9 @@ fun SettingsScreen(
                 }
             ) {innerPadding ->
                 Column(
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(top = 8.dp)
                 ) {
                     Text(
                         modifier = Modifier
@@ -77,7 +79,7 @@ fun SettingsScreen(
 
                     Text(
                         modifier = Modifier
-                            .padding( horizontal = 16.dp)
+                            .padding(horizontal = 16.dp)
                             .fillMaxWidth()
                             .clickable { onWorkerClick() },
                         text = stringResource(R.string.workers)
@@ -85,25 +87,21 @@ fun SettingsScreen(
                     HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
                     Text(
                         modifier = Modifier
-                            .padding( horizontal = 16.dp)
+                            .padding(horizontal = 16.dp)
                             .fillMaxWidth()
-                            .clickable {  },
-                        text = "Default settings"
+                            .clickable { },
+                        text = stringResource(R.string.default_settings)
                     )
                     HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
 
                     Text(
                         modifier = Modifier
-                            .padding( horizontal = 16.dp)
+                            .padding(horizontal = 16.dp)
                             .fillMaxWidth()
-                            .clickable {  },
-                        text = "About the program"
+                            .clickable { },
+                        text = stringResource(R.string.about_the_program)
                     )
                     HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
-
-
-
-
                 }
             }
         }

@@ -1,14 +1,13 @@
 package com.example.mywork.presentation.screen.works
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -28,8 +27,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -80,11 +81,17 @@ fun WorksScreen(
                             imageVector = Icons.Default.Settings,
                             contentDescription = stringResource(R.string.settings)
                         )
-                    }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        titleContentColor = Color.Black,
+                        navigationIconContentColor = Color.Black,
+                        actionIconContentColor = Color.Black
+                    )
                 )
                 SearchBar(
                     modifier = Modifier
-                        .padding(8.dp),
+                        .padding(8.dp)
+                        .background(MaterialTheme.colorScheme.secondary),
                     query = state.value.query,
                     onQueryChange = {
                         viewModel.processCommand(WorkCommand.InputSearchQuery(it))
@@ -95,7 +102,7 @@ fun WorksScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onAddWorkClick ,
+                onClick = onAddWorkClick,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 containerColor = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
@@ -109,19 +116,22 @@ fun WorksScreen(
     ) { innerPadding ->
 
 
-            LazyColumn(
-                Modifier.padding(innerPadding)
-            ) {
-                items(
-                    items = currentState.works,
-                    key = { it.id }
-                ) { work ->
-                    WorkCard(
+        LazyColumn(
+            Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.secondary)
+        ) {
+            items(
+                items = currentState.works,
+                key = { it.id }
+            ) { work ->
+                WorkCard(
 
-                        work = work,
-                        onWorkClick = { onWorkClick(it.id) })
-                }
+                    work = work,
+                    onWorkClick = { onWorkClick(it.id) })
             }
+        }
     }
 }
 
@@ -142,19 +152,38 @@ fun WorkCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
-    ){
-        Column(
+    ) {
+        Row(
             modifier = Modifier.padding(horizontal = 8.dp)
+
         ) {
-            Row {
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .align(Alignment.CenterVertically),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row{
+                    Text(
+                        text = DataFormater.getDayToString(work.date) + " " + DataFormater.getMonthToString(work.date),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1
+                    )
+                }
                 Text(
-                    text = DataFormater.formatDateToString(work.date),
-                    fontSize = 14.sp,
+                    text = DataFormater.getYearToString(work.date),
+                    fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+            }
+            Column(
+                modifier = modifier.weight(1f)
+            ) {
+
                 Text(
                     text = work.organization.name,
                     fontSize = 14.sp,
@@ -162,44 +191,42 @@ fun WorkCard(
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1
                 )
-            }
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = work.description,
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 3
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Row {
+                Text(
+                    text = work.description,
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1
+                )
                 Text(
                     text = work.worker.name,
                     fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 1
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = work.time.toString(),
-                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Thin,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1
                 )
             }
-
+            Text(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .align(Alignment.CenterVertically),
+                text = work.time.toString(),
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1
+            )
         }
+
     }
 
 }
+
 @Composable
 private fun SearchBar(
     modifier: Modifier = Modifier,
     query: String,
     onQueryChange: (String) -> Unit
-){
+) {
     TextField(
         modifier = modifier
             .fillMaxWidth()
@@ -213,7 +240,7 @@ private fun SearchBar(
         placeholder = {
             Text(
                 text = stringResource(R.string.search),
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         },

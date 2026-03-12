@@ -2,9 +2,7 @@ package com.example.mywork.presentation.screen.statistics
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -74,10 +72,12 @@ fun StatisticScreen(
                     modifier = Modifier.padding(innerPadding)
                 ) {
                     Column(Modifier.fillMaxWidth()) {
-                        Text(text = stringResource(R.string.date), fontSize = 12.sp)
-                        Spacer(Modifier.height(4.dp))
+                      //  Text(text = stringResource(R.string.date), fontSize = 12.sp)
+                      //  Spacer(Modifier.height(4.dp))
                         Text(
-                            modifier = Modifier.clickable { showDialog = true },
+                            modifier = Modifier
+                                .clickable { showDialog = true }
+                                .padding(16.dp),
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
                             text = DataFormater.formatDateToString(currentState.currentRange.first) + " - " + DataFormater.formatDateToString(currentState.currentRange.second)
@@ -103,6 +103,7 @@ fun StatisticScreen(
                         }
                     }
                     LazyColumn(
+                        modifier = Modifier.padding(16.dp)
 
 
                     ) {
