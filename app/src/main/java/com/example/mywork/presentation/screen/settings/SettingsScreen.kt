@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -16,11 +17,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.R
-import com.example.mywork.presentation.screen.workers.create.CreateWorkerViewModel.CreateWorkerCommand
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,6 +58,9 @@ fun SettingsScreen(
                             )
                         }
                     )
+                },
+                bottomBar = {
+
                 }
             ) {innerPadding ->
                 Column(
@@ -66,20 +68,41 @@ fun SettingsScreen(
                 ) {
                     Text(
                         modifier = Modifier
-                            .padding(8.dp)
+                            .padding(horizontal = 16.dp)
                             .fillMaxWidth()
                             .clickable { onOrganizationClick() },
-                        fontWeight = FontWeight.Bold,
                         text = stringResource(R.string.organizations)
                     )
+                    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+
                     Text(
                         modifier = Modifier
-                            .padding(8.dp)
+                            .padding( horizontal = 16.dp)
                             .fillMaxWidth()
                             .clickable { onWorkerClick() },
-                        fontWeight = FontWeight.Bold,
                         text = stringResource(R.string.workers)
                     )
+                    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+                    Text(
+                        modifier = Modifier
+                            .padding( horizontal = 16.dp)
+                            .fillMaxWidth()
+                            .clickable {  },
+                        text = "Default settings"
+                    )
+                    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+
+                    Text(
+                        modifier = Modifier
+                            .padding( horizontal = 16.dp)
+                            .fillMaxWidth()
+                            .clickable {  },
+                        text = "About the program"
+                    )
+                    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+
+
+
 
                 }
             }
