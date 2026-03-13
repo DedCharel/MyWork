@@ -16,8 +16,8 @@ import com.example.mywork.presentation.screen.statistics.StatisticScreen
 import com.example.mywork.presentation.screen.workers.WorkerScreen
 import com.example.mywork.presentation.screen.workers.create.CreateWorkerScreen
 import com.example.mywork.presentation.screen.workers.editing.EditWorkerScreen
-import com.example.mywork.presentation.screen.works.creating.CreateWorkScreen
 import com.example.mywork.presentation.screen.works.WorksScreen
+import com.example.mywork.presentation.screen.works.creating.CreateWorkScreen
 import com.example.mywork.presentation.screen.works.editing.EditWorkScreen
 
 @Composable
@@ -91,7 +91,14 @@ fun NavGraph() {
                     navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.set("worker_id", worker.id)
-                    navController.popBackStack()
+                    with(navController) {
+                        if (previousBackStackEntry?.destination?.route == Screen.EditWork.route ||
+                            previousBackStackEntry?.destination?.route == Screen.CreateWork.route) {
+                            popBackStack()
+                        } else {
+                            false
+                        }
+                    }
                 },
                 onEditWorker = {
                     navController.navigate(Screen.EditWorker.createRoute(it.id) )
@@ -115,7 +122,14 @@ fun NavGraph() {
                     navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.set("organization_id", organization.id)
-                    navController.popBackStack()
+                    with(navController) {
+                        if (previousBackStackEntry?.destination?.route == Screen.EditWork.route ||
+                            previousBackStackEntry?.destination?.route == Screen.CreateWork.route) {
+                            popBackStack()
+                        } else {
+                            false
+                        }
+                    }
                 },
                 onFinished = {
                     navController.popBackStack()

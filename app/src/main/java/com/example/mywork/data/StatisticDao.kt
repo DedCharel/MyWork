@@ -14,7 +14,7 @@ interface StatisticDao {
         FROM works         
         INNER JOIN organizations ON organizations.organizationId = works.organizationId
         WHERE works.date >= :startRange AND works.date <= :finishRange
-        GROUP BY Organizations.organizationId
+        GROUP BY Organizations.organizationId ORDER BY totalTime DESC
         
     """)
     fun getAllOrganizationsStatistic(startRange: Long, finishRange:Long): Flow<List<OrganizationStatistic>>
