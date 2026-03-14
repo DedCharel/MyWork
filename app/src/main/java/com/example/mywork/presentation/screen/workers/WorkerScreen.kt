@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.dropUnlessResumed
 import com.example.mywork.R
 import com.example.mywork.domain.worker.Worker
 
@@ -90,7 +91,7 @@ fun WorkerScreen(
 
                         WorkerCard(
                             worker = it,
-                            onWorkerClick = {
+                            onWorkerClick = dropUnlessResumed {
                                 if (isChoice){
                                     onWorkerSelected(it)
                                 } else {

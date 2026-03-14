@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.dropUnlessResumed
 import com.example.mywork.R
 import com.example.mywork.domain.organization.Organization
 import com.example.mywork.presentation.screen.settings.SettingsCommand
@@ -102,12 +103,12 @@ fun OrganizationScreen(
 
                         OrganizationCard(
                             organization = it,
-                            onOrganizationClick = {
+                            onOrganizationClick = dropUnlessResumed {
                                 if (isChoice){
                                     onOrganizationSelected(it)
-                                } else (
-                                        onEditOrganization(it)
-                                        )
+                                } else {
+                                    onEditOrganization(it)
+                                }
 
                             }
                         )

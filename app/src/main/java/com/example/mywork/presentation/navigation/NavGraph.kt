@@ -91,14 +91,7 @@ fun NavGraph() {
                     navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.set("worker_id", worker.id)
-                    with(navController) {
-                        if (previousBackStackEntry?.destination?.route == Screen.EditWork.route ||
-                            previousBackStackEntry?.destination?.route == Screen.CreateWork.route) {
-                            popBackStack()
-                        } else {
-                            false
-                        }
-                    }
+                    navController.popBackStack()
                 },
                 onEditWorker = {
                     navController.navigate(Screen.EditWorker.createRoute(it.id) )
@@ -122,14 +115,7 @@ fun NavGraph() {
                     navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.set("organization_id", organization.id)
-                    with(navController) {
-                        if (previousBackStackEntry?.destination?.route == Screen.EditWork.route ||
-                            previousBackStackEntry?.destination?.route == Screen.CreateWork.route) {
-                            popBackStack()
-                        } else {
-                            false
-                        }
-                    }
+                   navController.popBackStack()
                 },
                 onFinished = {
                     navController.popBackStack()
