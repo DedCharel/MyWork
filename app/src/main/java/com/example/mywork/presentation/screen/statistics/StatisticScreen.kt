@@ -54,7 +54,7 @@ fun StatisticScreen(
 
             }
         }
-        is StatisticScreenState.OrganizationStatistics -> {
+        is StatisticScreenState.DisplayStatistics -> {
             Scaffold(
                 topBar = {
                     TopAppBar(
@@ -93,7 +93,7 @@ fun StatisticScreen(
                                     val startRange = millis.first ?: 0
                                     val finishRange = millis.second ?: 0
                                     viewModel.processCommand(
-                                        StatisticCommand.StatisticRange(
+                                        StatisticCommand.SetStatisticRange(
                                             Pair(startRange, finishRange)
                                         )
                                     )
@@ -130,7 +130,7 @@ fun StatisticScreen(
 
                     ) {
                         items(
-                            items = currentState.organizationStatistics,
+                            items = currentState.totalStatistics,
                             key = { it.name }
 
                         ){ statistic ->

@@ -2,7 +2,7 @@ package com.example.mywork.presentation.screen.statistics
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mywork.domain.statistic.GetOrganizationStatisticUseCase
+import com.example.mywork.domain.statistic.GetAllStatisticUseCase
 import com.example.mywork.domain.statistic.TotalStatisticEntity
 import com.example.mywork.presentation.utils.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,17 +19,17 @@ import javax.inject.Inject
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class StatisticViewModel @Inject constructor(
-    private val getOrganizationStatisticUseCase: GetOrganizationStatisticUseCase
+    private val getOrganizationStatisticUseCase: GetAllStatisticUseCase
 ): ViewModel() {
 
     private val rangeState = MutableStateFlow(Pair(DateUtils.getStartOfCurrentMonth(),System.currentTimeMillis()))
-    private val _state = MutableStateFlow<StatisticScreenState>(StatisticScreenState.OrganizationStatistics())
+    private val _state = MutableStateFlow<StatisticScreenState>(StatisticScreenState.DisplayStatistics())
     val state = _state.asStateFlow()
 
     init {
         rangeState.onEach { input ->
             _state.update { previousState ->
-                if (previousState is StatisticScreenState.OrganizationStatistics)
+                if (previousState is StatisticScreenState.DisplayStatistics)
                     previousState.copy(currentRange = input)
                 else{
                     previousState
@@ -39,8 +39,8 @@ class StatisticViewModel @Inject constructor(
             getOrganizationStatisticUseCase(it)
         }.onEach { statistic ->
             _state.update { previousState ->
-                if (previousState is StatisticScreenState.OrganizationStatistics){
-                    previousState.copy(organizationStatistics = statistic)
+                if (previousState is StatisticScreenState.DisplayStatistics){
+                    previousState.copy(totalStatistics = statistic)
                 } else {
                     previousState
                 }
@@ -55,7 +55,7 @@ class StatisticViewModel @Inject constructor(
                     StatisticScreenState.Finished
                 }
             }
-            is StatisticCommand.StatisticRange -> {
+            is StatisticCommand.SetStatisticRange -> {
                 viewModelScope.launch {
                     val currentRange = command.range
                     rangeState.update {
@@ -73,7 +73,7 @@ sealed interface StatisticCommand {
 
     data object Back: StatisticCommand
 
-    data class StatisticRange(val range: Pair<Long,Long>): StatisticCommand
+    data class SetStatisticRange(val range: Pair<Long,Long>): StatisticCommand
 
 
 }
@@ -81,8 +81,8 @@ sealed interface StatisticScreenState{
 
     data object Finished: StatisticScreenState
 
-    data class OrganizationStatistics(
-        val organizationStatistics: List<TotalStatisticEntity> = listOf(),
+    data class DisplayStatistics(
+        val totalStatistics: List<TotalStatisticEntity> = listOf(),
         val currentRange: Pair<Long, Long> = Pair(0,0)
     ): StatisticScreenState
 

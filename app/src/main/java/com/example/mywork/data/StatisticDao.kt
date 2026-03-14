@@ -18,4 +18,12 @@ interface StatisticDao {
         
     """)
     fun getAllOrganizationsStatistic(startRange: Long, finishRange:Long): Flow<List<TotalStatistic>>
+
+
+    @Transaction
+    @Query ("""SELECT * FROM works 
+        WHERE organizationId = :organizationId 
+        AND works.date >= :startRange AND works.date <= :finishRange
+        ORDER BY time DESC""")
+    fun getOrganizationStatistic(organizationId: Long,startRange: Long, finishRange:Long): Flow<List<WorkWithReferences>>
 }
