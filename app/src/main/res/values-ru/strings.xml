@@ -41,4 +41,5 @@
     <string name="about_the_program">О программе</string>
     <string name="default_settings">Настройки по умолчанию</string>
     <string name="count">Кол-во</string>
+    <string name="upload_data">Выгрузить данные</string>
 </resources>

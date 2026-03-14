@@ -93,6 +93,14 @@ fun SettingsScreen(
                         text = stringResource(R.string.default_settings)
                     )
                     HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth()
+                            .clickable { },
+                        text = stringResource(R.string.upload_data)
+                    )
+                    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
 
                     Text(
                         modifier = Modifier

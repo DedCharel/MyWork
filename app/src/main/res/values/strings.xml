@@ -40,4 +40,5 @@
     <string name="about_the_program">About the program</string>
     <string name="default_settings">Default settings</string>
     <string name="count">Count</string>
+    <string name="upload_data">Upload data</string>
 </resources>
