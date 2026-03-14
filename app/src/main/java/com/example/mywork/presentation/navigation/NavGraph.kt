@@ -164,6 +164,9 @@ fun NavGraph() {
         }
         composable(Screen.Statistic.route) {
             StatisticScreen(
+                onStatisticClick = {
+
+                },
                 onFinished = {
                     navController.popBackStack()
                 }

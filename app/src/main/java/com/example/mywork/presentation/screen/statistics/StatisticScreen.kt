@@ -31,7 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.R
-import com.example.mywork.domain.statistic.OrganizationStatisticEntity
+import com.example.mywork.domain.statistic.TotalStatisticEntity
 import com.example.mywork.presentation.utils.DataFormater
 import com.example.mywork.presentation.utils.DateRangePickerModal
 
@@ -41,6 +41,7 @@ import com.example.mywork.presentation.utils.DateRangePickerModal
 fun StatisticScreen(
     modifier: Modifier = Modifier,
     viewModel: StatisticViewModel = hiltViewModel(),
+    onStatisticClick: (Long) -> Unit,
     onFinished: () -> Unit
 ){
     val state = viewModel.state.collectAsState()
@@ -132,10 +133,10 @@ fun StatisticScreen(
                             items = currentState.organizationStatistics,
                             key = { it.name }
 
-                        ){
+                        ){ statistic ->
                             StatisticCard(
-                                statistic = it,
-                                onStatisticClick = {}
+                                statistic = statistic,
+                                onStatisticClick = {onStatisticClick(it)}
                             )
                         }
                     }
@@ -150,15 +151,15 @@ fun StatisticScreen(
 @Composable
 fun StatisticCard(
     modifier: Modifier = Modifier,
-    statistic: OrganizationStatisticEntity,
-    onStatisticClick: (OrganizationStatisticEntity) -> Unit
+    statistic: TotalStatisticEntity,
+    onStatisticClick: (Long) -> Unit
 ){
     Card(
         modifier = modifier
             .padding(vertical = 4.dp)
             .fillMaxWidth()
             .clickable {
-                onStatisticClick(statistic)
+                onStatisticClick(statistic.organizationId)
             },
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
@@ -171,7 +172,7 @@ fun StatisticCard(
             ) {
                 Text(
                     modifier = Modifier.weight(0.6f),
-                    text = "${statistic.name}"
+                    text = statistic.name
                 )
                 Text(
                     modifier = Modifier.weight(0.2f),

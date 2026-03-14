@@ -1,8 +1,7 @@
 package com.example.mywork.data
 
-import com.example.mywork.domain.organization.Organization
-
-data class OrganizationStatistic(
+data class TotalStatistic(
+    val organizationId:  Long,
     val name: String,
     val totalTime: Double,
     val count: Int

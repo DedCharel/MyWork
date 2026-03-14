@@ -1,7 +1,7 @@
 package com.example.mywork.data
 
 import com.example.mywork.domain.organization.Organization
-import com.example.mywork.domain.statistic.OrganizationStatisticEntity
+import com.example.mywork.domain.statistic.TotalStatisticEntity
 import com.example.mywork.domain.work.Work
 import com.example.mywork.domain.worker.Worker
 
@@ -80,13 +80,13 @@ fun List<WorkerDbModel>.toWorkerEntities(): List<Worker>{
     return map { it.toWorkerEntity() }
 }
 
-fun OrganizationStatistic.toEntity(): OrganizationStatisticEntity{
-    return OrganizationStatisticEntity(
-        name, totalTime, count
+fun TotalStatistic.toEntity(): TotalStatisticEntity{
+    return TotalStatisticEntity(
+        organizationId, name, totalTime, count
     )
 }
 
-fun List<OrganizationStatistic>.toOrganizationStatisticEntities(): List<OrganizationStatisticEntity>{
+fun List<TotalStatistic>.toOrganizationStatisticEntities(): List<TotalStatisticEntity>{
     return map { it.toEntity() }
 }
 

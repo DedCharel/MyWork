@@ -3,7 +3,7 @@ package com.example.mywork.presentation.screen.statistics
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mywork.domain.statistic.GetOrganizationStatisticUseCase
-import com.example.mywork.domain.statistic.OrganizationStatisticEntity
+import com.example.mywork.domain.statistic.TotalStatisticEntity
 import com.example.mywork.presentation.utils.DateUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -82,7 +82,7 @@ sealed interface StatisticScreenState{
     data object Finished: StatisticScreenState
 
     data class OrganizationStatistics(
-        val organizationStatistics: List<OrganizationStatisticEntity> = listOf(),
+        val organizationStatistics: List<TotalStatisticEntity> = listOf(),
         val currentRange: Pair<Long, Long> = Pair(0,0)
     ): StatisticScreenState
 

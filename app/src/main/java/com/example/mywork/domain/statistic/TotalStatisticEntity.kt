@@ -1,6 +1,7 @@
 package com.example.mywork.domain.statistic
 
-data class OrganizationStatisticEntity(
+data class TotalStatisticEntity(
+    val organizationId:  Long,
     val name: String,
     val totalTime: Double,
     val count: Int

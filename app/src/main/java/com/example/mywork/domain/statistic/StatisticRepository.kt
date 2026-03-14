@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface StatisticRepository {
 
-    fun getAllOrganizationStatistic(range: Pair<Long, Long>): Flow<List<OrganizationStatisticEntity>>
+    fun getAllOrganizationStatistic(range: Pair<Long, Long>): Flow<List<TotalStatisticEntity>>
 }
