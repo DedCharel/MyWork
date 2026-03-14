@@ -2,14 +2,18 @@ package com.example.mywork.presentation.screen.statistics
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -23,10 +27,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.R
+import com.example.mywork.domain.statistic.OrganizationStatisticEntity
 import com.example.mywork.presentation.utils.DataFormater
 import com.example.mywork.presentation.utils.DateRangePickerModal
 
@@ -102,8 +108,27 @@ fun StatisticScreen(
                             )
                         }
                     }
+                    Row(
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    ) {
+                        Text(
+                            modifier = Modifier.weight(0.6f),
+                            text = stringResource(R.string.name_organization)
+                        )
+                        Text(
+                            modifier = Modifier.weight(0.2f),
+                            textAlign = TextAlign.Center,
+                            text = stringResource(R.string.count)
+                        )
+                        Text(
+                            modifier = Modifier.weight(0.2f),
+                            textAlign = TextAlign.End,
+
+                            text = stringResource(R.string.hour)
+                        )
+                    }
                     LazyColumn(
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(8.dp)
 
 
                     ) {
@@ -112,7 +137,10 @@ fun StatisticScreen(
                             key = { it.name }
 
                         ){
-                            Text("${it.name} time: ${it.totalTime} count: ${it.count}")
+                            StatisticCard(
+                                statistic = it,
+                                onStatisticClick = {}
+                            )
                         }
                     }
                 }
@@ -122,4 +150,46 @@ fun StatisticScreen(
         }
     }
 
+}
+@Composable
+fun StatisticCard(
+    modifier: Modifier = Modifier,
+    statistic: OrganizationStatisticEntity,
+    onStatisticClick: (OrganizationStatisticEntity) -> Unit
+){
+    Card(
+        modifier = modifier
+            .padding(vertical = 4.dp)
+            .fillMaxWidth()
+            .clickable {
+                onStatisticClick(statistic)
+            },
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    )   {
+
+            Row(
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
+                Text(
+                    modifier = Modifier.weight(0.6f),
+                    text = "${statistic.name}"
+                )
+                Text(
+                    modifier = Modifier.weight(0.2f),
+                    textAlign = TextAlign.Center,
+                    text = "${statistic.count}"
+                )
+                Text(
+                    modifier = Modifier.weight(0.2f),
+                    textAlign = TextAlign.End,
+
+                    text = "${statistic.totalTime}"
+                )
+            }
+
+
+    }
 }

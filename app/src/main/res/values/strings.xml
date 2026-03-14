@@ -39,4 +39,5 @@
     <string name="search_work">search work</string>
     <string name="about_the_program">About the program</string>
     <string name="default_settings">Default settings</string>
+    <string name="count">Count</string>
 </resources>
