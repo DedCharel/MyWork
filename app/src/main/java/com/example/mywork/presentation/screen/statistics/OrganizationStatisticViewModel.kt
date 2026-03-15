@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel(assistedFactory = OrganizationStatisticViewModel.Factory::class)
@@ -53,6 +54,17 @@ class OrganizationStatisticViewModel @AssistedInject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            _state.update { previousState ->
+                if (previousState is OrganizationStatisticScreenState.DisplayOrganizationStatistic){
+                    val organization = getOrganizationUseCase(organizationId)
+                    previousState.copy(organizationName = organization.name)
+                } else {
+                    previousState
+                }
+
+            }
+        }
     }
 
     fun processCommand(command: OrganizationStatisticCommand){
@@ -91,7 +103,8 @@ sealed interface OrganizationStatisticScreenState{
 
     data class DisplayOrganizationStatistic(
         val works: List<Work> = listOf(),
-        val currentRange: Pair<Long, Long> = Pair(0,0)
+        val currentRange: Pair<Long, Long> = Pair(0,0),
+        val organizationName: String = ""
     ): OrganizationStatisticScreenState
 }
 

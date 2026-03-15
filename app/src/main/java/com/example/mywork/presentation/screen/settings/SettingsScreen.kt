@@ -4,6 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +35,7 @@ fun SettingsScreen(
 ){
     val state = viewModel.state.collectAsState()
     val currentState = state.value
+    val scrollState = rememberScrollState()
 
     when (currentState){
         SettingsState.Finished -> {
@@ -67,6 +70,7 @@ fun SettingsScreen(
                     modifier = Modifier
                         .padding(innerPadding)
                         .padding(top = 8.dp)
+                        .verticalScroll(scrollState)
                 ) {
                     Text(
                         modifier = Modifier

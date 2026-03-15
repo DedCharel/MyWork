@@ -12,6 +12,7 @@ import com.example.mywork.presentation.screen.organization.OrganizationScreen
 import com.example.mywork.presentation.screen.organization.create.CreateOrganizationScreen
 import com.example.mywork.presentation.screen.organization.editing.EditOrganizationScreen
 import com.example.mywork.presentation.screen.settings.SettingsScreen
+import com.example.mywork.presentation.screen.statistics.OrganizationStatisticScreen
 import com.example.mywork.presentation.screen.statistics.StatisticScreen
 import com.example.mywork.presentation.screen.workers.WorkerScreen
 import com.example.mywork.presentation.screen.workers.create.CreateWorkerScreen
@@ -165,8 +166,17 @@ fun NavGraph() {
         composable(Screen.Statistic.route) {
             StatisticScreen(
                 onStatisticClick = {
-
+                    navController.navigate(Screen.OrganizationStatistic.createRoute(it))
                 },
+                onFinished = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(Screen.OrganizationStatistic.route) {
+            val organizationId = Screen.OrganizationStatistic.getOrganizationId(it.arguments)
+            OrganizationStatisticScreen (
+                organizationId = organizationId,
                 onFinished = {
                     navController.popBackStack()
                 }
@@ -234,6 +244,16 @@ sealed class Screen(val route: String) {
     }
 
     data object Statistic : Screen("statistic")
+
+    data object OrganizationStatistic : Screen("organization_statistic/{organizationId}") {
+        fun createRoute(organizationId: Long): String {
+            return "organization_statistic/$organizationId"
+        }
+
+        fun getOrganizationId(arguments: Bundle?): Long {
+            return arguments?.getString("organizationId")?.toLong() ?: 0
+        }
+    }
 }
 
 

@@ -41,4 +41,6 @@
     <string name="default_settings">Default settings</string>
     <string name="count">Count</string>
     <string name="upload_data">Upload data</string>
+    <string name="send_by_email">Send by Email</string>
+    <string name="organization_statistic">Organization statistic</string>
 </resources>

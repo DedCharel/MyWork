@@ -42,4 +42,6 @@
     <string name="default_settings">Настройки по умолчанию</string>
     <string name="count">Кол-во</string>
     <string name="upload_data">Выгрузить данные</string>
+    <string name="send_by_email">Отправить на Email</string>
+    <string name="organization_statistic">Статистика организации</string>
 </resources>
