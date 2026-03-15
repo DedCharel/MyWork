@@ -46,9 +46,11 @@ import com.example.mywork.presentation.utils.DateRangePickerModal
 fun OrganizationStatisticScreen(
     modifier: Modifier = Modifier,
     organizationId:Long,
+    startRange: Long,
+    finishRange: Long,
     viewModel: OrganizationStatisticViewModel = hiltViewModel(
         creationCallback = {factory: OrganizationStatisticViewModel.Factory ->
-            factory.create(organizationId)
+            factory.create(organizationId, startRange, finishRange)
         }
     ),
     onFinished: () -> Unit

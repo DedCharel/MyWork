@@ -23,7 +23,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -42,7 +41,7 @@ import com.example.mywork.presentation.utils.DateRangePickerModal
 fun StatisticScreen(
     modifier: Modifier = Modifier,
     viewModel: StatisticViewModel = hiltViewModel(),
-    onStatisticClick: (Long) -> Unit,
+    onStatisticClick: (Long,Pair<Long,Long>) -> Unit,
     onFinished: () -> Unit
 ){
     val state = viewModel.state.collectAsState()
@@ -137,7 +136,7 @@ fun StatisticScreen(
                         ){ statistic ->
                             StatisticCard(
                                 statistic = statistic,
-                                onStatisticClick = {onStatisticClick(it)}
+                                onStatisticClick = {onStatisticClick(it, currentState.currentRange)}
                             )
                         }
                     }

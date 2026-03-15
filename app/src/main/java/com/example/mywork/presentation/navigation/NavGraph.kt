@@ -165,8 +165,8 @@ fun NavGraph() {
         }
         composable(Screen.Statistic.route) {
             StatisticScreen(
-                onStatisticClick = {
-                    navController.navigate(Screen.OrganizationStatistic.createRoute(it))
+                onStatisticClick = { organizationId, range ->
+                    navController.navigate(Screen.OrganizationStatistic.createRoute(organizationId, range.first, range.second))
                 },
                 onFinished = {
                     navController.popBackStack()
@@ -175,8 +175,12 @@ fun NavGraph() {
         }
         composable(Screen.OrganizationStatistic.route) {
             val organizationId = Screen.OrganizationStatistic.getOrganizationId(it.arguments)
+            val startRange = Screen.OrganizationStatistic.getStartRange(it.arguments)
+            val finishRange = Screen.OrganizationStatistic.getFinishRange(it.arguments)
             OrganizationStatisticScreen (
                 organizationId = organizationId,
+                startRange = startRange,
+                finishRange = finishRange,
                 onFinished = {
                     navController.popBackStack()
                 }
@@ -245,13 +249,19 @@ sealed class Screen(val route: String) {
 
     data object Statistic : Screen("statistic")
 
-    data object OrganizationStatistic : Screen("organization_statistic/{organizationId}") {
-        fun createRoute(organizationId: Long): String {
-            return "organization_statistic/$organizationId"
+    data object OrganizationStatistic : Screen("organization_statistic/{organizationId}/{startRange}/{finishRange}") {
+        fun createRoute(organizationId: Long, startRange: Long, finishRange:Long): String {
+            return "organization_statistic/$organizationId/$startRange/$finishRange"
         }
 
         fun getOrganizationId(arguments: Bundle?): Long {
             return arguments?.getString("organizationId")?.toLong() ?: 0
+        }
+        fun getStartRange(arguments: Bundle?): Long {
+            return arguments?.getString("startRange")?.toLong() ?: 0
+        }
+        fun getFinishRange(arguments: Bundle?): Long {
+            return arguments?.getString("finishRange")?.toLong() ?: 0
         }
     }
 }

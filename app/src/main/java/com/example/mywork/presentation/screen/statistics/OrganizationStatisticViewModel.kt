@@ -24,10 +24,11 @@ import kotlinx.coroutines.launch
 class OrganizationStatisticViewModel @AssistedInject constructor(
     private val getOrganizationStatisticUseCase: GetOrganizationStatisticUseCase,
     private val getOrganizationUseCase: GetOrganizationUseCase,
-    @Assisted("organizationId")val organizationId: Long
+    @Assisted("organizationId")val organizationId: Long,
+    @Assisted("startRange") val startRange: Long,
+    @Assisted("finishRange") val finishRange: Long
 ): ViewModel(){
-    private val rangeState = MutableStateFlow(Pair(DateUtils.getStartOfCurrentMonth(),
-        System.currentTimeMillis()))
+    private val rangeState = MutableStateFlow(Pair(startRange,finishRange))
 
     private val _state = MutableStateFlow<OrganizationStatisticScreenState>(
         OrganizationStatisticScreenState.DisplayOrganizationStatistic())
@@ -85,7 +86,11 @@ class OrganizationStatisticViewModel @AssistedInject constructor(
 
     @AssistedFactory
     interface Factory{
-        fun create(@Assisted("organizationId") organizationId: Long): OrganizationStatisticViewModel
+        fun create(
+            @Assisted("organizationId") organizationId: Long,
+            @Assisted("startRange") startRange: Long,
+            @Assisted("finishRange") finishRange: Long
+        ): OrganizationStatisticViewModel
     }
 }
 
