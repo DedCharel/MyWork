@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.Button
@@ -45,39 +43,41 @@ import com.example.mywork.presentation.utils.DateRangePickerModal
 @Composable
 fun OrganizationStatisticScreen(
     modifier: Modifier = Modifier,
-    organizationId:Long,
+    organizationId: Long,
     startRange: Long,
     finishRange: Long,
     viewModel: OrganizationStatisticViewModel = hiltViewModel(
-        creationCallback = {factory: OrganizationStatisticViewModel.Factory ->
+        creationCallback = { factory: OrganizationStatisticViewModel.Factory ->
             factory.create(organizationId, startRange, finishRange)
         }
     ),
     onFinished: () -> Unit
-){
+) {
     val state = viewModel.state.collectAsState()
     val currentState = state.value
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
 
-    when(currentState){
+    when (currentState) {
         is OrganizationStatisticScreenState.DisplayOrganizationStatistic -> {
             Scaffold(
-                topBar = { TopAppBar(
-                    title = {Text(stringResource(R.string.organization_statistic))},
-                    navigationIcon = {
-                        Icon(
-                            modifier = Modifier
-                                .padding(horizontal = 8.dp)
-                                .clickable {
-                                    onFinished()
-                                },
-                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                            contentDescription = stringResource(R.string.back)
+                topBar = {
+                    TopAppBar(
+                        title = { Text(stringResource(R.string.organization_statistic)) },
+                        navigationIcon = {
+                            Icon(
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp)
+                                    .clickable {
+                                        onFinished()
+                                    },
+                                imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                                contentDescription = stringResource(R.string.back)
 
-                        )
-                    }
-                ) }
+                            )
+                        }
+                    )
+                }
             )
             { innerPadding ->
                 Column(
@@ -122,10 +122,13 @@ fun OrganizationStatisticScreen(
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp,
                         text = currentState.organizationName,
-                        textAlign = TextAlign.Center)
+                        textAlign = TextAlign.Center
+                    )
 
                     LazyColumn(
-                        modifier = Modifier.padding(8.dp).fillMaxWidth()
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .fillMaxWidth()
 
 
                     ) {
@@ -133,13 +136,16 @@ fun OrganizationStatisticScreen(
                             items = currentState.works,
                             key = { it.id }
 
-                        ){ work ->
+                        ) { work ->
                             OrganizationStatisticCard(work = work)
                         }
                         item {
                             Box(
-                                modifier = Modifier.fillMaxWidth().padding(8.dp),
-                                contentAlignment = Alignment.Center){
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
                                 Button(
                                     onClick = {}
                                 ) {
@@ -152,6 +158,7 @@ fun OrganizationStatisticScreen(
                 }
             }
         }
+
         OrganizationStatisticScreenState.Finished -> {
             LaunchedEffect(key1 = Unit) {
                 onFinished()
@@ -164,7 +171,7 @@ fun OrganizationStatisticScreen(
 fun OrganizationStatisticCard(
     modifier: Modifier = Modifier,
     work: Work
-){
+) {
     Card(
         modifier = modifier
             .padding(vertical = 4.dp)
@@ -173,31 +180,29 @@ fun OrganizationStatisticCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
-    )   {
+    ) {
 
         Row(
-            modifier = Modifier.padding(horizontal = 8.dp)
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
         ) {
-            Column (
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    textAlign = TextAlign.Start,
-                    fontWeight = FontWeight.Bold,
-                    text = DataFormater.formatDateToString(work.date)
-                )
-                Text(
-                    textAlign = TextAlign.Start,
-                    text = work.description
-                )
-            }
             Text(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Bold,
+                text = DataFormater.formatDateToString(work.date)
+            )
+            Text(
                 fontWeight = FontWeight.Bold,
                 text = "${work.time}"
             )
         }
-
-
+        Text(
+            modifier = modifier.padding(horizontal = 8.dp),
+            textAlign = TextAlign.Start,
+            text = work.description
+        )
     }
+
+
 }
