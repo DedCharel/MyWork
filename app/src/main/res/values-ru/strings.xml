@@ -44,4 +44,6 @@
     <string name="upload_data">Выгрузить данные</string>
     <string name="send_by_email">Отправить на Email</string>
     <string name="organization_statistic">Статистика организации</string>
+    <string name="report_work_for_the_period">Отчет о работе за период %1$s - %2$s</string>
+    <string name="select_an_email_client">Выберите почтовый клиент</string>
 </resources>

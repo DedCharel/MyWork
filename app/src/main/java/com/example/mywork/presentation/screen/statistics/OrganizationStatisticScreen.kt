@@ -1,5 +1,7 @@
 package com.example.mywork.presentation.screen.statistics
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -56,6 +59,7 @@ fun OrganizationStatisticScreen(
     val state = viewModel.state.collectAsState()
     val currentState = state.value
     var showDialog by rememberSaveable { mutableStateOf(false) }
+    val context = LocalContext.current
 
 
     when (currentState) {
@@ -147,7 +151,38 @@ fun OrganizationStatisticScreen(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Button(
-                                    onClick = {}
+                                    onClick = {
+                                        //temp solution
+                                        val title = context.getString(
+                                            R.string.report_work_for_the_period,
+                                            DataFormater.formatDateToString(currentState.currentRange.first),
+                                            DataFormater.formatDateToString(currentState.currentRange.second)
+                                        )
+                                        val intent = Intent(Intent.ACTION_SENDTO).apply {
+                                            data = Uri.parse("mailto:")
+                                            val report =
+                                                putExtra(
+                                                    Intent.EXTRA_EMAIL,
+                                                    arrayOf("test@mail.ru")
+                                                )
+                                            putExtra(Intent.EXTRA_SUBJECT, title)
+                                            putExtra(
+                                                Intent.EXTRA_TEXT,
+                                                currentState.works.joinToString(separator = "\n") {
+                                                    DataFormater.formatDateToString(it.date) + " " + it.description + " / " + it.time + " часа/"
+                                                } + "\n\n Отчет сформирован автоматически из программы Учет работ")
+                                        }
+                                        context.startActivity(
+                                            Intent.createChooser(
+                                                intent,
+                                                context.getString(
+                                                    R.string.select_an_email_client
+                                                )
+                                            )
+                                        )
+
+
+                                    }
                                 ) {
                                     Text(stringResource(R.string.send_by_email))
                                 }

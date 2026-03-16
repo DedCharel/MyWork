@@ -24,6 +24,6 @@ interface StatisticDao {
     @Query ("""SELECT * FROM works 
         WHERE organizationId = :organizationId 
         AND works.date >= :startRange AND works.date <= :finishRange
-        ORDER BY time DESC""")
+        ORDER BY date""")
     fun getOrganizationStatistic(organizationId: Long,startRange: Long, finishRange:Long): Flow<List<WorkWithReferences>>
 }

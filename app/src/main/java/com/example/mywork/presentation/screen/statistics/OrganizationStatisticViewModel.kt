@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.mywork.domain.organization.GetOrganizationUseCase
 import com.example.mywork.domain.statistic.GetOrganizationStatisticUseCase
 import com.example.mywork.domain.work.Work
-import com.example.mywork.presentation.utils.DateUtils
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -75,11 +74,13 @@ class OrganizationStatisticViewModel @AssistedInject constructor(
                     OrganizationStatisticScreenState.Finished
                 }
             }
-            OrganizationStatisticCommand.SendEmail -> {
 
-            }
             is OrganizationStatisticCommand.SetStatisticRange -> {
                 rangeState.update { command.range }
+            }
+
+            is OrganizationStatisticCommand.SendEmail -> {
+
             }
         }
     }
@@ -98,7 +99,7 @@ sealed interface OrganizationStatisticCommand{
 
     data object Back: OrganizationStatisticCommand
 
-    data object SendEmail: OrganizationStatisticCommand
+    data class SendEmail(val email: String): OrganizationStatisticCommand
 
     data class SetStatisticRange(val range: Pair<Long,Long>): OrganizationStatisticCommand
 }

@@ -43,4 +43,6 @@
     <string name="upload_data">Upload data</string>
     <string name="send_by_email">Send by Email</string>
     <string name="organization_statistic">Organization statistic</string>
+    <string name="report_work_for_the_period">Report work for the period %1$s - %2$s</string>
+    <string name="select_an_email_client">Select an email client</string>
 </resources>
