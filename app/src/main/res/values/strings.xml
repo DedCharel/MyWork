@@ -45,4 +45,6 @@
     <string name="organization_statistic">Organization statistic</string>
     <string name="report_work_for_the_period">Report work for the period %1$s - %2$s</string>
     <string name="select_an_email_client">Select an email client</string>
+    <string name="report_footer">The report is generated automatically from the My Work program</string>
+    <string name="hour_short">h.</string>
 </resources>

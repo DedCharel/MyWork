@@ -58,7 +58,7 @@ class OrganizationStatisticViewModel @AssistedInject constructor(
             _state.update { previousState ->
                 if (previousState is OrganizationStatisticScreenState.DisplayOrganizationStatistic){
                     val organization = getOrganizationUseCase(organizationId)
-                    previousState.copy(organizationName = organization.name)
+                    previousState.copy(organizationName = organization.name, organizationEmail = organization.email)
                 } else {
                     previousState
                 }
@@ -110,7 +110,8 @@ sealed interface OrganizationStatisticScreenState{
     data class DisplayOrganizationStatistic(
         val works: List<Work> = listOf(),
         val currentRange: Pair<Long, Long> = Pair(0,0),
-        val organizationName: String = ""
+        val organizationName: String = "",
+        val organizationEmail: String = ""
     ): OrganizationStatisticScreenState
 }
 

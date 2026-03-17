@@ -46,4 +46,6 @@
     <string name="organization_statistic">Статистика организации</string>
     <string name="report_work_for_the_period">Отчет о работе за период %1$s - %2$s</string>
     <string name="select_an_email_client">Выберите почтовый клиент</string>
+    <string name="report_footer">Отчет сформирован автоматически из программы "Учет работ"</string>
+    <string name="hour_short">ч.</string>
 </resources>

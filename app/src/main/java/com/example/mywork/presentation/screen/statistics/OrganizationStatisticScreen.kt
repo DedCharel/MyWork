@@ -163,14 +163,15 @@ fun OrganizationStatisticScreen(
                                             val report =
                                                 putExtra(
                                                     Intent.EXTRA_EMAIL,
-                                                    arrayOf("test@mail.ru")
+                                                    arrayOf(currentState.organizationEmail)
                                                 )
                                             putExtra(Intent.EXTRA_SUBJECT, title)
                                             putExtra(
                                                 Intent.EXTRA_TEXT,
                                                 currentState.works.joinToString(separator = "\n") {
-                                                    DataFormater.formatDateToString(it.date) + " " + it.description + " / " + it.time + " часа/"
-                                                } + "\n\n Отчет сформирован автоматически из программы Учет работ")
+                                                    DataFormater.formatDateToString(it.date) + " " + it.description + " / " + it.time + " " + context.getString(R.string.hour_short) + "/"
+
+                                                } + "\n\n" + context.getString(R.string.report_footer))
                                         }
                                         context.startActivity(
                                             Intent.createChooser(
