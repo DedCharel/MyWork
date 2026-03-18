@@ -2,12 +2,18 @@ package com.example.mywork.presentation.screen.settings
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -72,47 +78,92 @@ fun SettingsScreen(
                         .padding(top = 8.dp)
                         .verticalScroll(scrollState)
                 ) {
-                    Text(
+                    Row(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
-                            .clickable { onOrganizationClick() },
-                        text = stringResource(R.string.organizations)
-                    )
-                    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+                            .clickable { onOrganizationClick() }
+                    ){
+                        Icon(
+                            imageVector = Icons.Default.List,
+                            contentDescription = stringResource(R.string.organizations)
+                        )
+                        Text(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            text = stringResource(R.string.organizations)
+                        )
+                    }
 
-                    Text(
+                    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+                    Row(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
-                            .clickable { onWorkerClick() },
-                        text = stringResource(R.string.workers)
-                    )
+                            .clickable { onWorkerClick() }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.AccountBox,
+                            contentDescription = stringResource(R.string.workers)
+                        )
+                        Text(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            text = stringResource(R.string.workers)
+                        )
+                    }
                     HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
-                    Text(
+                    Row(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
-                            .clickable { },
-                        text = stringResource(R.string.default_settings)
-                    )
+                            .clickable {}
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.settings)
+                        )
+                        Text(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            text = stringResource(R.string.default_settings)
+                        )
+                    }
                     HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
-                    Text(
+                    Row(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
-                            .clickable { },
-                        text = stringResource(R.string.upload_data)
-                    )
-                    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+                            .clickable {}
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Send,
+                            contentDescription = stringResource(R.string.unload)
+                        )
+                        Text(
 
-                    Text(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            text = stringResource(R.string.upload_data)
+                        )
+                    }
+                    HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+                    Row(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
-                            .clickable { },
-                        text = stringResource(R.string.about_the_program)
-                    )
+                            .clickable {}
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = stringResource(R.string.info)
+                        )
+                        Text(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            text = stringResource(R.string.about_the_program)
+                        )
+                    }
                     HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
                 }
             }

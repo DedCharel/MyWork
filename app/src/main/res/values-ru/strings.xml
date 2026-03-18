@@ -48,4 +48,6 @@
     <string name="select_an_email_client">Выберите почтовый клиент</string>
     <string name="report_footer">Отчет сформирован автоматически из программы "Учет работ"</string>
     <string name="hour_short">ч.</string>
+    <string name="unload">Выгрузить</string>
+    <string name="info">Информация</string>
 </resources>

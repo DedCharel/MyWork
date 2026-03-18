@@ -47,4 +47,6 @@
     <string name="select_an_email_client">Select an email client</string>
     <string name="report_footer">The report is generated automatically from the My Work program</string>
     <string name="hour_short">h.</string>
+    <string name="unload">Upload</string>
+    <string name="info">Info</string>
 </resources>
