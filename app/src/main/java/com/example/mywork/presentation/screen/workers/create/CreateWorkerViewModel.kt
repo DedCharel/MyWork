@@ -80,7 +80,15 @@ sealed interface CreateWorkerScreenState {
     data class Creation(
         val name: String = "",
         val phone: String = ""
-    ): CreateWorkerScreenState
+    ): CreateWorkerScreenState {
+        val isSaveEnabled: Boolean
+            get() {
+                return when{
+                    name.isEmpty() -> false
+                    else -> true
+                }
+            }
+    }
 
     data object Finish: CreateWorkerScreenState
 }

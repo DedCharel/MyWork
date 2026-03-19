@@ -159,5 +159,13 @@ sealed interface EditOrganizationState{
 
     data object Initial: EditOrganizationState
 
-    data class Editing(val organization: Organization): EditOrganizationState
+    data class Editing(val organization: Organization): EditOrganizationState {
+        val isSaveEnabled: Boolean
+            get() {
+                return when{
+                    organization.name.isEmpty() -> false
+                    else -> true
+                }
+            }
+    }
 }

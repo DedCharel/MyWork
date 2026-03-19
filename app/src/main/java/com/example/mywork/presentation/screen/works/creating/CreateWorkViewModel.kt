@@ -165,7 +165,12 @@ sealed interface CreateWorkScreenState {
         val description: String = "",
         val timeHour: Int = 0,
         val timeMinute: Int = 0
-    ) : CreateWorkScreenState
+    ) : CreateWorkScreenState {
+        val isSaveEnabled: Boolean
+            get() {
+                return !(organization == null || worker == null || description.isEmpty() || (timeHour == 0 && timeMinute == 0))
+            }
+    }
 
     data object Finished : CreateWorkScreenState
 }

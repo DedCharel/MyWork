@@ -121,5 +121,13 @@ sealed interface EditWorkerState {
 
     data object Finished : EditWorkerState
 
-    data class Editing(val worker: Worker) : EditWorkerState
+    data class Editing(val worker: Worker) : EditWorkerState {
+        val isSaveEnabled: Boolean
+            get() {
+                return when{
+                    worker.name.isEmpty() -> false
+                    else -> true
+                }
+            }
+    }
 }

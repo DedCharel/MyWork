@@ -133,7 +133,15 @@ sealed interface CreateOrganizationScreenState{
         val email: String = "",
         val address: String = "",
         val comments: String = ""
-    ): CreateOrganizationScreenState
+    ): CreateOrganizationScreenState {
+        val isSaveEnabled: Boolean
+            get() {
+                return when{
+                    name.isEmpty() -> false
+                    else -> true
+                }
+            }
+    }
 
     data object Finished: CreateOrganizationScreenState
 }

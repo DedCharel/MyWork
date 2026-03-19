@@ -172,5 +172,10 @@ sealed interface EditWorkState {
 
     data object Finished : EditWorkState
 
-    data class Editing(val work: Work) : EditWorkState
+    data class Editing(val work: Work) : EditWorkState {
+        val isSaveEnabled: Boolean
+            get() {
+                return !(work.description.isEmpty() || work.time == 0.0)
+            }
+    }
 }

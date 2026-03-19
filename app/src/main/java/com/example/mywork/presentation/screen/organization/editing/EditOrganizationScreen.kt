@@ -202,6 +202,7 @@ fun EditOrganizationScreen(
                     Button(
                         modifier = Modifier
                             .fillMaxWidth(),
+                        enabled = currentState.isSaveEnabled,
                         shape = RoundedCornerShape(16.dp),
                         onClick = { viewModel.processCommand(EditOrganizationCommand.Save) }
                     ) {
