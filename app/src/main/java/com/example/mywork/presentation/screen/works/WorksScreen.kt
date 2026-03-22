@@ -3,16 +3,21 @@ package com.example.mywork.presentation.screen.works
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -21,9 +26,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -31,6 +36,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +50,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mywork.R
 import com.example.mywork.domain.work.Work
 import com.example.mywork.presentation.utils.DataFormater
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,6 +65,9 @@ fun WorksScreen(
     val state = viewModel.state.collectAsState()
 
     val currentState = state.value
+    val months = currentState.groupWorks.keys.toList()
+    val pagerState = rememberPagerState(pageCount = { months.size })
+    val scope = rememberCoroutineScope()
 
     Scaffold(
         modifier = modifier,
@@ -116,39 +126,80 @@ fun WorksScreen(
         }
     ) { innerPadding ->
 
-
-        LazyColumn(
-            Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.secondary)
-        ) {
-            currentState.groupWorks.forEach { (month, work) ->
-                stickyHeader {
-                    Surface(
-                        modifier = Modifier.fillMaxWidth().padding( horizontal = 16.dp),
-                        color = MaterialTheme.colorScheme.secondary
+        if (months.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(innerPadding)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(
+                        onClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                            }
+                        },
+                        enabled = pagerState.currentPage < months.size - 1
                     ) {
-                        Text(
-                            text = month,
-                            modifier = Modifier.padding(8.dp),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary
+                        Icon(
+                            Icons.AutoMirrored.Default.KeyboardArrowLeft,
+                            contentDescription = "Back"
+                        )
+                    }
+
+                    Text(
+                        text = months[pagerState.currentPage],
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    IconButton(
+                        onClick = {
+                            scope.launch {
+                                pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                            }
+                        },
+                        enabled = pagerState.currentPage > 0
+                    ) {
+                        Icon(
+                            Icons.AutoMirrored.Default.KeyboardArrowRight,
+                            contentDescription = "Next"
                         )
                     }
                 }
-                items(
-                    items = work,
-                ) { work ->
-                    WorkCard(
-                        work = work,
-                        onWorkClick = { onWorkClick(it.id) })
+
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.padding(top = 8.dp),
+                    contentPadding = PaddingValues(horizontal = 8.dp),
+                    pageSpacing = 8.dp
+                ) { pageIndex ->
+                    val monthKey = months[pageIndex]
+                    val itemsForMonth = currentState.groupWorks[monthKey] ?: emptyList()
+
+                    LazyColumn(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        items(itemsForMonth) { work ->
+                            WorkCard(
+                                work = work,
+                                onWorkClick = { onWorkClick(it.id) })
+
+                        }
+                    }
                 }
             }
-
         }
     }
 }
+//TODO исправить ошибку при удалении единственной записи в месяце, исправить ошибку не корректного отображения единственного элемента в крайнем месяце
 
 @Composable
 fun WorkCard(
@@ -178,9 +229,11 @@ fun WorkCard(
                     .align(Alignment.CenterVertically),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row{
+                Row {
                     Text(
-                        text = DataFormater.getDayToString(work.date) + " " + DataFormater.getMonthToString(work.date),
+                        text = DataFormater.getDayToString(work.date) + " " + DataFormater.getMonthToString(
+                            work.date
+                        ),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,

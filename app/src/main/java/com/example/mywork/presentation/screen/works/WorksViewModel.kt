@@ -53,7 +53,7 @@ class WorksViewModel @Inject constructor(
             .map { works ->
                 works.groupBy { work ->
                     val date = Instant.ofEpochMilli(work.date).atZone(ZoneId.systemDefault())
-                    date.format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                    date.format(DateTimeFormatter.ofPattern("LLLL yyyy"))
                 }
             }
             .onEach { groupWorks ->
