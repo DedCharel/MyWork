@@ -152,7 +152,6 @@ fun SettingsScreen(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
-                            .clickable {}
                     ) {
                         Icon(
                             imageVector = Icons.Default.Info,

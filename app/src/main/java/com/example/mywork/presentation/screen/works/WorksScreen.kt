@@ -23,6 +23,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -122,15 +123,29 @@ fun WorksScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.secondary)
         ) {
-            items(
-                items = currentState.works,
-                key = { it.id }
-            ) { work ->
-                WorkCard(
-
-                    work = work,
-                    onWorkClick = { onWorkClick(it.id) })
+            currentState.groupWorks.forEach { (month, work) ->
+                stickyHeader {
+                    Surface(
+                        modifier = Modifier.fillMaxWidth().padding( horizontal = 16.dp),
+                        color = MaterialTheme.colorScheme.secondary
+                    ) {
+                        Text(
+                            text = month,
+                            modifier = Modifier.padding(8.dp),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+                items(
+                    items = work,
+                ) { work ->
+                    WorkCard(
+                        work = work,
+                        onWorkClick = { onWorkClick(it.id) })
+                }
             }
+
         }
     }
 }

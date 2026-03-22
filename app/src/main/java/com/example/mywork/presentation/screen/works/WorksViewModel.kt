@@ -14,9 +14,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -45,8 +50,15 @@ class WorksViewModel @Inject constructor(
                     searchWorkUseCase(input)
                 }
             }
-            .onEach { works ->
-                _state.update { it.copy(works = works) }
+            .map { works ->
+                works.groupBy { work ->
+                    val date = Instant.ofEpochMilli(work.date).atZone(ZoneId.systemDefault())
+                    date.format(DateTimeFormatter.ofPattern("MMMM yyyy"))
+                }
+            }
+            .onEach { groupWorks ->
+
+                _state.update { it.copy(groupWorks = groupWorks) }
             }
             .launchIn(viewModelScope)
 
@@ -97,5 +109,6 @@ sealed interface WorkCommand{
 
 data class WorksScreenState(
     val query:String = "",
-    val works: List<Work> = listOf()
+    val groupWorks: Map<String, List<Work>> = mapOf("" to listOf())
+
 )
