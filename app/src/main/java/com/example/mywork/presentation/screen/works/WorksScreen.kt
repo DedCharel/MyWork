@@ -35,6 +35,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -51,6 +52,7 @@ import com.example.mywork.R
 import com.example.mywork.domain.work.Work
 import com.example.mywork.presentation.utils.DataFormater
 import kotlinx.coroutines.launch
+import kotlin.math.min
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -153,8 +155,9 @@ fun WorksScreen(
                         )
                     }
 
+                    val currentPage = min(months.size -1, pagerState.currentPage)
                     Text(
-                        text = months[pagerState.currentPage],
+                        text = months[currentPage],
                         style = MaterialTheme.typography.headlineSmall,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
@@ -181,7 +184,7 @@ fun WorksScreen(
                     contentPadding = PaddingValues(horizontal = 8.dp),
                     pageSpacing = 8.dp
                 ) { pageIndex ->
-                    val monthKey = months[pageIndex]
+                    val monthKey = months.getOrNull(pageIndex) ?: return@HorizontalPager
                     val itemsForMonth = currentState.groupWorks[monthKey] ?: emptyList()
 
                     LazyColumn(
@@ -199,7 +202,7 @@ fun WorksScreen(
         }
     }
 }
-//TODO исправить ошибку при удалении единственной записи в месяце, исправить ошибку не корректного отображения единственного элемента в крайнем месяце
+//TODO исправить ошибку не корректного отображения единственного элемента в крайнем месяце
 
 @Composable
 fun WorkCard(
