@@ -181,6 +181,7 @@ fun WorksScreen(
                 HorizontalPager(
                     state = pagerState,
                     modifier = Modifier.padding(top = 8.dp),
+                    verticalAlignment = Alignment.Top,
                     contentPadding = PaddingValues(horizontal = 8.dp),
                     pageSpacing = 8.dp
                 ) { pageIndex ->
@@ -202,7 +203,6 @@ fun WorksScreen(
         }
     }
 }
-//TODO исправить ошибку не корректного отображения единственного элемента в крайнем месяце
 
 @Composable
 fun WorkCard(
