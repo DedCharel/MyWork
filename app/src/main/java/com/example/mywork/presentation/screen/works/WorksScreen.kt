@@ -35,7 +35,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -81,16 +80,16 @@ fun WorksScreen(
                         Icon(
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .clickable { onStatisticClick() }
-                                .padding(end = 16.dp),
+                                .padding(end = 16.dp)
+                                .clickable { onStatisticClick() },
                             painter = painterResource(id = R.drawable.ic_equalizer),
                             contentDescription = stringResource(R.string.statistics)
                         )
                         Icon(
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .clickable { onSettingsClick() }
-                                .padding(end = 16.dp),
+                                .padding(end = 16.dp)
+                                .clickable { onSettingsClick() },
                             imageVector = Icons.Default.Settings,
                             contentDescription = stringResource(R.string.settings)
                         )
@@ -160,7 +159,8 @@ fun WorksScreen(
                         text = months[currentPage],
                         style = MaterialTheme.typography.headlineSmall,
                         fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
                     )
 
                     IconButton(

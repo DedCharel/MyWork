@@ -3,6 +3,7 @@ package com.example.mywork.di
 import android.content.Context
 import com.example.mywork.data.OrganizationRepositoryImpl
 import com.example.mywork.data.OrganizationsDao
+import com.example.mywork.data.SettingsRepositoryImpl
 import com.example.mywork.data.StatisticDao
 import com.example.mywork.data.StatisticRepositoryImpl
 import com.example.mywork.data.WorkDatabase
@@ -11,6 +12,7 @@ import com.example.mywork.data.WorkerRepositoryImpl
 import com.example.mywork.data.WorkersDao
 import com.example.mywork.data.WorksDao
 import com.example.mywork.domain.organization.OrganizationRepository
+import com.example.mywork.domain.settings.SettingsRepository
 import com.example.mywork.domain.statistic.StatisticRepository
 import com.example.mywork.domain.work.WorkRepository
 import com.example.mywork.domain.worker.WorkerRepository
@@ -41,6 +43,10 @@ interface DataModule {
     @Singleton
     @Binds
     fun bindsStatisticRepository(impl: StatisticRepositoryImpl): StatisticRepository
+
+    @Binds
+    @Singleton
+    fun bindsSettingsRepository(impl: SettingsRepositoryImpl): SettingsRepository
 
     companion object {
 

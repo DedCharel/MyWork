@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -53,7 +52,7 @@ class WorksViewModel @Inject constructor(
             .map { works ->
                 works.groupBy { work ->
                     val date = Instant.ofEpochMilli(work.date).atZone(ZoneId.systemDefault())
-                    date.format(DateTimeFormatter.ofPattern("LLLL yyyy"))
+                    date.format(DateTimeFormatter.ofPattern("LLLL yyyy")).replaceFirstChar { it.uppercaseChar() }
                 }
             }
             .onEach { groupWorks ->
