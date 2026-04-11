@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mywork.presentation.screen.organization.OrganizationScreen
 import com.example.mywork.presentation.screen.organization.create.CreateOrganizationScreen
 import com.example.mywork.presentation.screen.organization.editing.EditOrganizationScreen
+import com.example.mywork.presentation.screen.settings.DefaultScreen
 import com.example.mywork.presentation.screen.settings.SettingsScreen
 import com.example.mywork.presentation.screen.statistics.OrganizationStatisticScreen
 import com.example.mywork.presentation.screen.statistics.StatisticScreen
@@ -126,6 +127,7 @@ fun NavGraph() {
             SettingsScreen(
                 onWorkerClick = { navController.navigate("worker/false") },
                 onOrganizationClick = { navController.navigate("organization/false") },
+                onDefaultClick = {navController.navigate("default")},
                 onFinished = {
                     navController.popBackStack()
                 }
@@ -181,6 +183,13 @@ fun NavGraph() {
                 organizationId = organizationId,
                 startRange = startRange,
                 finishRange = finishRange,
+                onFinished = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        composable(Screen.Default.route) {
+            DefaultScreen(
                 onFinished = {
                     navController.popBackStack()
                 }
@@ -264,6 +273,8 @@ sealed class Screen(val route: String) {
             return arguments?.getString("finishRange")?.toLong() ?: 0
         }
     }
+
+    data object Default: Screen("default")
 }
 
 

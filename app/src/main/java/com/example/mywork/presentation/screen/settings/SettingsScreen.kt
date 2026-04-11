@@ -37,6 +37,7 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
     onOrganizationClick: () -> Unit,
     onWorkerClick: () -> Unit,
+    onDefaultClick: () -> Unit,
     onFinished: () -> Unit
 ){
     val state = viewModel.state.collectAsState()
@@ -117,7 +118,9 @@ fun SettingsScreen(
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
-                            .clickable {}
+                            .clickable {
+                                onDefaultClick()
+                            }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Settings,
