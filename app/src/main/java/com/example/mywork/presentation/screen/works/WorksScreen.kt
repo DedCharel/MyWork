@@ -79,16 +79,16 @@ fun WorksScreen(
                     actions = {
                         Icon(
                             modifier = Modifier
-                                .clip(CircleShape)
                                 .padding(end = 16.dp)
+                                .clip(CircleShape)
                                 .clickable { onStatisticClick() },
                             painter = painterResource(id = R.drawable.ic_equalizer),
                             contentDescription = stringResource(R.string.statistics)
                         )
                         Icon(
                             modifier = Modifier
-                                .clip(CircleShape)
                                 .padding(end = 16.dp)
+                                .clip(CircleShape)
                                 .clickable { onSettingsClick() },
                             imageVector = Icons.Default.Settings,
                             contentDescription = stringResource(R.string.settings)
