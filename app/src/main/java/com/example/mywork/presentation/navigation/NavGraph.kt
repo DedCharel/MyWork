@@ -188,11 +188,14 @@ fun NavGraph() {
                 }
             )
         }
-        composable(Screen.Default.route) {
+        composable(Screen.Default.route) { entry ->
+            val currentWorkerId = entry.savedStateHandle.get<Long>("worker_id")
             DefaultScreen(
+                currentWorkerId = currentWorkerId,
                 onFinished = {
                     navController.popBackStack()
-                }
+                },
+                onWorkerClick = {navController.navigate("worker/true")}
             )
         }
 
