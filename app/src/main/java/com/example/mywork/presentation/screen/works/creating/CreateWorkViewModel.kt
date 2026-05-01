@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mywork.domain.organization.GetOrganizationUseCase
 import com.example.mywork.domain.organization.Organization
+import com.example.mywork.domain.settings.GetSettingsUseCase
 import com.example.mywork.domain.work.AddWorkUseCase
 import com.example.mywork.domain.worker.GetWorkerUseCase
 import com.example.mywork.domain.worker.Worker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,10 +22,26 @@ class CreateWorkViewModel @Inject constructor(
     private val addWorkUseCase: AddWorkUseCase,
     private val getWorkerUseCase: GetWorkerUseCase,
     private val getOrganizationUseCase: GetOrganizationUseCase,
+    private val getSettingsUseCase: GetSettingsUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow<CreateWorkScreenState>(CreateWorkScreenState.Creation())
     val state = _state.asStateFlow()
 
+    init {
+            getSettingsUseCase().onEach {
+                if (it.workerId != 0L){
+                    _state.update { previousState ->
+                        if (previousState is CreateWorkScreenState.Creation){
+                            val worker = getWorkerUseCase(it.workerId)
+                            previousState.copy(worker = worker)
+                        } else {
+                            previousState
+                        }
+                    }
+                }
+            }.launchIn(viewModelScope)
+
+    }
     fun processCommand(command: CreateWorkCommand) {
         when (command) {
             CreateWorkCommand.Back -> {
