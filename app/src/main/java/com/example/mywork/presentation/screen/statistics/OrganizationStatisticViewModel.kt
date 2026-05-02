@@ -48,7 +48,8 @@ class OrganizationStatisticViewModel @AssistedInject constructor(
         }.onEach { works ->
             _state.update { previousState ->
                 if (previousState is OrganizationStatisticScreenState.DisplayOrganizationStatistic){
-                    previousState.copy(works = works)
+                    val totalTime = works.sumOf { it.time }
+                    previousState.copy(works = works, totalTime = totalTime)
                 } else {
                     previousState
                 }
@@ -111,7 +112,8 @@ sealed interface OrganizationStatisticScreenState{
         val works: List<Work> = listOf(),
         val currentRange: Pair<Long, Long> = Pair(0,0),
         val organizationName: String = "",
-        val organizationEmail: String = ""
+        val organizationEmail: String = "",
+        val totalTime: Double = 0.0
     ): OrganizationStatisticScreenState
 }
 

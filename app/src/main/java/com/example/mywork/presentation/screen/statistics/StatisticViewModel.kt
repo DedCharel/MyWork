@@ -40,7 +40,8 @@ class StatisticViewModel @Inject constructor(
         }.onEach { statistic ->
             _state.update { previousState ->
                 if (previousState is StatisticScreenState.DisplayStatistics){
-                    previousState.copy(totalStatistics = statistic)
+                    val totalTime = statistic.sumOf { it.totalTime }
+                    previousState.copy(totalStatistics = statistic, totalTime = totalTime)
                 } else {
                     previousState
                 }
@@ -83,7 +84,8 @@ sealed interface StatisticScreenState{
 
     data class DisplayStatistics(
         val totalStatistics: List<TotalStatisticEntity> = listOf(),
-        val currentRange: Pair<Long, Long> = Pair(0,0)
+        val currentRange: Pair<Long, Long> = Pair(0,0),
+        val totalTime: Double = 0.0
     ): StatisticScreenState
 
 

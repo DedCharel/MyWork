@@ -27,6 +27,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -138,6 +139,25 @@ fun StatisticScreen(
                                 statistic = statistic,
                                 onStatisticClick = {onStatisticClick(it, currentState.currentRange)}
                             )
+                        }
+                        item{
+                            Row(
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            ) {
+                                Text(
+                                    modifier = Modifier.weight(0.8f),
+                                    fontWeight = FontWeight.Bold,
+                                    text = stringResource(R.string.total)
+                                )
+
+                                Text(
+                                    modifier = Modifier.weight(0.2f),
+                                    textAlign = TextAlign.End,
+                                    fontWeight = FontWeight.Bold,
+                                    text = currentState.totalTime.toString()
+                                )
+                            }
+
                         }
                     }
                 }

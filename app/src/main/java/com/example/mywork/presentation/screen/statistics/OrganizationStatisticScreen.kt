@@ -144,6 +144,24 @@ fun OrganizationStatisticScreen(
                             OrganizationStatisticCard(work = work)
                         }
                         item {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            ) {
+                                Text(
+                                    modifier = Modifier.weight(0.8f),
+                                    fontWeight = FontWeight.Bold,
+                                    text = stringResource(R.string.total)
+                                )
+
+                                Text(
+                                    modifier = Modifier.weight(0.2f),
+                                    textAlign = TextAlign.End,
+                                    fontWeight = FontWeight.Bold,
+                                    text = currentState.totalTime.toString()
+                                )
+                            }
+                        }
+                        item {
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -152,7 +170,7 @@ fun OrganizationStatisticScreen(
                             ) {
                                 Button(
                                     onClick = {
-                                        //temp solution
+                                        //TODO temporary solution
                                         val title = context.getString(
                                             R.string.report_work_for_the_period,
                                             DataFormater.formatDateToString(currentState.currentRange.first),
@@ -171,7 +189,7 @@ fun OrganizationStatisticScreen(
                                                 currentState.works.joinToString(separator = "\n") {
                                                     DataFormater.formatDateToString(it.date) + " " + it.description + " / " + it.time + " " + context.getString(R.string.hour_short) + "/"
 
-                                                } + "\n\n" + context.getString(R.string.report_footer))
+                                                } + "\n" + context.getString(R.string.total) + currentState.totalTime.toString() + "\n\n" + context.getString(R.string.report_footer))
                                         }
                                         context.startActivity(
                                             Intent.createChooser(
